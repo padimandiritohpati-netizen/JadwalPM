@@ -11,10 +11,33 @@
 <style>
 body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 /* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom) */
+/* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom di Desktop) */
 #outletsContainer {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 16px !important;
+}
+
+/* RESPONSIF KHUSUS HP (Layar kecil < 768px menjadi 1 kolom & padding tabel disesuaikan) */
+@media (max-width: 768px) {
+  #outletsContainer {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  
+  .sheet-table th {
+    font-size: 8px !important;
+    padding: 4px 1px !important;
+    white-space: normal !important; /* Membolehkan teks membungkus jika terlalu panjang */
+    word-break: break-all;
+  }
+  
+  .name-badge {
+    width: 98% !important;
+    font-size: 9px !important;
+    height: 20px !important;
+    padding: 0 2px !important;
+  }
 }
 /* Definisi Warna Header Outlet */
 .header-bg-yellow { background-color: #facc15 !important; border-color: #eab308 !important; color: #0f172a !important; }
