@@ -9,10 +9,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
+/* Styling Kertas Orak-Orek Patokan Libur */
+#scratchpadContainer {
+  background: #fefce8; /* Warna kertas kuning muda ala catatan */
+  border: 2px dashed #ca8a04;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.scratchpad-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 11px;
+  table-layout: fixed;
+}
+.scratchpad-table th {
+  background-color: #fef08a;
+  border: 1px solid #ca8a04;
+  padding: 6px 4px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #713f12;
+}
+.scratchpad-table td {
+  border: 1px solid #fde047;
+  padding: 3px;
+  vertical-align: top;
+  background-color: #ffffff;
+}
+.scratchpad-textarea {
+  width: 100%;
+  min-height: 140px;
+  border: none;
+  background: transparent;
+  resize: vertical;
+  font-size: 10.5px;
+  font-family: 'Inter', sans-serif;
+  color: #1e293b;
+  outline: none;
+  line-height: 1.4;
+  padding: 2px;
+}
 body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-/* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom) */
 /* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom di Desktop) */
-/* TAMPILAN DEFAULT (UNTUK KOMPUTER / LAYAR LEBAR: 3 Kolom) */
 #outletsContainer {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
@@ -60,7 +102,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 .sheet-table {
   border-collapse: collapse;
   width: 100%;
-  min-width: 100% !important; /* Memastikan tabel melebar secara proporsional */
+  min-width: 100% !important;
   font-size: 11px;
   table-layout: fixed;
 }
@@ -115,7 +157,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   text-overflow: ellipsis !important;
 }
 
-/* EFEK TUTUP NAMA (NAMA SEAKAN KOSONG TAPI TEMPAT TETAP UTUH) */
 .name-badge.hidden-name span {
   visibility: hidden !important;
 }
@@ -140,7 +181,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   border: 1px solid #facc15 !important;
 }
 
-/* KHUSUS ATURAN CETAK / PRINT PDF & SCREENSHOT (Otomatis 4 kolom & pas di kertas A3) */
+/* KHUSUS ATURAN CETAK / PRINT PDF & SCREENSHOT */
 @media print {
   .no-print, header, aside, #syncStatusBadge, #allOkToast, #ssToast, button { 
     display: none !important; 
@@ -171,7 +212,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     transform-origin: top center !important;
   }
 
-  /* Saat dicetak, baru diatur menjadi 4 kolom agar muat 1 lembar A3 */
   #outletsContainer {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
@@ -197,24 +237,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
- 
- /* Definisi Warna Header Outlet */
-.header-bg-yellow { background-color: #facc15 !important; border-color: #eab308 !important; color: #0f172a !important; }
-.header-bg-cyan { background-color: #22d3ee !important; border-color: #06b6d4 !important; color: #0f172a !important; }
-.header-bg-pink { background-color: #f472b6 !important; border-color: #ec4899 !important; color: #0f172a !important; }
-.header-bg-emerald { background-color: #34d399 !important; border-color: #10b981 !important; color: #0f172a !important; }
-.header-bg-purple { background-color: #c084fc !important; border-color: #a855f7 !important; color: #0f172a !important; }
-.header-bg-orange { background-color: #fb923c !important; border-color: #f97316 !important; color: #0f172a !important; }
-.header-bg-blue { background-color: #60a5fa !important; border-color: #3b82f6 !important; color: #0f172a !important; }
-
-/* Definisi Warna Sub-Hari di bawah Header */
-.subday-bg-yellow { background-color: #fef08a !important; }
-.subday-bg-cyan { background-color: #a5f3fc !important; }
-.subday-bg-pink { background-color: #fbcfe8 !important; }
-.subday-bg-emerald { background-color: #a7f3d0 !important; }
-.subday-bg-purple { background-color: #e9d5ff !important; }
-.subday-bg-orange { background-color: #ffedd5 !important; }
-.subday-bg-blue { background-color: #bfdbfe !important; }
 }
 
 /* Penanda tanggal merah / hari libur */
@@ -274,6 +296,11 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   <div class="max-w-[1700px] mx-auto px-4 py-2.5 flex justify-between items-center gap-3">
     <div class="flex items-center space-x-3"></div>
     <div class="flex items-center gap-2 flex-wrap">
+      <!-- TOMBOL NOTE BARU YANG DITAMBAHKAN -->
+      <button id="btnOpenNoteModal" class="px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5" title="Buka Catatan / Tabel Catatan Libur">
+        <i class="fa-solid fa-note-sticky"></i> Note
+      </button>
+
       <button id="btnSetStartDate" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5 hidden">
         <i class="fa-solid fa-calendar-days"></i> Tgl 
       </button>
@@ -310,6 +337,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     </div>
   </div>
 </header>
+
 <div class="max-w-[1700px] w-full mx-auto p-4 flex flex-col lg:flex-row gap-5 flex-1 print-full-width">
 <aside id="mainSidebar" class="w-full lg:w-80 flex-shrink-0 transition-all duration-300 no-print">
 <div id="sidebarCard" class="bg-white border border-slate-300 rounded-xl shadow-sm p-3.5 sticky top-16 space-y-4 overflow-hidden">
@@ -357,9 +385,6 @@ class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg te
 </div>
 </aside>
 <main id="captureArea" class="flex-1 flex flex-col gap-4 min-w-0 print-full-width bg-slate-50 p-3 rounded-xl">
-<div class="text-center py-2">
-
-</div>
 <!-- Container Logo & Judul Bulan -->
 <div class="flex flex-col items-center justify-center gap-2 mb-2">  
   <div class="w-full bg-amber-400 border-2 border-amber-500 text-slate-900 text-center py-2 px-4 rounded-xl shadow-sm font-black text-xl uppercase tracking-widest flex items-center justify-between">
@@ -372,8 +397,10 @@ class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg te
     <span class="text-xs font-bold text-slate-700 hidden sm:inline-block">MINGGUAN</span>
   </div>
 </div>
+
 <div id="outletsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 print-full-width">
 </div>
+
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 print-full-width">
 <div class="bg-white border border-slate-400 rounded-xl p-3 shadow-xs font-mono text-[11px]">
 <div class="font-bold text-slate-800 border-b pb-1 mb-2 uppercase flex justify-between items-center">
@@ -399,6 +426,53 @@ class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg te
 </div>
 </div>
 </main>
+</div>
+
+<!-- MODAL NOTE (SESUAI DENGAN FORMAT TABEL REFERENSI GAMBAR ATAS) -->
+<div id="noteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 no-print hidden">
+  <div class="bg-[#fefce8] border-2 border-amber-500 rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col">
+    <div class="px-5 py-3 bg-amber-400 text-slate-950 flex justify-between items-center border-b border-amber-500">
+      <h3 class="font-black text-xs uppercase tracking-wider flex items-center gap-2">
+        <i class="fa-solid fa-table text-amber-900"></i> Catatan Tabel Patokan Libur & Jadwal
+      </h3>
+      <button id="btnCloseNoteModal" class="text-slate-800 hover:text-black text-lg font-bold">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="p-4 space-y-4">
+      <div id="scratchpadContainer">
+        <table class="scratchpad-table">
+          <thead>
+            <tr>
+              <th>SENIN</th>
+              <th>SELASA</th>
+              <th>RABU</th>
+              <th>KAMIS</th>
+              <th>JUM'AT</th>
+              <th>SABTU</th>
+              <th>MINGGU</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><textarea class="scratchpad-textarea" id="scratchNote1" placeholder="Catatan Senin..."></textarea></td>
+              <td><textarea class="scratchpad-textarea" id="scratchNote2" placeholder="Catatan Selasa..."></textarea></td>
+              <td><textarea class="scratchpad-textarea" id="scratchNote3" placeholder="Catatan Rabu..."></textarea></td>
+              <td><textarea class="scratchpad-textarea" id="scratchNote4" placeholder="Catatan Kamis..."></textarea></td>
+              <td><textarea class="scratchpad-textarea" id="scratchNote5" placeholder="Catatan Jumat..."></textarea></td>
+              <td><textarea class="scratchpad-textarea" id="scratchNote6" placeholder="Catatan Sabtu..."></textarea></td>
+              <td><textarea class="scratchpad-textarea" id="scratchNote7" placeholder="Catatan Minggu..."></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex justify-end gap-2">
+        <button id="btnSaveScratchNotes" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl shadow transition">
+          Simpan Catatan
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- MODAL FLOATING LOGIN -->
@@ -576,16 +650,16 @@ Tambah
 <div class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
 <i class="fa-solid fa-plane-departure"></i> Tambah Jadwal Cuti Karyawan
 </div>
-<form id="addLeaveForm" class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+<form id="addLeaveForm" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
 <select id="leaveEmpName" class="px-2 py-1.5 text-xs border border-amber-300 rounded-lg bg-white" required>
 <option value="">- Pilih Pegawai -</option>
 </select>
-<input type="number" id="leaveStart" placeholder="Tgl Mulai (mis: 1)" min="1" max="31" class="px-2 py-1.5 text-xs border border-amber-300 rounded-lg bg-white" required>
-<input type="number" id="leaveEnd" placeholder="Tgl Selesai (mis: 3)" min="1" max="31" class="px-2 py-1.5 text-xs border border-amber-300 rounded-lg bg-white" required>
+<input type="text" id="leaveDatesInput" placeholder="Tgl (mis: 10, 11, 13 atau 10)" class="px-2 py-1.5 text-xs border border-amber-300 rounded-lg bg-white" required>
 <button type="submit" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs rounded-lg transition">
 Simpan Cuti
 </button>
 </form>
+<p class="text-[10px] text-amber-800 italic">💡 Tips: Masukkan tanggal cuti dipisah koma jika lompat-lompat (contoh: <code>10, 11, 13</code>) atau satu angka saja untuk 1 hari (contoh: <code>10</code>).</p>
 <div id="activeLeaveListContainer" class="space-y-1 pt-1">
 </div>
 </div>
@@ -647,7 +721,6 @@ Daftar Outlet Aktif
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyK-X5hlW07aG_YUq6HBcAxm_IqRDcx_X4-yTJV5YO1pbQ9K8XXSi1CDzgqxoE9hcMF/exec";
 
-// KREDENSIAL PENGGUNA TERDAFTAR (AWAL: KURIS / 12345678)
 const DEFAULT_USERS = [
   { username: "KURIS", password: "12345678" }
 ];
@@ -717,6 +790,10 @@ let hiddenNamesState = JSON.parse(localStorage.getItem('grid_shift_hidden_names'
 let activeHolidayDay = null;
 let standardSchedule = JSON.parse(localStorage.getItem('grid_shift_standard_schedule')) || null;
 let noteContent = localStorage.getItem('grid_shift_note') || "* SETIAP SENIN ESTI MASUK JAM 08.00\nNOTE: * TUKERAN HARUS KONFIRMASI (IZIN) KE MANAJEMEN";
+
+// Variabel untuk data 7 hari di Note tabel
+let scratchNotes = JSON.parse(localStorage.getItem('grid_shift_scratch_notes')) || ["", "", "", "", "", "", ""];
+
 let jagaMalamContent = localStorage.getItem('grid_shift_jaga_malam') || "TOHPATI: FARIS & CALVIN\nBUYAN: AHMAD";
 let currentEditingContext = null;
 let activeRightClickedIdx = null;
@@ -761,6 +838,7 @@ localStorage.setItem('grid_shift_holiday_colors', JSON.stringify(holidayColors))
 localStorage.setItem('grid_shift_hidden_names', JSON.stringify(hiddenNamesState));
 localStorage.setItem('grid_shift_note', noteTextarea.value);
 localStorage.setItem('grid_shift_jaga_malam', jagaMalamTextarea.value);
+localStorage.setItem('grid_shift_scratch_notes', JSON.stringify(scratchNotes));
 localStorage.setItem('grid_shift_users', JSON.stringify(users));
 
 const payload = {
@@ -774,6 +852,7 @@ const payload = {
   hiddenNamesState: hiddenNamesState,
   note: noteTextarea.value,
   jagaMalam: jagaMalamTextarea.value,
+  scratchNotes: scratchNotes,
   standardSchedule: standardSchedule,
   users: users
 };
@@ -813,6 +892,9 @@ async function loadDataFromSheets() {
       if (data.schedule) schedule = data.schedule;
       if (data.holidayColors) holidayColors = data.holidayColors;
       if (data.hiddenNamesState) hiddenNamesState = data.hiddenNamesState;
+      if (data.scratchNotes) {
+        scratchNotes = data.scratchNotes;
+      }
       if (data.note !== undefined) {
         noteContent = data.note;
         noteTextarea.value = noteContent;
@@ -848,7 +930,6 @@ function updateAuthUI() {
   const btnManageUsers = document.getElementById('btnManageUsers');
   const activeUserDisplay = document.getElementById('activeUserDisplay');
   
-  // Daftar tombol menu admin/edit yang ingin disembunyikan/ditampilkan
   const adminButtons = [
     document.getElementById('btnSetStartDate'),
     document.getElementById('btnSaveStandard'),
@@ -865,7 +946,6 @@ function updateAuthUI() {
     btnManageUsers.classList.remove('hidden');
     activeUserDisplay.textContent = currentUser;
     
-    // Tampilkan semua tombol menu admin
     adminButtons.forEach(btn => {
       if (btn) btn.classList.remove('hidden');
     });
@@ -874,7 +954,6 @@ function updateAuthUI() {
     btnLogout.classList.add('hidden');
     btnManageUsers.classList.add('hidden');
     
-    // Sembunyikan semua tombol menu admin
     adminButtons.forEach(btn => {
       if (btn) btn.classList.add('hidden');
     });
@@ -908,13 +987,24 @@ if (holidayMenu && !holidayMenu.contains(event.target)) holidayMenu.classList.ad
 });
 
 function isEmployeeOnLeave(empName, dayName) {
-const days = getCalculatedDays();
-const foundDay = days.find(d => d.name === dayName);
-if (!foundDay) return false;
-const dateNum = parseInt(foundDay.date);
-const leave = employeeLeaves.find(l => l.name.toUpperCase() === empName.toUpperCase());
-if (!leave) return false;
-return dateNum >= parseInt(leave.start) && dateNum <= parseInt(leave.end);
+  const days = getCalculatedDays();
+  const foundDay = days.find(d => d.name === dayName);
+  if (!foundDay) return false;
+  const dateNum = parseInt(foundDay.date);
+  
+  const leaves = employeeLeaves.filter(l => l.name.toUpperCase() === empName.toUpperCase());
+  if (!leaves || leaves.length === 0) return false;
+
+  for (const leave of leaves) {
+    if (leave.dates) {
+      const allowedDates = leave.dates.map(d => parseInt(d));
+      if (allowedDates.includes(dateNum)) return true;
+    }
+    else if (leave.start !== undefined && leave.end !== undefined) {
+      if (dateNum >= parseInt(leave.start) && dateNum <= parseInt(leave.end)) return true;
+    }
+  }
+  return false;
 }
 
 function cleanupViolations() {
@@ -1552,21 +1642,28 @@ renderOutletsGrid();
 }
 
 function renderActiveLeavesList() {
-const container = document.getElementById('activeLeaveListContainer');
-container.innerHTML = '';
-if (employeeLeaves.length === 0) {
-container.innerHTML = '<span class="text-[10px] text-slate-500 italic">Belum ada jadwal cuti terdaftar.</span>';
-return;
-}
-employeeLeaves.forEach((leave, idx) => {
-const div = document.createElement('div');
-div.className = "flex items-center justify-between text-[11px] bg-white border border-amber-200 px-2 py-1 rounded-lg";
-div.innerHTML = `
-<span><strong class="text-amber-900">${leave.name}</strong> Cuti Tgl: ${leave.start} s/d ${leave.end}</span>
-<button onclick="removeLeave(${idx})" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>
-`;
-container.appendChild(div);
-});
+  const container = document.getElementById('activeLeaveListContainer');
+  container.innerHTML = '';
+  if (employeeLeaves.length === 0) {
+    container.innerHTML = '<span class="text-[10px] text-slate-500 italic">Belum ada jadwal cuti terdaftar.</span>';
+    return;
+  }
+  employeeLeaves.forEach((leave, idx) => {
+    let dateStr = "";
+    if (leave.dates) {
+      dateStr = leave.dates.join(', ');
+    } else {
+      dateStr = `${leave.start} s/d ${leave.end}`;
+    }
+
+    const div = document.createElement('div');
+    div.className = "flex items-center justify-between text-[11px] bg-white border border-amber-200 px-2 py-1 rounded-lg";
+    div.innerHTML = `
+      <span><strong class="text-amber-900">${leave.name}</strong> Cuti Tgl: ${dateStr}</span>
+      <button onclick="removeLeave(${idx})" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>
+    `;
+    container.appendChild(div);
+  });
 }
 
 function removeLeave(idx) {
@@ -1725,6 +1822,29 @@ sidebarToggleIcon.className = "fa-solid fa-chevron-left";
 btnToggleSidebar.title = "Minimize Sidebar";
 btnToggleSidebar.setAttribute('aria-label', 'Minimize sidebar');
 }
+};
+
+// Event tombol Note Modal
+const noteModal = document.getElementById('noteModal');
+document.getElementById('btnOpenNoteModal').onclick = () => {
+  // Isi textarea di modal dengan data tersimpan
+  for (let i = 1; i <= 7; i++) {
+    const el = document.getElementById(`scratchNote${i}`);
+    if (el) el.value = scratchNotes[i-1] || "";
+  }
+  noteModal.classList.remove('hidden');
+};
+document.getElementById('btnCloseNoteModal').onclick = () => {
+  noteModal.classList.add('hidden');
+};
+document.getElementById('btnSaveScratchNotes').onclick = () => {
+  for (let i = 1; i <= 7; i++) {
+    const el = document.getElementById(`scratchNote${i}`);
+    if (el) scratchNotes[i-1] = el.value;
+  }
+  saveData();
+  noteModal.classList.add('hidden');
+  alert('Catatan berhasil disimpan!');
 };
 
 document.getElementById('btnLoginTrigger').onclick = () => {
@@ -2022,26 +2142,32 @@ alert('Nama pegawai sudah ada!');
 });
 
 document.getElementById('addLeaveForm').addEventListener('submit', (e) => {
-e.preventDefault();
-const name = document.getElementById('leaveEmpName').value;
-const start = parseInt(document.getElementById('leaveStart').value);
-const end = parseInt(document.getElementById('leaveEnd').value);
-if (!name) {
-alert('Pilih nama pegawai yang cuti.');
-return;
-}
-if (start > end) {
-alert('Tanggal mulai cuti tidak boleh lebih besar dari tanggal selesai.');
-return;
-}
-employeeLeaves.push({ name, start, end });
-document.getElementById('leaveStart').value = '';
-document.getElementById('leaveEnd').value = '';
-cleanupViolations();
-saveData();
-renderActiveLeavesList();
-renderSidebar();
-renderOutletsGrid();
+  e.preventDefault();
+  const name = document.getElementById('leaveEmpName').value;
+  const rawDatesStr = document.getElementById('leaveDatesInput').value;
+  
+  if (!name) {
+    alert('Pilih nama pegawai yang cuti.');
+    return;
+  }
+
+  const datesArray = rawDatesStr
+    .split(',')
+    .map(s => parseInt(s.trim()))
+    .filter(n => !isNaN(n));
+
+  if (datesArray.length === 0) {
+    alert('Format tanggal cuti tidak valid. Gunakan angka dipisah koma (contoh: 10, 11, 13 atau 10).');
+    return;
+  }
+
+  employeeLeaves.push({ name, dates: datesArray });
+  document.getElementById('leaveDatesInput').value = '';
+  cleanupViolations();
+  saveData();
+  renderActiveLeavesList();
+  renderSidebar();
+  renderOutletsGrid();
 });
 
 document.getElementById('addBranchForm').addEventListener('submit', (e) => {
@@ -2049,7 +2175,7 @@ e.preventDefault();
 const nameInput = document.getElementById('newBranchName');
 const themeSelect = document.getElementById('newBranchTheme');
 const hoursInput = document.getElementById('newBranchHours');
-const valName = nameInput.value.trim().toUpperCase();
+const valName = nameInput.value.type.trim().toUpperCase();
 const valTheme = themeSelect.value;
 const valHours = hoursInput.value.trim();
 if (valName) {
