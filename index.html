@@ -1,0 +1,2037 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Pegawai Padi Mandiri Valuta</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+/* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom) */
+#outletsContainer {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px !important;
+}
+/* Definisi Warna Header Outlet */
+.header-bg-yellow { background-color: #facc15 !important; border-color: #eab308 !important; color: #0f172a !important; }
+.header-bg-cyan { background-color: #22d3ee !important; border-color: #06b6d4 !important; color: #0f172a !important; }
+.header-bg-pink { background-color: #f472b6 !important; border-color: #ec4899 !important; color: #0f172a !important; }
+.header-bg-emerald { background-color: #34d399 !important; border-color: #10b981 !important; color: #0f172a !important; }
+.header-bg-purple { background-color: #c084fc !important; border-color: #a855f7 !important; color: #0f172a !important; }
+.header-bg-orange { background-color: #fb923c !important; border-color: #f97316 !important; color: #0f172a !important; }
+.header-bg-blue { background-color: #60a5fa !important; border-color: #3b82f6 !important; color: #0f172a !important; }
+
+/* Definisi Warna Sub-Hari di bawah Header */
+.subday-bg-yellow { background-color: #fef08a !important; }
+.subday-bg-cyan { background-color: #a5f3fc !important; }
+.subday-bg-pink { background-color: #fbcfe8 !important; }
+.subday-bg-emerald { background-color: #a7f3d0 !important; }
+.subday-bg-purple { background-color: #e9d5ff !important; }
+.subday-bg-orange { background-color: #ffedd5 !important; }
+.subday-bg-blue { background-color: #bfdbfe !important; }
+.sheet-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 100% !important; /* Memastikan tabel melebar secara proporsional */
+  font-size: 11px;
+  table-layout: fixed;
+}
+
+.sheet-table th {
+  border: 1px solid #94a3b8 !important;
+  border-right: 1px solid #94a3b8 !important;
+  padding: 6px 4px !important;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.3;
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.sheet-table td {
+  border-right: 1px solid #94a3b8 !important;
+  border-bottom: 1px solid #cbd5e1 !important;
+}
+
+.sheet-table th:last-child, .sheet-table td:last-child {
+  border-right: 1px solid #94a3b8 !important;
+}
+
+.sheet-table td > div {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 3px !important;
+  padding-top: 6px !important;
+  min-height: 50px !important;
+}
+
+/* Badge nama pegawai */
+.name-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 94% !important;
+  height: 22px !important;
+  margin: 1px auto !important;
+  padding: 0 4px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  border-radius: 4px !important;
+  box-sizing: border-box !important;
+  border: none !important; 
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* EFEK TUTUP NAMA (NAMA SEAKAN KOSONG TAPI TEMPAT TETAP UTUH) */
+.name-badge.hidden-name span {
+  visibility: hidden !important;
+}
+
+.badge-none {
+  color: #1e293b;
+  background-color: transparent;
+}
+.badge-pink {
+  background-color: #fbcfe8;
+  color: #831843;
+  border: 1px solid #f472b6 !important;
+}
+.badge-blue {
+  background-color: #bfdbfe;
+  color: #1e3a8a;
+  border: 1px solid #60a5fa !important;
+}
+.badge-yellow {
+  background-color: #fef08a;
+  color: #713f12;
+  border: 1px solid #facc15 !important;
+}
+
+/* KHUSUS ATURAN CETAK / PRINT PDF & SCREENSHOT (Otomatis 4 kolom & pas di kertas A3) */
+@media print {
+  .no-print, header, aside, #syncStatusBadge, #allOkToast, #ssToast, button { 
+    display: none !important; 
+  }
+
+  @page {
+    size: A3 landscape;
+    margin: 4mm;
+  }
+
+  html, body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #f8fafc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #captureArea {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 2px !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+    transform: scale(0.85) !important;
+    transform-origin: top center !important;
+  }
+
+  /* Saat dicetak, baru diatur menjadi 4 kolom agar muat 1 lembar A3 */
+  #outletsContainer {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .sheet-card { 
+    page-break-inside: avoid !important; 
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+  }
+
+  .sheet-table th, .sheet-table td {
+    padding: 2px !important;
+  }
+
+  .name-badge {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 20px !important;
+    font-size: 10px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+ 
+ /* Definisi Warna Header Outlet */
+.header-bg-yellow { background-color: #facc15 !important; border-color: #eab308 !important; color: #0f172a !important; }
+.header-bg-cyan { background-color: #22d3ee !important; border-color: #06b6d4 !important; color: #0f172a !important; }
+.header-bg-pink { background-color: #f472b6 !important; border-color: #ec4899 !important; color: #0f172a !important; }
+.header-bg-emerald { background-color: #34d399 !important; border-color: #10b981 !important; color: #0f172a !important; }
+.header-bg-purple { background-color: #c084fc !important; border-color: #a855f7 !important; color: #0f172a !important; }
+.header-bg-orange { background-color: #fb923c !important; border-color: #f97316 !important; color: #0f172a !important; }
+.header-bg-blue { background-color: #60a5fa !important; border-color: #3b82f6 !important; color: #0f172a !important; }
+
+/* Definisi Warna Sub-Hari di bawah Header */
+.subday-bg-yellow { background-color: #fef08a !important; }
+.subday-bg-cyan { background-color: #a5f3fc !important; }
+.subday-bg-pink { background-color: #fbcfe8 !important; }
+.subday-bg-emerald { background-color: #a7f3d0 !important; }
+.subday-bg-purple { background-color: #e9d5ff !important; }
+.subday-bg-orange { background-color: #ffedd5 !important; }
+.subday-bg-blue { background-color: #bfdbfe !important; }
+}
+
+/* Penanda tanggal merah / hari libur */
+.holiday-red {
+  background-color: #fecaca !important;
+  color: #991b1b !important;
+  border-color: #ef4444 !important;
+  font-weight: 900 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+#holidayColorMenu {
+  position: fixed; z-index: 100; width: 170px;
+  background: white; border: 1px solid #cbd5e1; border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(15,23,42,.2); padding: 6px;
+}
+#holidayColorMenu button {
+  display: block; width: 100%; text-align: left; padding: 7px 9px;
+  border-radius: 6px; font-size: 11px; font-weight: 700;
+}
+#holidayColorMenu button:hover { background: #f1f5f9; }
+</style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col relative">
+
+<!-- Status Indicator Cloud Sync -->
+<div id="syncStatusBadge" class="fixed top-3 left-4 z-50 bg-slate-900/90 text-white text-[11px] px-3 py-1.5 rounded-full shadow-lg flex items-center gap-2 border border-slate-700 no-print">
+  <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+  <span id="syncText" class="font-semibold">Terhubung ke Google Sheets</span>
+</div>
+
+<div id="allOkToast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-500 ease-in-out pointer-events-none">
+  <div class="bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-emerald-400">
+    <div class="bg-white/20 p-2 rounded-xl text-lg">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <div>
+      <h4 class="font-extrabold text-xs uppercase tracking-wider">Jadwal Sempurna!</h4>
+      <p class="text-[11px] text-emerald-100">Semua pegawai sudah terjadwal penuh (Senin-Minggu) & tidak ada bentrok.</p>
+    </div>
+  </div>
+</div>
+
+<div id="ssToast" class="fixed top-6 right-6 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 ease-in-out pointer-events-none">
+  <div class="bg-indigo-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-indigo-400">
+    <div class="bg-white/20 p-2 rounded-xl text-lg animate-spin">
+      <i class="fa-solid fa-spinner"></i>
+    </div>
+    <div>
+      <h4 class="font-extrabold text-xs uppercase tracking-wider">Merekam Gambaran Jadwal</h4>
+      <p class="text-[11px] text-indigo-100">SS BERHASIL MOHON TUNGGU HASIL DOWNLOAD</p>
+    </div>
+  </div>
+</div>
+
+<header class="bg-slate-900 text-white sticky top-0 z-40 shadow-md no-print">
+  <div class="max-w-[1700px] mx-auto px-4 py-2.5 flex justify-between items-center gap-3">
+    <div class="flex items-center space-x-3"></div>
+    <div class="flex items-center gap-2 flex-wrap">
+      <button id="btnSetStartDate" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5">
+        <i class="fa-solid fa-calendar-days"></i> Tgl 
+      </button>
+      <button id="btnSaveStandard" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold rounded-lg text-xs shadow transition flex items-center gap-1.5" title="Simpan sebagai jadwal standar">
+        <i class="fa-solid fa-bookmark"></i> Simpan Master
+      </button>
+      <button id="btnLoadStandard" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg text-xs shadow transition flex items-center gap-1.5" title="Muat jadwal standar">
+        <i class="fa-solid fa-file-arrow-down"></i> Muat Master
+      </button>
+      <button id="btnScreenshot" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow transition flex items-center gap-1.5">
+        <i class="fa-solid fa-camera"></i> SS
+      </button>
+
+      <button id="btnManageEmp" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 rounded-lg text-xs font-medium transition flex items-center gap-1.5">
+        <i class="fa-solid fa-users text-amber-400"></i> Pegawai & Cuti
+      </button>
+      <button id="btnManageBranch" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 rounded-lg text-xs font-medium transition flex items-center gap-1.5">
+        <i class="fa-solid fa-store text-cyan-400"></i> Outlet & Header
+      </button>
+
+      <button id="btnManageUsers" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-semibold transition hidden flex items-center gap-1.5">
+        <i class="fa-solid fa-user-gear"></i> Setting
+      </button>
+      <button id="btnLoginTrigger" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1.5">
+        <i class="fa-solid fa-right-to-bracket"></i> Login Edit
+      </button>
+      <button id="btnLogout" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold transition hidden flex items-center gap-1.5">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout (<span id="activeUserDisplay"></span>)
+      </button>
+
+      <button id="btnClearAll" class="px-3 py-1.5 bg-rose-700 hover:bg-rose-800 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1">
+        <i class="fa-solid fa-rotate-left"></i> Reset
+      </button>
+    </div>
+  </div>
+</header>
+<div class="max-w-[1700px] w-full mx-auto p-4 flex flex-col lg:flex-row gap-5 flex-1 print-full-width">
+<aside id="mainSidebar" class="w-full lg:w-80 flex-shrink-0 transition-all duration-300 no-print">
+<div id="sidebarCard" class="bg-white border border-slate-300 rounded-xl shadow-sm p-3.5 sticky top-16 space-y-4 overflow-hidden">
+<div class="flex items-center justify-between border-b pb-2 mb-2">
+<span id="sidebarTitleText" class="font-bold text-xs uppercase tracking-wider text-slate-600 truncate">Status Pegawai</span>
+<div class="flex items-center gap-2 flex-shrink-0">
+<span id="totalEmpBadge" class="text-xs bg-slate-100 font-bold px-2 py-0.5 rounded-full text-slate-700">0</span>
+<button id="btnToggleSidebarMinimize" class="text-slate-700 hover:text-black bg-slate-200 hover:bg-slate-300 p-1.5 rounded-lg text-xs transition cursor-pointer shadow-xs" title="Sembunyikan / Tampilkan Sidebar">
+<i id="sidebarToggleIcon" class="fa-solid fa-chevron-left"></i>
+</button>
+</div>
+</div>
+<div id="sidebarBodyContent" class="space-y-3 transition-all duration-300">
+<div class="p-2.5 bg-blue-50 border border-blue-200 rounded-lg">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-bold text-blue-900 flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Belum Terjadwal Lengkap
+</span>
+<span id="unassignedCount" class="text-xs font-black bg-blue-600 text-white px-2 py-0.5 rounded-full">0</span>
+</div>
+<p class="text-[10px] text-blue-700 leading-tight">Berstatus <strong>BELUM</strong> jika masih ada hari (Senin-Minggu) yang kosong di luar libur/cuti.</p>
+</div>
+<div id="conflictAlertBox" class="p-2.5 bg-rose-50 border border-rose-300 rounded-lg hidden">
+<div class="flex items-center justify-between mb-1">
+<span class="text-xs font-bold text-rose-900 flex items-center gap-1.5">
+<i class="fa-solid fa-circle-exclamation text-rose-600"></i> Ada Bentrok / Double!
+</span>
+<span id="conflictCount" class="text-xs font-black bg-rose-600 text-white px-2 py-0.5 rounded-full">0</span>
+</div>
+<p class="text-[10px] text-rose-700 leading-tight">Nama disorot MERAH jika bertugas >1 kali pada hari yang sama.</p>
+</div>
+<div class="space-y-1">
+<div class="relative">
+<i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-xs text-slate-400"></i>
+<input type="text" id="searchEmpInput" placeholder="Cari nama pegawai..."
+class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+</div>
+</div>
+<div>
+<div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Daftar Pegawai (Klik nama untuk detail):</div>
+<div id="sidebarEmpList" class="space-y-1.5 max-h-[calc(100vh-320px)] overflow-y-auto custom-scrollbar pr-1">
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main id="captureArea" class="flex-1 flex flex-col gap-4 min-w-0 print-full-width bg-slate-50 p-3 rounded-xl">
+<div class="text-center py-2">
+
+</div>
+<!-- Container Logo & Judul Bulan -->
+<div class="flex flex-col items-center justify-center gap-2 mb-2">  
+  <div class="w-full bg-amber-400 border-2 border-amber-500 text-slate-900 text-center py-2 px-4 rounded-xl shadow-sm font-black text-xl uppercase tracking-widest flex items-center justify-between">
+    <span class="text-xs font-bold text-slate-700 hidden sm:inline-block">JADWAL PEGAWAI</span>
+    <div class="flex items-center gap-2 mx-auto">
+      <button id="btnPrevMonth" class="text-slate-800 hover:text-black px-2 no-print"><i class="fa-solid fa-chevron-left"></i></button>
+      <span id="monthYearDisplay">NOVEMBER</span>
+      <button id="btnNextMonth" class="text-slate-800 hover:text-black px-2 no-print"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+    <span class="text-xs font-bold text-slate-700 hidden sm:inline-block">MINGGUAN</span>
+  </div>
+</div>
+<div id="outletsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 print-full-width">
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 print-full-width">
+<div class="bg-white border border-slate-400 rounded-xl p-3 shadow-xs font-mono text-[11px]">
+<div class="font-bold text-slate-800 border-b pb-1 mb-2 uppercase flex justify-between items-center">
+<span>Catatan Operasional / Note:</span>
+<i class="fa-solid fa-pen text-slate-400 text-xs no-print"></i>
+</div>
+<textarea id="noteTextarea" class="w-full h-24 p-1.5 border border-slate-200 rounded text-xs focus:ring-1 focus:ring-slate-400 outline-none resize-none bg-slate-50/50" placeholder="Tambahkan catatan khusus..."></textarea>
+</div>
+<div class="bg-emerald-100 border border-emerald-400 rounded-xl p-3 shadow-xs text-[11px] flex flex-col">
+<div class="font-bold text-emerald-900 border-b border-emerald-300 pb-1 mb-2 uppercase flex justify-between items-center">
+<span>Penugasan Kasir / Khusus:</span>
+<span class="text-[9px] bg-emerald-200 px-1.5 py-0.5 rounded text-emerald-800 font-bold">Kasir Outlet</span>
+</div>
+<div id="kasirGridList" class="space-y-1.5 flex-1 overflow-y-auto max-h-24 custom-scrollbar">
+</div>
+</div>
+<div class="bg-blue-100 border border-blue-400 rounded-xl p-3 shadow-xs text-[11px] flex flex-col">
+<div class="font-bold text-blue-900 border-b border-blue-300 pb-1 mb-2 uppercase flex justify-between items-center">
+<span>Penjagaan Malam (Jaga Malam):</span>
+<i class="fa-solid fa-moon text-blue-600"></i>
+</div>
+<textarea id="jagaMalamTextarea" class="w-full h-24 p-1.5 border border-blue-200 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none bg-blue-50/50 text-blue-950 font-semibold" placeholder="TOHPATI: FARIS & CALVIN..."></textarea>
+</div>
+</div>
+</main>
+</div>
+
+<!-- MODAL FLOATING LOGIN -->
+<div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 no-print hidden">
+<div class="bg-white rounded-2xl max-w-sm w-full shadow-2xl overflow-hidden flex flex-col transform transition-all">
+<div class="px-5 py-4 bg-slate-900 text-white flex justify-between items-center">
+<h3 class="font-bold text-sm flex items-center gap-2">
+<i class="fa-solid fa-lock text-amber-400"></i> Login Sebelum Edit Jadwal
+</h3>
+<button id="btnCloseLoginModal" class="text-slate-400 hover:text-white text-lg">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<form id="loginForm" class="p-5 space-y-4">
+<div>
+<label class="block text-xs font-bold text-slate-600 mb-1">USERNAME</label>
+<div class="relative">
+<i class="fa-solid fa-user absolute left-3 top-2.5 text-xs text-slate-400"></i>
+<input type="text" id="loginUsername" placeholder="Masukkan Username..." required
+class="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none uppercase font-semibold">
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-600 mb-1">PASSWORD</label>
+<div class="relative">
+<i class="fa-solid fa-key absolute left-3 top-2.5 text-xs text-slate-400"></i>
+<input type="password" id="loginPassword" placeholder="Masukkan Password..." required
+class="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none font-semibold">
+</div>
+</div>
+<div id="loginError" class="text-rose-600 text-[11px] font-bold hidden bg-rose-50 border border-rose-200 p-2 rounded-lg text-center">
+Username atau Password Salah!
+</div>
+<button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-md flex items-center justify-center gap-2">
+<i class="fa-solid fa-right-to-bracket"></i> Masuk Sekarang
+</button>
+</form>
+</div>
+</div>
+
+<!-- MODAL PENGATURAN USER BARU -->
+<div id="userModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4 no-print">
+<div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+<div class="px-4 py-3 bg-slate-900 text-white flex justify-between items-center">
+<h3 class="font-bold text-sm flex items-center gap-2">
+<i class="fa-solid fa-user-gear text-emerald-400"></i> Pengaturan Tambah Pengguna
+</h3>
+<button id="btnCloseUserModal" class="text-slate-400 hover:text-white text-lg">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div class="p-4 space-y-4 overflow-y-auto custom-scrollbar flex-1">
+<form id="addUserForm" class="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+<div class="text-xs font-bold text-slate-700">Tambah Pengguna Baru:</div>
+<input type="text" id="newUsername" placeholder="Username Baru..." required
+class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none uppercase">
+<input type="password" id="newPassword" placeholder="Password Baru..." required
+class="w-full px-3 py-1.5 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+<button type="submit" class="w-full py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-lg transition shadow">
++ Tambah Pengguna
+</button>
+</form>
+<div class="border border-slate-200 rounded-xl overflow-hidden">
+<div class="bg-slate-100 px-3 py-1.5 border-b font-bold text-xs text-slate-600">
+Daftar Pengguna Terdaftar
+</div>
+<ul id="userList" class="divide-y divide-slate-100 max-h-48 overflow-y-auto custom-scrollbar">
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="cellModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4 no-print">
+<div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+<div class="px-4 py-3 bg-slate-900 text-white flex justify-between items-center">
+<div>
+<h3 class="font-bold text-sm" id="modalTargetTitle">Edit Slot Shift</h3>
+<p class="text-[11px] text-slate-300" id="modalTargetSubtitle">Pusat - SENIN - Shift Pagi</p>
+</div>
+<button id="btnCloseCellModal" class="text-slate-400 hover:text-white text-lg">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div class="p-4 space-y-3 overflow-y-auto custom-scrollbar flex-1">
+<div class="flex gap-2 items-center bg-slate-100 p-2 rounded-xl border border-slate-200">
+<span class="text-[10px] font-bold text-slate-600 uppercase">Aksi Cepat:</span>
+<button type="button" id="btnCopyCell" class="px-2.5 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-semibold rounded-lg shadow-2xs transition flex items-center gap-1">
+<i class="fa-solid fa-copy"></i> Salin Shift
+</button>
+<button type="button" id="btnPasteCell" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold rounded-lg shadow-2xs transition flex items-center gap-1">
+<i class="fa-solid fa-paste"></i> Tempel Shift
+</button>
+<span id="clipboardStatusInfo" class="text-[10px] text-slate-500 italic ml-auto truncate max-w-[150px]"></span>
+</div>
+<div>
+<div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex justify-between items-center">
+<span>Pegawai Di Shift Ini:</span>
+<span class="text-[9px] text-indigo-600 font-bold bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200">💡 Klik Kanan untuk Warna</span>
+</div>
+<div id="modalActiveChips" class="flex flex-wrap gap-1.5 min-h-[46px] p-2 bg-slate-50 border border-slate-200 rounded-xl relative">
+</div>
+</div>
+<div class="relative">
+<i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-xs text-slate-400"></i>
+<input type="text" id="modalSearchEmp" placeholder="Cari pegawai dari master..."
+class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+</div>
+<div>
+<div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Klik Nama Untuk Tambah:</div>
+<div id="modalEmpPickGrid" class="grid grid-cols-2 gap-1.5 max-h-52 overflow-y-auto custom-scrollbar">
+</div>
+</div>
+</div>
+<div class="px-4 py-3 border-t bg-slate-50 flex justify-end">
+<button id="btnSaveCellModal" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl shadow transition">
+Selesai & Simpan
+</button>
+</div>
+</div>
+</div>
+
+<div id="colorContextMenu" class="fixed z-50 bg-white border border-slate-300 shadow-xl rounded-xl p-1.5 hidden no-print space-y-1 w-36 text-xs">
+<div class="text-[9px] font-bold text-slate-400 uppercase px-2 py-0.5 border-b">Pilih Warna:</div>
+<button onclick="applyContextMenuColor('pink')" class="w-full text-left px-2 py-1 rounded hover:bg-pink-100 text-pink-900 font-bold flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-pink-400 inline-block border"></span> Warna Pink
+</button>
+<button onclick="applyContextMenuColor('blue')" class="w-full text-left px-2 py-1 rounded hover:bg-blue-100 text-blue-900 font-bold flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-blue-400 inline-block border"></span> Warna Biru
+</button>
+<button onclick="applyContextMenuColor('yellow')" class="w-full text-left px-2 py-1 rounded hover:bg-yellow-100 text-yellow-900 font-bold flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-yellow-400 inline-block border"></span> Warna Kuning
+</button>
+<button onclick="applyContextMenuColor('none')" class="w-full text-left px-2 py-1 rounded hover:bg-slate-100 text-slate-700 font-bold flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-full bg-white inline-block border border-slate-400"></span> Tanpa Warna
+</button>
+</div>
+<div id="holidayColorMenu" class="hidden no-print">
+  <div class="text-[9px] font-bold text-slate-400 uppercase px-2 py-1 border-b mb-1">Penanda Hari Libur</div>
+  <button type="button" onclick="window.applyHolidayColor('red')" class="text-red-800"><span class="inline-block w-3 h-3 rounded-sm bg-red-400 border border-red-600 mr-2"></span>Tandai Tanggal Merah</button>
+  <button type="button" onclick="window.applyHolidayColor('none')" class="text-slate-700"><span class="inline-block w-3 h-3 rounded-sm bg-white border border-slate-400 mr-2"></span>Hapus Warna</button>
+  <div class="border-t my-1"></div>
+  <button type="button" onclick="window.toggleHideNamesForDay(true)" class="text-amber-800"><i class="fa-solid fa-eye-slash mr-1.5"></i>Tutup Nama (Efek Kosong)</button>
+  <button type="button" onclick="window.toggleHideNamesForDay(false)" class="text-emerald-800"><i class="fa-solid fa-eye mr-1.5"></i>Tampilkan Nama Kembali</button>
+</div>
+<div id="empModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4 no-print">
+<div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+<div class="px-4 py-3 bg-slate-900 text-white flex justify-between items-center">
+<h3 class="font-bold text-sm flex items-center gap-2">
+<i class="fa-solid fa-users text-amber-400"></i> Master Data Pegawai, Libur Tetap & Daftar Cuti
+</h3>
+<button id="btnCloseEmpModal" class="text-slate-400 hover:text-white text-lg">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div class="p-4 space-y-4 overflow-y-auto custom-scrollbar flex-1">
+<form id="addEmpForm" class="flex gap-2 items-center">
+<input type="text" id="newEmpName" placeholder="Nama pegawai baru..." required
+class="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+<select id="newEmpOffDay" class="px-2 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+<option value="">- Libur Tetap -</option>
+<option value="SENIN">Libur: SENIN</option>
+<option value="SELASA">Libur: SELASA</option>
+<option value="RABU">Libur: RABU</option>
+<option value="KAMIS">Libur: KAMIS</option>
+<option value="JUMAT">Libur: JUMAT</option>
+<option value="SABTU">Libur: SABTU</option>
+<option value="MINGGU">Libur: MINGGU</option>
+</select>
+<button type="submit" class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl transition">
+Tambah
+</button>
+</form>
+<div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+<div class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+<i class="fa-solid fa-plane-departure"></i> Tambah Jadwal Cuti Karyawan
+</div>
+<form id="addLeaveForm" class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+<select id="leaveEmpName" class="px-2 py-1.5 text-xs border border-amber-300 rounded-lg bg-white" required>
+<option value="">- Pilih Pegawai -</option>
+</select>
+<input type="number" id="leaveStart" placeholder="Tgl Mulai (mis: 1)" min="1" max="31" class="px-2 py-1.5 text-xs border border-amber-300 rounded-lg bg-white" required>
+<input type="number" id="leaveEnd" placeholder="Tgl Selesai (mis: 3)" min="1" max="31" class="px-2 py-1.5 text-xs border border-amber-300 rounded-lg bg-white" required>
+<button type="submit" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs rounded-lg transition">
+Simpan Cuti
+</button>
+</form>
+<div id="activeLeaveListContainer" class="space-y-1 pt-1">
+</div>
+</div>
+<div class="border border-slate-200 rounded-xl overflow-hidden">
+<div class="bg-slate-100 px-3 py-1.5 border-b font-bold text-xs text-slate-600 flex justify-between">
+<span>Daftar Pegawai (Terurut Sesuai Abjad)</span>
+<span id="masterEmpCountBadge" class="text-indigo-600 font-extrabold">0</span>
+</div>
+<ul id="masterEmpList" class="divide-y divide-slate-100 max-h-52 overflow-y-auto custom-scrollbar">
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="branchModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4 no-print">
+<div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
+<div class="px-4 py-3 bg-slate-900 text-white flex justify-between items-center">
+<h3 class="font-bold text-sm flex items-center gap-2">
+<i class="fa-solid fa-store text-cyan-400"></i> Kelola Outlet & Warna Header
+</h3>
+<button id="btnCloseBranchModal" class="text-slate-400 hover:text-white text-lg">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<div class="p-4 space-y-4 overflow-y-auto custom-scrollbar flex-1">
+<form id="addBranchForm" class="space-y-2">
+<div class="flex gap-2">
+<input type="text" id="newBranchName" placeholder="Nama outlet baru..." required
+class="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none">
+<select id="newBranchTheme" class="px-2 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:outline-none bg-white">
+<option value="yellow">Kuning</option>
+<option value="pink">Pink</option>
+<option value="cyan">Cyan</option>
+<option value="emerald">Hijau</option>
+<option value="purple">Ungu</option>
+<option value="orange">Oranye</option>
+<option value="blue">Biru</option>
+</select>
+<button type="submit" class="px-3.5 py-2 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-xs rounded-xl transition">
+Tambah
+</button>
+</div>
+<input type="text" id="newBranchHours" placeholder="Jam masuk misal: MASUK JAM 09.00 - 17.00|pink"
+class="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg text-slate-600">
+<p class="text-[10px] text-slate-400">Tips warna jam: tambahkan <code>|pink</code>, <code>|blue</code>, atau <code>|yellow</code> di akhir teks jam.</p>
+</form>
+<div class="border border-slate-200 rounded-xl overflow-hidden">
+<div class="bg-slate-100 px-3 py-1.5 border-b font-bold text-xs text-slate-600">
+Daftar Outlet Aktif
+</div>
+<ul id="masterBranchList" class="divide-y divide-slate-100 max-h-60 overflow-y-auto custom-scrollbar">
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyK-X5hlW07aG_YUq6HBcAxm_IqRDcx_X4-yTJV5YO1pbQ9K8XXSi1CDzgqxoE9hcMF/exec";
+
+// KREDENSIAL PENGGUNA TERDAFTAR (AWAL: KURIS / 12345678)
+const DEFAULT_USERS = [
+  { username: "KURIS", password: "12345678" }
+];
+let users = JSON.parse(localStorage.getItem('grid_shift_users')) || DEFAULT_USERS;
+let currentUser = sessionStorage.getItem('grid_shift_current_user') || null;
+
+const DEFAULT_MONTH = "NOVEMBER";
+let startMondayDate = localStorage.getItem('grid_shift_start_date') || "12";
+function getCalculatedDays() {
+let baseNum = parseInt(startMondayDate) || 12;
+return [
+{ name: "SENIN", date: String(baseNum) },
+{ name: "SELASA", date: String(baseNum + 1) },
+{ name: "RABU", date: String(baseNum + 2) },
+{ name: "KAMIS", date: String(baseNum + 3) },
+{ name: "JUMAT", date: String(baseNum + 4) },
+{ name: "SABTU", date: String(baseNum + 5) },
+{ name: "MINGGU", date: String(baseNum + 6) }
+];
+}
+const DEFAULT_BRANCHES = [
+{ id: 'pusat', name: 'PUSAT', theme: 'yellow', hours: ['MASUK JAM 08.00 - 16.00', 'MASUK JAM 08.30 - 16.30|blue', 'MASUK JAM 09.30 - 17.30|pink', 'MASUK JAM 14.00 - 22.00|yellow'] },
+{ id: 'mcd', name: 'MCD', theme: 'yellow', hours: ['MASUK JAM 07.30 - 15.30|pink', 'MASUK JAM 08.00 - 16.00', 'MASUK JAM 09.30 - 17.30', 'MASUK JAM 14.00 - 22.00|blue'] },
+{ id: 'tohpati', name: 'TOHPATI', theme: 'yellow', hours: ['MASUK JAM 08.00 - 16.00', 'MASUK JAM 10.30 - 18.30|blue', 'MASUK JAM 13.00 - 21.00|pink'] },
+{ id: 'nusa_dua', name: 'NUSA DUA', theme: 'yellow', hours: ['MASUK JAM 08.00 - 16.00', 'MASUK JAM 13.00 - 21.00|pink'] },
+{ id: 'mas', name: 'MAS', theme: 'pink', hours: ['MAS MASUK JAM 09.30 - 17.30|pink'] },
+{ id: 'uluwatu', name: 'ULUWATU', theme: 'pink', hours: ['JIMBARAN MASUK JAM 09.30 - 17.30|pink'] },
+{ id: 'madu', name: 'MADU', theme: 'pink', hours: ['MADU MASUK JAM 09.30 - 17.30|pink'] },
+{ id: 'ib_mantra', name: 'IDA BAGUS MANTRA', theme: 'cyan', hours: ['IDA BAGUS MASUK JAM 09.00 - 17.00|blue'] },
+{ id: 'pitamaha', name: 'PITAMAHA', theme: 'cyan', hours: ['PITAMAHA MASUK JAM 09.00 - 17.00|blue'] },
+{ id: 'braban', name: 'BRABAN', theme: 'cyan', hours: ['BRABAN MASUK JAM 11.00 - 19.00|blue'] },
+{ id: 'nyuh_kuning', name: 'NYUH KUNING', theme: 'cyan', hours: ['NYUH KUNING MASUK JAM 09.00 - 17.00|blue'] },
+{ id: 'sunset', name: 'SUNSET ROAD', theme: 'cyan', hours: ['SUNSET ROAD MASUK JAM 09.00 - 17.00|blue'] }
+];
+const DEFAULT_EMPLOYEES = [
+{ name: "ADIT", offDay: "RABU" }, { name: "AGUS", offDay: "JUMAT" }, { name: "ALDY", offDay: "KAMIS" },
+{ name: "AHMAD", offDay: "KAMIS" }, { name: "ARTHA", offDay: "KAMIS" }, { name: "B JERO", offDay: "SENIN" },
+{ name: "BIAS", offDay: "MINGGU" }, { name: "BIYEL", offDay: "MINGGU" }, { name: "CALVIN", offDay: "RABU" },
+{ name: "DAMAI", offDay: "RABU" }, { name: "DEWA", offDay: "JUMAT" }, { name: "DIAN", offDay: "JUMAT" },
+{ name: "DIKA", offDay: "SELASA" }, { name: "EGA", offDay: "KAMIS" }, { name: "EKA", offDay: "SABTU" },
+{ name: "ERIN", offDay: "SENIN" }, { name: "ESTY", offDay: "MINGGU" }, { name: "FAJAR", offDay: "KAMIS" },
+{ name: "FARIAN", offDay: "RABU" }, { name: "FUAD", offDay: "RABU" }, { name: "HAMID", offDay: "JUMAT" },
+{ name: "ICHSAN", offDay: "SENIN" }, { name: "IMAM", offDay: "KAMIS" }, { name: "INDRA", offDay: "MINGGU" },
+{ name: "KOMANG", offDay: "JUMAT" }, { name: "KRISNA", offDay: "SABTU" }, { name: "MADE", offDay: "MINGGU" },
+{ name: "PUTRA", offDay: "RABU" }, { name: "RATHIH", offDay: "SELASA" }, { name: "RIZAL", offDay: "SENIN" },
+{ name: "SASTRA", offDay: "JUMAT" }, { name: "SISTA", offDay: "SABTU" }, { name: "SOFYAN", offDay: "SELASA" },
+{ name: "SRI", offDay: "SELASA" }, { name: "SURYA", offDay: "SENIN" }, { name: "SYIFA", offDay: "SABTU" },
+{ name: "TARISA", offDay: "SABTU" }, { name: "UCCA", offDay: "SELASA" }, { name: "YAYEH", offDay: "MINGGU" }
+];
+let currentMonth = localStorage.getItem('grid_shift_month') || DEFAULT_MONTH;
+let branches = JSON.parse(localStorage.getItem('grid_shift_branches')) || DEFAULT_BRANCHES;
+let rawEmployees = JSON.parse(localStorage.getItem('grid_shift_employees')) || DEFAULT_EMPLOYEES;
+let employees = rawEmployees.map(emp => {
+if (typeof emp === 'string') return { name: emp, offDay: '' };
+return emp;
+});
+let employeeLeaves = JSON.parse(localStorage.getItem('grid_shift_leaves')) || [];
+let cellClipboard = null;
+let activeExpandedEmpName = null;
+function sortEmployeesAlphabetically() {
+employees.sort((a, b) => a.name.localeCompare(b.name, 'id', { sensitivity: 'base' }));
+}
+sortEmployeesAlphabetically();
+let schedule = JSON.parse(localStorage.getItem('grid_shift_schedule')) || {};
+let holidayColors = JSON.parse(localStorage.getItem('grid_shift_holiday_colors')) || {};
+let hiddenNamesState = JSON.parse(localStorage.getItem('grid_shift_hidden_names')) || {};
+let activeHolidayDay = null;
+let standardSchedule = JSON.parse(localStorage.getItem('grid_shift_standard_schedule')) || null;
+let noteContent = localStorage.getItem('grid_shift_note') || "* SETIAP SENIN ESTI MASUK JAM 08.00\nNOTE: * TUKERAN HARUS KONFIRMASI (IZIN) KE MANAJEMEN";
+let jagaMalamContent = localStorage.getItem('grid_shift_jaga_malam') || "TOHPATI: FARIS & CALVIN\nBUYAN: AHMAD";
+let currentEditingContext = null;
+let activeRightClickedIdx = null;
+const outletsContainer = document.getElementById('outletsContainer');
+const sidebarEmpList = document.getElementById('sidebarEmpList');
+const searchEmpInput = document.getElementById('searchEmpInput');
+const totalEmpBadge = document.getElementById('totalEmpBadge');
+const unassignedCount = document.getElementById('unassignedCount');
+const conflictAlertBox = document.getElementById('conflictAlertBox');
+const conflictCount = document.getElementById('conflictCount');
+const noteTextarea = document.getElementById('noteTextarea');
+const jagaMalamTextarea = document.getElementById('jagaMalamTextarea');
+const monthYearDisplay = document.getElementById('monthYearDisplay');
+const colorContextMenu = document.getElementById('colorContextMenu');
+const allOkToast = document.getElementById('allOkToast');
+
+const syncDot = document.getElementById('syncDot');
+const syncText = document.getElementById('syncText');
+
+function setSyncStatus(status, message) {
+  if (status === 'saving') {
+    syncDot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-ping';
+    syncText.textContent = message || 'Menyimpan ke Google Sheets...';
+  } else if (status === 'success') {
+    syncDot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+    syncText.textContent = message || 'Terhubung ke Google Sheets';
+  } else if (status === 'error') {
+    syncDot.className = 'w-2 h-2 rounded-full bg-rose-500';
+    syncText.textContent = message || 'Gagal tersambung Google Sheets';
+  }
+}
+
+function saveData() {
+sortEmployeesAlphabetically();
+localStorage.setItem('grid_shift_month', currentMonth);
+localStorage.setItem('grid_shift_start_date', startMondayDate);
+localStorage.setItem('grid_shift_branches', JSON.stringify(branches));
+localStorage.setItem('grid_shift_employees', JSON.stringify(employees));
+localStorage.setItem('grid_shift_leaves', JSON.stringify(employeeLeaves));
+localStorage.setItem('grid_shift_schedule', JSON.stringify(schedule));
+localStorage.setItem('grid_shift_holiday_colors', JSON.stringify(holidayColors));
+localStorage.setItem('grid_shift_hidden_names', JSON.stringify(hiddenNamesState));
+localStorage.setItem('grid_shift_note', noteTextarea.value);
+localStorage.setItem('grid_shift_jaga_malam', jagaMalamTextarea.value);
+localStorage.setItem('grid_shift_users', JSON.stringify(users));
+
+const payload = {
+  month: currentMonth,
+  startDate: startMondayDate,
+  branches: branches,
+  employees: employees,
+  leaves: employeeLeaves,
+  schedule: schedule,
+  holidayColors: holidayColors,
+  hiddenNamesState: hiddenNamesState,
+  note: noteTextarea.value,
+  jagaMalam: jagaMalamTextarea.value,
+  standardSchedule: standardSchedule,
+  users: users
+};
+
+setSyncStatus('saving');
+fetch(SCRIPT_URL, {
+  method: "POST",
+  mode: "no-cors",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(payload)
+})
+.then(() => setSyncStatus('success', 'Data tersimpan di Google Sheets'))
+.catch(err => {
+  console.error("Gagal sync:", err);
+  setSyncStatus('error', 'Gagal kirim ke Google Sheets');
+});
+}
+
+async function loadDataFromSheets() {
+  if (!SCRIPT_URL || SCRIPT_URL.includes("GANTI_DENGAN_WEB_APP_URL_ANDA")) {
+    setSyncStatus('error', 'Belum setting Web App URL');
+    return;
+  }
+
+  setSyncStatus('saving', 'Memuat data dari Google Sheets...');
+
+  try {
+    const response = await fetch(SCRIPT_URL);
+    const data = await response.json();
+
+    if (data && Object.keys(data).length > 0) {
+      if (data.month) currentMonth = data.month;
+      if (data.startDate) startMondayDate = data.startDate;
+      if (data.branches) branches = data.branches;
+      if (data.employees) employees = data.employees;
+      if (data.leaves) employeeLeaves = data.leaves;
+      if (data.schedule) schedule = data.schedule;
+      if (data.holidayColors) holidayColors = data.holidayColors;
+      if (data.hiddenNamesState) hiddenNamesState = data.hiddenNamesState;
+      if (data.note !== undefined) {
+        noteContent = data.note;
+        noteTextarea.value = noteContent;
+      }
+      if (data.jagaMalam !== undefined) {
+        jagaMalamContent = data.jagaMalam;
+        jagaMalamTextarea.value = jagaMalamContent;
+      }
+      if (data.standardSchedule) standardSchedule = data.standardSchedule;
+      if (data.users) {
+        users = data.users;
+        localStorage.setItem('grid_shift_users', JSON.stringify(users));
+      }
+
+      monthYearDisplay.textContent = currentMonth;
+      renderOutletsGrid();
+      renderSidebar();
+      renderKasirPanel();
+
+      setSyncStatus('success', 'Data terbaru dimuat');
+    } else {
+      setSyncStatus('success', 'Sheets kosong (Menggunakan data lokal)');
+    }
+  } catch (err) {
+    console.error("Gagal load dari Google Sheets:", err);
+    setSyncStatus('error', 'Gagal memuat (Memakai data lokal)');
+  }
+}
+
+function updateAuthUI() {
+  const btnLoginTrigger = document.getElementById('btnLoginTrigger');
+  const btnLogout = document.getElementById('btnLogout');
+  const btnManageUsers = document.getElementById('btnManageUsers');
+  const activeUserDisplay = document.getElementById('activeUserDisplay');
+
+  if (currentUser) {
+    btnLoginTrigger.classList.add('hidden');
+    btnLogout.classList.remove('hidden');
+    btnManageUsers.classList.remove('hidden');
+    activeUserDisplay.textContent = currentUser;
+  } else {
+    btnLoginTrigger.classList.remove('hidden');
+    btnLogout.classList.add('hidden');
+    btnManageUsers.classList.add('hidden');
+  }
+}
+
+function checkAuthBeforeAction(callback) {
+  if (currentUser) {
+    callback();
+  } else {
+    document.getElementById('loginModal').classList.remove('hidden');
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+monthYearDisplay.textContent = currentMonth;
+noteTextarea.value = noteContent;
+jagaMalamTextarea.value = jagaMalamContent;
+renderOutletsGrid();
+renderSidebar();
+renderKasirPanel();
+setupEventListeners();
+updateAuthUI();
+
+loadDataFromSheets();
+});
+
+window.addEventListener('click', (event) => {
+colorContextMenu.classList.add('hidden');
+const holidayMenu = document.getElementById('holidayColorMenu');
+if (holidayMenu && !holidayMenu.contains(event.target)) holidayMenu.classList.add('hidden');
+});
+
+function isEmployeeOnLeave(empName, dayName) {
+const days = getCalculatedDays();
+const foundDay = days.find(d => d.name === dayName);
+if (!foundDay) return false;
+const dateNum = parseInt(foundDay.date);
+const leave = employeeLeaves.find(l => l.name.toUpperCase() === empName.toUpperCase());
+if (!leave) return false;
+return dateNum >= parseInt(leave.start) && dateNum <= parseInt(leave.end);
+}
+
+function cleanupViolations() {
+let changed = false;
+const DAYS = getCalculatedDays();
+Object.keys(schedule).forEach(bId => {
+const branchObj = schedule[bId] || {};
+Object.keys(branchObj).forEach(shiftKey => {
+const shiftObj = branchObj[shiftKey] || {};
+DAYS.forEach(d => {
+if (shiftObj[d.name]) {
+const originalLen = shiftObj[d.name].length;
+shiftObj[d.name] = shiftObj[d.name].filter(item => {
+const name = typeof item === 'string' ? item : item.n;
+const empObj = employees.find(e => e.name.toUpperCase() === name.toUpperCase());
+const isOff = empObj && empObj.offDay === d.name;
+const isLeave = isEmployeeOnLeave(name, d.name);
+return !(isOff || isLeave);
+});
+if (shiftObj[d.name].length !== originalLen) changed = true;
+}
+});
+});
+});
+if (changed) saveData();
+}
+
+function getDailyAssignmentsMap() {
+const map = {};
+const DAYS = getCalculatedDays();
+Object.keys(schedule).forEach(branchId => {
+const branchObj = schedule[branchId] || {};
+Object.keys(branchObj).forEach(shiftKey => {
+const shiftObj = branchObj[shiftKey] || {};
+DAYS.forEach(d => {
+const empList = shiftObj[d.name] || [];
+empList.forEach(item => {
+const name = typeof item === 'string' ? item : item.n;
+if (!name) return;
+const key = `${d.name}_${name.toUpperCase().trim()}`;
+map[key] = (map[key] || 0) + 1;
+});
+});
+});
+});
+return map;
+}
+
+function getEmployeeWeeklyScheduleStatus(empObj) {
+const empName = empObj.name;
+const DAYS = getCalculatedDays();
+const dailyDetails = [];
+let unassignedDaysCount = 0;
+DAYS.forEach(d => {
+let info = "";
+let isOccupied = false;
+if (empObj.offDay === d.name) {
+info = "LIBUR TETAP";
+isOccupied = true;
+} else if (isEmployeeOnLeave(empName, d.name)) {
+info = "CUTI";
+isOccupied = true;
+} else {
+let assigned = [];
+Object.keys(schedule).forEach(bId => {
+const branchObj = schedule[bId] || {};
+const branchMeta = branches.find(b => b.id === bId);
+const bName = branchMeta ? branchMeta.name : bId;
+['pagi', 'sore'].forEach(shiftKey => {
+const list = branchObj[shiftKey]?.[d.name] || [];
+if (list.some(it => (typeof it === 'string' ? it : it.n).toUpperCase().trim() === empName.toUpperCase())) {
+assigned.push(`${bName} (${shiftKey.toUpperCase()})`);
+}
+});
+});
+if (assigned.length > 0) {
+info = assigned.join(', ');
+isOccupied = true;
+} else {
+info = "KOSONG / BELUM TERJADWAL";
+isOccupied = false;
+unassignedDaysCount++;
+}
+}
+dailyDetails.push({ day: d.name, date: d.date, info, isOccupied });
+});
+const isFullyOK = (unassignedDaysCount === 0);
+return { isFullyOK, unassignedDaysCount, dailyDetails };
+}
+
+function getHolidayKey(day) {
+  return `${currentMonth}_${day.date}_${day.name}`;
+}
+
+function showHolidayColorMenu(dayName, event) {
+  if (!currentUser) {
+    checkAuthBeforeAction(() => showHolidayColorMenu(dayName, event));
+    return;
+  }
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  activeHolidayDay = dayName;
+  const menu = document.getElementById('holidayColorMenu');
+  const x = event && Number.isFinite(event.clientX) ? event.clientX : 20;
+  const y = event && Number.isFinite(event.clientY) ? event.clientY : 20;
+  menu.style.left = `${Math.max(8, Math.min(x, window.innerWidth - 185))}px`;
+  menu.style.top = `${Math.max(8, Math.min(y, window.innerHeight - 150))}px`;
+  menu.classList.remove('hidden');
+}
+
+function applyHolidayColor(color) {
+  if (!activeHolidayDay) {
+    alert('Pilih dahulu nama hari atau tanggal yang ingin ditandai.');
+    return;
+  }
+  const day = getCalculatedDays().find(d => d.name === activeHolidayDay);
+  if (!day) return;
+
+  const key = getHolidayKey(day);
+  if (color === 'red') {
+    holidayColors[key] = 'red';
+  } else {
+    delete holidayColors[key];
+  }
+
+  const menu = document.getElementById('holidayColorMenu');
+  if (menu) menu.classList.add('hidden');
+
+  renderOutletsGrid();
+  saveData();
+  activeHolidayDay = null;
+}
+
+function toggleHideNamesForDay(isHidden) {
+  if (!activeHolidayDay) {
+    alert('Pilih dahulu hari yang ingin diatur tutup namanya.');
+    return;
+  }
+  const day = getCalculatedDays().find(d => d.name === activeHolidayDay);
+  if (!day) return;
+
+  const key = getHolidayKey(day);
+  if (isHidden) {
+    hiddenNamesState[key] = true;
+  } else {
+    delete hiddenNamesState[key];
+  }
+
+  const menu = document.getElementById('holidayColorMenu');
+  if (menu) menu.classList.add('hidden');
+
+  renderOutletsGrid();
+  saveData();
+  activeHolidayDay = null;
+}
+
+window.showHolidayColorMenu = showHolidayColorMenu;
+window.applyHolidayColor = applyHolidayColor;
+window.toggleHideNamesForDay = toggleHideNamesForDay;
+
+function getHolidayCellStyle(day) {
+  return holidayColors[getHolidayKey(day)] === 'red'
+    ? 'background-color:#fecaca !important;color:#991b1b !important;border-color:#ef4444 !important;font-weight:900 !important;'
+    : '';
+}
+
+function renderOutletsGrid() {
+outletsContainer.innerHTML = '';
+const dailyAssignments = getDailyAssignmentsMap();
+const DAYS = getCalculatedDays();
+branches.forEach((branch) => {
+const bId = branch.id;
+if (!schedule[bId]) schedule[bId] = { pagi: {}, sore: {} };
+const card = document.createElement('div');
+card.className = "bg-white border border-slate-300 rounded-xl shadow-xs overflow-hidden sheet-card flex flex-col justify-between";
+const themeColor = branch.theme || 'yellow';
+const headerBgClass = `header-bg-${themeColor}`;
+const dayBgClass = `subday-bg-${themeColor}`;
+const hoursLegendHTML = (branch.hours || []).map(hStr => {
+let text = hStr.replace(/^['"\s]+|['"\s]+$/g, '');
+let colorClass = "";
+if (text.includes('|pink')) {
+text = text.replace('|pink', '').replace(/^['"\s]+|['"\s]+$/g, '');
+colorClass = "bg-pink-200 text-pink-900 border border-pink-300 px-1.5 py-0.5 rounded font-bold inline-block";
+} else if (text.includes('|blue')) {
+text = text.replace('|blue', '').replace(/^['"\s]+|['"\s]+$/g, '');
+colorClass = "bg-blue-200 text-blue-900 border border-blue-300 px-1.5 py-0.5 rounded font-bold inline-block";
+} else if (text.includes('|yellow')) {
+text = text.replace('|yellow', '').replace(/^['"\s]+|['"\s]+$/g, '');
+colorClass = "bg-yellow-200 text-yellow-900 border border-yellow-300 px-1.5 py-0.5 rounded font-bold inline-block";
+} else {
+colorClass = "text-slate-700 font-bold inline-block";
+}
+return `<div class="leading-relaxed flex items-center gap-1.5">• <span class="${colorClass}">${text}</span></div>`;
+}).join('');
+let tableHTML = `
+<div>
+<div class="${headerBgClass} font-black text-center py-1 text-xs border-b uppercase tracking-wider flex justify-between items-center px-2">
+<span class="w-4"></span>
+<span>${branch.name}</span>
+<button onclick="checkAuthBeforeAction(() => editBranchHours('${bId}'))" title="Edit Jam Masuk & Warna Header" class="text-slate-800 hover:text-black no-print text-[10px]">
+<i class="fa-solid fa-gear"></i>
+</button>
+</div>
+<table class="sheet-table">
+<thead>
+<tr class="${dayBgClass} font-bold text-[10px]">
+${DAYS.map(d => `<th onclick="window.showHolidayColorMenu('${d.name}', event)" oncontextmenu="window.showHolidayColorMenu('${d.name}', event)" title="Klik untuk menu libur & tutup nama" style="${getHolidayCellStyle(d)}" class="w-[14.28%] text-center align-middle cursor-pointer">${d.name}</th>`).join('')}
+</tr>
+<tr class="bg-amber-100/60 font-semibold text-[9px] text-slate-700">
+${DAYS.map(d => `<th onclick="window.showHolidayColorMenu('${d.name}', event)" oncontextmenu="window.showHolidayColorMenu('${d.name}', event)" title="Klik untuk menu libur & tutup nama" style="${getHolidayCellStyle(d)}" class="text-center align-middle cursor-pointer">${d.date}</th>`).join('')}
+</tr>
+</thead>
+<tbody>
+<tr>
+${DAYS.map(d => {
+const items = schedule[bId]?.pagi?.[d.name] || [];
+return renderCellSlotHTML(bId, 'pagi', d.name, items, dailyAssignments);
+}).join('')}
+</tr>
+<tr class="bg-slate-200 h-1">
+<td colspan="7" class="p-0 border-y border-slate-300"></td>
+</tr>
+<tr class="bg-yellow-200/90">
+${DAYS.map(d => {
+const items = schedule[bId]?.sore?.[d.name] || [];
+return renderCellSlotHTML(bId, 'sore', d.name, items, dailyAssignments, 'bg-yellow-200/90');
+}).join('')}
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-2 bg-slate-50 border-t border-slate-200 text-[9.5px] font-medium text-slate-600 space-y-1">
+${hoursLegendHTML}
+</div>
+`;
+card.innerHTML = tableHTML;
+outletsContainer.appendChild(card);
+});
+}
+
+function renderCellSlotHTML(branchId, shiftType, dayName, items, dailyAssignments, extraBg = '') {
+  const dayObj = getCalculatedDays().find(d => d.name === dayName);
+  const isHiddenName = dayObj && hiddenNamesState[getHolidayKey(dayObj)] === true;
+
+  const itemsList = items.map(item => {
+    const name = typeof item === 'string' ? item : item.n;
+    const color = typeof item === 'string' ? 'none' : (item.c || 'none');
+    const key = `${dayName}_${name.toUpperCase().trim()}`;
+    const isConflict = dailyAssignments[key] > 1;
+    if (isConflict) {
+      return `<div class="name-badge bg-rose-600 text-white border border-rose-700 animate-pulse"><span>${name}</span></div>`;
+    }
+    let badgeClass = 'badge-none';
+    if (color === 'pink') badgeClass = 'badge-pink';
+    else if (color === 'blue') badgeClass = 'badge-blue';
+    else if (color === 'yellow') badgeClass = 'badge-yellow';
+    
+    if (isHiddenName) {
+      badgeClass += ' hidden-name';
+    }
+    
+    return `<div class="name-badge ${badgeClass}" title="${name}"><span>${name}</span></div>`;
+  }).join('');
+  
+  return `
+  <td class="align-top hover:opacity-80 cursor-pointer transition min-h-[50px] ${extraBg}"
+  onclick="checkAuthBeforeAction(() => openCellEditor('${branchId}', '${shiftType}', '${dayName}'))">
+  <div class="min-h-[48px] flex flex-col justify-start py-0.5">
+  ${itemsList || '<span class="text-[9px] text-slate-300 italic no-print">-</span>'}
+  </div>
+  </td>
+  `;
+}
+
+function renderSidebar() {
+sidebarEmpList.innerHTML = '';
+sortEmployeesAlphabetically();
+const dailyAssignments = getDailyAssignmentsMap();
+const keyword = searchEmpInput.value.toLowerCase().trim();
+let unassignedCountNum = 0;
+let conflictCountNum = 0;
+Object.values(dailyAssignments).forEach(cnt => {
+if (cnt > 1) conflictCountNum++;
+});
+if (conflictCountNum > 0) {
+conflictAlertBox.classList.remove('hidden');
+conflictCount.textContent = conflictCountNum;
+} else {
+conflictAlertBox.classList.add('hidden');
+}
+employees.forEach(empObj => {
+const empName = empObj.name;
+const nameUpper = empName.toUpperCase().trim();
+if (keyword && !empName.toLowerCase().includes(keyword)) return;
+const { isFullyOK, unassignedDaysCount, dailyDetails } = getEmployeeWeeklyScheduleStatus(empObj);
+if (!isFullyOK) unassignedCountNum++;
+let hasConflict = false;
+const DAYS = getCalculatedDays();
+DAYS.forEach(d => {
+if (dailyAssignments[`${d.name}_${nameUpper}`] > 1) hasConflict = true;
+});
+const isExpanded = (activeExpandedEmpName === empName);
+const item = document.createElement('div');
+item.className = `rounded-lg border text-xs overflow-hidden transition ${
+hasConflict
+? 'bg-rose-50 border-rose-300 text-rose-900'
+: !isFullyOK
+? 'bg-blue-50/70 border-blue-200 text-blue-900'
+: 'bg-white border-slate-200 text-slate-700'
+}`;
+let empCardHTML = `
+<div onclick="toggleExpandEmp('${empName}')" class="p-2 flex items-center justify-between cursor-pointer select-none hover:bg-slate-100/60 transition">
+<div class="flex items-center gap-2 overflow-hidden">
+<span class="w-2.5 h-2.5 rounded-full flex-shrink-0 ${hasConflict ? 'bg-rose-600 animate-ping' : !isFullyOK ? 'bg-blue-600' : 'bg-emerald-500'}"></span>
+<div class="truncate">
+<div class="text-[11px] leading-tight font-extrabold flex items-center gap-1">
+<span>${empName}</span>
+<i class="fa-solid ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[9px] text-slate-400"></i>
+</div>
+<div class="text-[9px] text-slate-400 font-medium">Libur: ${empObj.offDay || 'Tidak ada'}</div>
+</div>
+</div>
+<span class="text-[9px] px-1.5 py-0.5 rounded font-black ${
+hasConflict ? 'bg-rose-600 text-white' : !isFullyOK ? 'bg-blue-600 text-white' : 'bg-emerald-100 text-emerald-800'
+}">
+${hasConflict ? 'BENTROK' : !isFullyOK ? 'BELUM' : 'OK'}
+</span>
+</div>
+`;
+if (isExpanded) {
+empCardHTML += `
+<div class="px-2.5 pb-2 pt-1 bg-white border-t border-slate-200 text-[10px] space-y-1">
+<div class="font-bold text-slate-500 uppercase border-b pb-0.5 text-[9px]">Detail Jadwal Senin - Minggu:</div>
+`;
+dailyDetails.forEach(d => {
+let badgeBg = "bg-emerald-50 text-emerald-800 font-bold border border-emerald-200";
+if (d.info === "LIBUR TETAP") badgeBg = "bg-amber-100 text-amber-900 font-bold border border-amber-300";
+else if (d.info === "CUTI") badgeBg = "bg-rose-100 text-rose-900 font-bold border border-rose-300";
+else if (!d.isOccupied) badgeBg = "bg-slate-100 text-slate-400 font-normal italic";
+empCardHTML += `
+<div class="flex justify-between items-center text-[9.5px]">
+<span class="font-semibold text-slate-600">${d.day} (${d.date}):</span>
+<span class="px-1.5 py-0.5 rounded ${badgeBg} truncate max-w-[170px] text-right" title="${d.info}">${d.info}</span>
+</div>
+`;
+});
+empCardHTML += `</div>`;
+}
+item.innerHTML = empCardHTML;
+sidebarEmpList.appendChild(item);
+});
+totalEmpBadge.textContent = employees.length;
+unassignedCount.textContent = unassignedCountNum;
+if (employees.length > 0 && unassignedCountNum === 0 && conflictCountNum === 0) {
+showAllOkToast();
+} else {
+hideAllOkToast();
+}
+}
+
+function toggleExpandEmp(empName) {
+if (activeExpandedEmpName === empName) {
+activeExpandedEmpName = null;
+} else {
+activeExpandedEmpName = empName;
+}
+renderSidebar();
+}
+
+let allOkToastTimeout = null;
+
+function showAllOkToast() {
+  const allOkToast = document.getElementById('allOkToast');
+  if (!allOkToast) return;
+
+  allOkToast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+  allOkToast.classList.add('translate-y-0', 'opacity-100');
+
+  if (allOkToastTimeout) {
+    clearTimeout(allOkToastTimeout);
+  }
+
+  allOkToastTimeout = setTimeout(() => {
+    hideAllOkToast();
+  }, 3000);
+}
+
+function hideAllOkToast() {
+  const allOkToast = document.getElementById('allOkToast');
+  if (!allOkToast) return;
+
+  allOkToast.classList.remove('translate-y-0', 'opacity-100');
+  allOkToast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+}
+
+function renderKasirPanel() {
+const container = document.getElementById('kasirGridList');
+container.innerHTML = `
+<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR TOHPATI</span><span class="font-bold">QODRI / ALDI</span></div>
+<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MCD</span><span class="font-bold">SISTA / YAYEH</span></div>
+<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR NUSA</span><span class="font-bold">DIKA / MADE</span></div>
+<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR BAGUS</span><span class="font-bold">SOFYAN</span></div>
+<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MADU</span><span class="font-bold">KOMANG</span></div>
+<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MAS</span><span class="font-bold">B JERO</span></div>
+`;
+}
+
+function openCellEditor(branchId, shiftType, dayName) {
+currentEditingContext = { branchId, shiftType, dayName };
+const branch = branches.find(b => b.id === branchId);
+document.getElementById('modalTargetTitle').textContent = `Shift ${shiftType.toUpperCase()} - ${branch?.name || ''}`;
+document.getElementById('modalTargetSubtitle').textContent = `Hari ${dayName} • Drag chip untuk ubah posisi. Klik Kanan untuk Ubah Warna.`;
+renderModalContent();
+document.getElementById('cellModal').classList.remove('hidden');
+}
+
+function renderModalContent() {
+if (!currentEditingContext) return;
+const { branchId, shiftType, dayName } = currentEditingContext;
+if (!schedule[branchId]) schedule[branchId] = { pagi: {}, sore: {} };
+if (!schedule[branchId][shiftType]) schedule[branchId][shiftType] = {};
+if (!schedule[branchId][shiftType][dayName]) schedule[branchId][shiftType][dayName] = [];
+const currentList = schedule[branchId][shiftType][dayName];
+const chipsContainer = document.getElementById('modalActiveChips');
+const gridContainer = document.getElementById('modalEmpPickGrid');
+const searchVal = document.getElementById('modalSearchEmp').value.toLowerCase().trim();
+chipsContainer.innerHTML = '';
+if (currentList.length === 0) {
+chipsContainer.innerHTML = '<span class="text-xs text-slate-400 italic">Belum ada pegawai ditugaskan</span>';
+} else {
+currentList.forEach((item, idx) => {
+const name = typeof item === 'string' ? item : item.n;
+const color = typeof item === 'string' ? 'none' : (item.c || 'none');
+let bgBadge = 'bg-white text-slate-800 border-slate-300';
+if (color === 'pink') bgBadge = 'bg-pink-300 text-pink-950 border-pink-400 font-bold';
+if (color === 'blue') bgBadge = 'bg-blue-300 text-blue-950 border-blue-400 font-bold';
+if (color === 'yellow') bgBadge = 'bg-yellow-300 text-yellow-950 border-yellow-400 font-bold';
+const chip = document.createElement('div');
+chip.className = `inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-xl shadow-2xs border select-none cursor-grab active:cursor-grabbing ${bgBadge}`;
+chip.draggable = true;
+chip.dataset.index = idx;
+chip.title = "Drag ke kiri/kanan untuk atur posisi. Klik kanan untuk warna.";
+chip.innerHTML = `
+<i class="fa-solid fa-grip-vertical text-slate-400 text-[10px]"></i>
+<span>${name}</span>
+<button type="button" onclick="removeNameFromCell(${idx})" class="hover:text-rose-600 ml-1 text-xs"><i class="fa-solid fa-xmark"></i></button>
+`;
+chip.addEventListener('dragstart', (e) => {
+e.dataTransfer.setData('text/plain', idx);
+});
+chip.addEventListener('dragover', (e) => {
+e.preventDefault();
+});
+chip.addEventListener('drop', (e) => {
+e.preventDefault();
+const fromIdx = parseInt(e.dataTransfer.getData('text/plain'));
+const toIdx = idx;
+if (!isNaN(fromIdx) && fromIdx !== toIdx) {
+const movedItem = currentList.splice(fromIdx, 1)[0];
+currentList.splice(toIdx, 0, movedItem);
+saveData();
+renderModalContent();
+renderOutletsGrid();
+}
+});
+chip.oncontextmenu = (e) => {
+e.preventDefault();
+e.stopPropagation();
+activeRightClickedIdx = idx;
+colorContextMenu.style.left = `${e.clientX}px`;
+colorContextMenu.style.top = `${e.clientY}px`;
+colorContextMenu.classList.remove('hidden');
+};
+chipsContainer.appendChild(chip);
+});
+}
+gridContainer.innerHTML = '';
+sortEmployeesAlphabetically();
+const dailyAssignments = getDailyAssignmentsMap();
+employees.forEach(empObj => {
+const empName = empObj.name;
+if (searchVal && !empName.toLowerCase().includes(searchVal)) return;
+const isSelected = currentList.some(it => (typeof it === 'string' ? it : it.n) === empName);
+const isOffDay = empObj.offDay === dayName;
+const isLeave = isEmployeeOnLeave(empName, dayName);
+const isRestricted = isOffDay || isLeave;
+const isDouble = !isSelected && !isRestricted && (dailyAssignments[`${dayName}_${empName.toUpperCase()}`] > 0);
+const card = document.createElement('button');
+card.type = 'button';
+if (isRestricted) {
+card.disabled = true;
+const badgeText = isLeave ? 'CUTI' : 'LIBUR';
+card.className = `p-2 rounded-lg border text-left text-xs font-semibold flex items-center justify-between transition bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed opacity-75`;
+card.innerHTML = `
+<div class="truncate">
+<span class="block truncate font-bold">${empName}</span>
+<span class="text-[9px] text-rose-500 font-bold">${badgeText}: Hari ini</span>
+</div>
+<span class="text-[9px] bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-bold">${badgeText}</span>
+`;
+} else {
+card.className = `p-2 rounded-lg border text-left text-xs font-semibold flex items-center justify-between transition ${
+isSelected
+? 'bg-indigo-50 border-indigo-500 text-indigo-900 ring-1 ring-indigo-500'
+: isDouble
+? 'bg-rose-50 border-rose-300 text-rose-800'
+: 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+}`;
+card.innerHTML = `
+<div class="truncate">
+<span class="block truncate font-bold">${empName}</span>
+${empObj.offDay ? `<span class="text-[9px] text-slate-400">Libur Tetap: ${empObj.offDay}</span>` : ''}
+</div>
+${isSelected
+? '<i class="fa-solid fa-check text-indigo-600"></i>'
+: isDouble
+? '<span class="text-[9px] bg-rose-200 text-rose-800 px-1 rounded font-bold">Ada Shift</span>'
+: '<i class="fa-solid fa-plus text-slate-300"></i>'}
+`;
+card.onclick = () => {
+const existingIdx = currentList.findIndex(it => (typeof it === 'string' ? it : it.n) === empName);
+if (existingIdx > -1) {
+currentList.splice(existingIdx, 1);
+} else {
+currentList.push({ n: empName, c: 'none' });
+}
+saveData();
+renderModalContent();
+renderOutletsGrid();
+renderSidebar();
+};
+}
+gridContainer.appendChild(card);
+});
+}
+
+function applyContextMenuColor(chosenColor) {
+if (!currentEditingContext || activeRightClickedIdx === null) return;
+const { branchId, shiftType, dayName } = currentEditingContext;
+const list = schedule[branchId][shiftType][dayName];
+if (list[activeRightClickedIdx]) {
+const name = typeof list[activeRightClickedIdx] === 'string' ? list[activeRightClickedIdx] : list[activeRightClickedIdx].n;
+list[activeRightClickedIdx] = { n: name, c: chosenColor };
+saveData();
+renderModalContent();
+renderOutletsGrid();
+}
+colorContextMenu.classList.add('hidden');
+}
+
+function removeNameFromCell(idx) {
+if (!currentEditingContext) return;
+const { branchId, shiftType, dayName } = currentEditingContext;
+schedule[branchId][shiftType][dayName].splice(idx, 1);
+saveData();
+renderModalContent();
+renderOutletsGrid();
+renderSidebar();
+}
+
+function renderMasterEmpList() {
+sortEmployeesAlphabetically();
+const list = document.getElementById('masterEmpList');
+document.getElementById('masterEmpCountBadge').textContent = employees.length;
+list.innerHTML = '';
+const DAYS = getCalculatedDays();
+employees.forEach((empObj, idx) => {
+const li = document.createElement('li');
+li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50 gap-2';
+li.innerHTML = `
+<div class="flex items-center gap-1.5 w-1/3 truncate">
+<span class="font-bold text-slate-800 truncate">${empObj.name}</span>
+<button onclick="editMasterEmpName(${idx})" title="Edit Nama Pegawai" class="text-slate-400 hover:text-indigo-600 transition px-1">
+<i class="fa-solid fa-pen-to-square"></i>
+</button>
+</div>
+<div class="flex items-center gap-1.5 flex-1 justify-end">
+<select onchange="updateEmpOffDay(${idx}, this.value)" class="text-[11px] px-2 py-1 border border-slate-300 rounded-lg bg-white focus:ring-1 focus:ring-indigo-500">
+<option value="" ${!empObj.offDay ? 'selected' : ''}>Tanpa Libur Tetap</option>
+${DAYS.map(d => `<option value="${d.name}" ${empObj.offDay === d.name ? 'selected' : ''}>Libur Hari ${d.name}</option>`).join('')}
+</select>
+<button onclick="deleteMasterEmp(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1">
+<i class="fa-solid fa-trash-can"></i>
+</button>
+</div>
+`;
+list.appendChild(li);
+});
+const leaveSelect = document.getElementById('leaveEmpName');
+leaveSelect.innerHTML = '<option value="">- Pilih Pegawai -</option>';
+employees.forEach(e => {
+leaveSelect.innerHTML += `<option value="${e.name}">${e.name}</option>`;
+});
+renderActiveLeavesList();
+}
+
+function editMasterEmpName(index) {
+const oldName = employees[index].name;
+const newNameInput = prompt(`Ubah nama pegawai "${oldName}":`, oldName);
+if (newNameInput !== null && newNameInput.trim() !== '') {
+const newName = newNameInput.trim().toUpperCase();
+if (newName === oldName) return;
+if (employees.some((e, i) => i !== index && e.name.toUpperCase() === newName)) {
+alert('Nama pegawai tersebut sudah ada di sistem!');
+return;
+}
+employees[index].name = newName;
+employeeLeaves.forEach(l => {
+if (l.name.toUpperCase() === oldName.toUpperCase()) l.name = newName;
+});
+Object.keys(schedule).forEach(bId => {
+Object.keys(schedule[bId] || {}).forEach(shiftKey => {
+Object.keys(schedule[bId][shiftKey] || {}).forEach(dName => {
+schedule[bId][shiftKey][dName] = schedule[bId][shiftKey][dName].map(item => {
+if (typeof item === 'string') {
+return item.toUpperCase() === oldName.toUpperCase() ? newName : item;
+} else if (item && item.n) {
+if (item.n.toUpperCase() === oldName.toUpperCase()) {
+return { ...item, n: newName };
+}
+}
+return item;
+});
+});
+});
+});
+saveData();
+renderMasterEmpList();
+renderSidebar();
+renderOutletsGrid();
+}
+}
+
+function renderActiveLeavesList() {
+const container = document.getElementById('activeLeaveListContainer');
+container.innerHTML = '';
+if (employeeLeaves.length === 0) {
+container.innerHTML = '<span class="text-[10px] text-slate-500 italic">Belum ada jadwal cuti terdaftar.</span>';
+return;
+}
+employeeLeaves.forEach((leave, idx) => {
+const div = document.createElement('div');
+div.className = "flex items-center justify-between text-[11px] bg-white border border-amber-200 px-2 py-1 rounded-lg";
+div.innerHTML = `
+<span><strong class="text-amber-900">${leave.name}</strong> Cuti Tgl: ${leave.start} s/d ${leave.end}</span>
+<button onclick="removeLeave(${idx})" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>
+`;
+container.appendChild(div);
+});
+}
+
+function removeLeave(idx) {
+employeeLeaves.splice(idx, 1);
+saveData();
+renderActiveLeavesList();
+renderSidebar();
+renderOutletsGrid();
+}
+
+function updateEmpOffDay(index, newOffDay) {
+employees[index].offDay = newOffDay;
+cleanupViolations();
+saveData();
+renderSidebar();
+renderOutletsGrid();
+}
+
+function deleteMasterEmp(index) {
+employees.splice(index, 1);
+saveData();
+renderMasterEmpList();
+renderSidebar();
+renderOutletsGrid();
+}
+
+function renderMasterBranchList() {
+const list = document.getElementById('masterBranchList');
+list.innerHTML = '';
+branches.forEach((b, idx) => {
+const li = document.createElement('li');
+li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50 gap-2';
+li.innerHTML = `
+<div class="flex-1">
+<div class="font-bold text-slate-800">${b.name}</div>
+<div class="text-[10px] text-slate-400">${(b.hours || []).join(' | ')}</div>
+</div>
+<div class="flex items-center gap-2">
+<select onchange="updateBranchTheme(${idx}, this.value)" class="text-[11px] px-2 py-1 border border-slate-300 rounded-lg bg-white focus:ring-1 focus:ring-cyan-500 font-bold">
+<option value="yellow" ${b.theme === 'yellow' ? 'selected' : ''}>Kuning</option>
+<option value="pink" ${b.theme === 'pink' ? 'selected' : ''}>Pink</option>
+<option value="cyan" ${b.theme === 'cyan' ? 'selected' : ''}>Cyan</option>
+<option value="emerald" ${b.theme === 'emerald' ? 'selected' : ''}>Hijau</option>
+<option value="purple" ${b.theme === 'purple' ? 'selected' : ''}>Ungu</option>
+<option value="orange" ${b.theme === 'orange' ? 'selected' : ''}>Oranye</option>
+<option value="blue" ${b.theme === 'blue' ? 'selected' : ''}>Biru</option>
+</select>
+${branches.length > 1 ? `
+<button onclick="deleteMasterBranch(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1">
+<i class="fa-solid fa-trash-can"></i>
+</button>
+` : ''}
+</div>
+`;
+list.appendChild(li);
+});
+}
+
+function updateBranchTheme(index, newTheme) {
+branches[index].theme = newTheme;
+saveData();
+renderOutletsGrid();
+}
+
+function deleteMasterBranch(index) {
+const b = branches[index];
+delete schedule[b.id];
+branches.splice(index, 1);
+saveData();
+renderMasterBranchList();
+renderOutletsGrid();
+renderSidebar();
+}
+
+function editBranchHours(bId) {
+const b = branches.find(item => item.id === bId);
+if (!b) return;
+const currentStr = (b.hours || []).join('; ');
+const newHours = prompt(`Edit Jam Operasional untuk ${b.name} (Gunakan '|pink', '|blue', atau '|yellow' untuk indikator warna, pisahkan dengan ';'):`, currentStr);
+if (newHours !== null) {
+b.hours = newHours.split(';').map(s => s.trim()).filter(Boolean);
+saveData();
+renderOutletsGrid();
+}
+}
+
+function renderUserList() {
+  const userList = document.getElementById('userList');
+  userList.innerHTML = '';
+  users.forEach((u, idx) => {
+    const li = document.createElement('li');
+    li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50';
+    li.innerHTML = `
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-user-shield text-slate-400"></i>
+        <span class="font-bold text-slate-800 uppercase">${u.username}</span>
+      </div>
+      ${users.length > 1 ? `
+        <button onclick="deleteUser(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      ` : '<span class="text-[9px] text-slate-400 italic">Utama</span>'}
+    `;
+    userList.appendChild(li);
+  });
+}
+
+function deleteUser(idx) {
+  if (confirm(`Hapus pengguna "${users[idx].username}"?`)) {
+    users.splice(idx, 1);
+    saveData();
+    renderUserList();
+  }
+}
+
+function showSsToast() {
+const ssToast = document.getElementById('ssToast');
+ssToast.classList.remove('-translate-y-20', 'opacity-0', 'pointer-events-none');
+ssToast.classList.add('translate-y-0', 'opacity-100');
+}
+
+function hideSsToast() {
+const ssToast = document.getElementById('ssToast');
+ssToast.classList.remove('translate-y-0', 'opacity-100');
+ssToast.classList.add('-translate-y-20', 'opacity-0', 'pointer-events-none');
+}
+
+function setupEventListeners() {
+const mainSidebar = document.getElementById('mainSidebar');
+const sidebarCard = document.getElementById('sidebarCard');
+const btnToggleSidebar = document.getElementById('btnToggleSidebarMinimize');
+const sidebarBodyContent = document.getElementById('sidebarBodyContent');
+const sidebarToggleIcon = document.getElementById('sidebarToggleIcon');
+const sidebarTitleText = document.getElementById('sidebarTitleText');
+const totalEmpBadge = document.getElementById('totalEmpBadge');
+let isSidebarMinimized = false;
+
+btnToggleSidebar.onclick = () => {
+isSidebarMinimized = !isSidebarMinimized;
+if (isSidebarMinimized) {
+mainSidebar.className = "w-14 flex-shrink-0 transition-all duration-300 no-print";
+sidebarCard.classList.add('sidebar-minimized-card');
+sidebarBodyContent.classList.add('hidden');
+sidebarTitleText.classList.add('hidden');
+totalEmpBadge.classList.add('hidden');
+sidebarToggleIcon.className = "fa-solid fa-chevron-right";
+btnToggleSidebar.title = "Tampilkan / Maximize Sidebar";
+btnToggleSidebar.setAttribute('aria-label', 'Tampilkan sidebar');
+} else {
+mainSidebar.className = "w-full lg:w-80 flex-shrink-0 transition-all duration-300 no-print";
+sidebarCard.classList.remove('sidebar-minimized-card');
+sidebarBodyContent.classList.remove('hidden');
+sidebarTitleText.classList.remove('hidden');
+totalEmpBadge.classList.remove('hidden');
+sidebarToggleIcon.className = "fa-solid fa-chevron-left";
+btnToggleSidebar.title = "Minimize Sidebar";
+btnToggleSidebar.setAttribute('aria-label', 'Minimize sidebar');
+}
+};
+
+document.getElementById('btnLoginTrigger').onclick = () => {
+  document.getElementById('loginModal').classList.remove('hidden');
+};
+document.getElementById('btnCloseLoginModal').onclick = () => {
+  document.getElementById('loginModal').classList.add('hidden');
+  document.getElementById('loginError').classList.add('hidden');
+};
+
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const uVal = document.getElementById('loginUsername').value.trim().toUpperCase();
+  const pVal = document.getElementById('loginPassword').value.trim();
+  const foundUser = users.find(u => u.username.toUpperCase() === uVal && u.password === pVal);
+  
+  if (foundUser) {
+    currentUser = foundUser.username;
+    sessionStorage.setItem('grid_shift_current_user', currentUser);
+    updateAuthUI();
+    document.getElementById('loginModal').classList.add('hidden');
+    document.getElementById('loginError').classList.add('hidden');
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+  } else {
+    document.getElementById('loginError').classList.remove('hidden');
+  }
+});
+
+document.getElementById('btnLogout').onclick = () => {
+  if (confirm('Apakah Anda yakin ingin Logout?')) {
+    currentUser = null;
+    sessionStorage.removeItem('grid_shift_current_user');
+    updateAuthUI();
+  }
+};
+
+const userModal = document.getElementById('userModal');
+document.getElementById('btnManageUsers').onclick = () => {
+  renderUserList();
+  userModal.classList.remove('hidden');
+};
+document.getElementById('btnCloseUserModal').onclick = () => userModal.classList.add('hidden');
+
+document.getElementById('addUserForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const uName = document.getElementById('newUsername').value.trim().toUpperCase();
+  const uPass = document.getElementById('newPassword').value.trim();
+  if (uName && uPass) {
+    if (users.some(u => u.username.toUpperCase() === uName)) {
+      alert('Username tersebut sudah digunakan!');
+      return;
+    }
+    users.push({ username: uName, password: uPass });
+    saveData();
+    renderUserList();
+    document.getElementById('newUsername').value = '';
+    document.getElementById('newPassword').value = '';
+  }
+});
+
+document.getElementById('btnSaveStandard').onclick = () => {
+checkAuthBeforeAction(() => {
+  if (confirm('Apakah Anda yakin ingin menyimpan data sebagai master jadwal?')) {
+    standardSchedule = JSON.parse(JSON.stringify(schedule));
+    localStorage.setItem('grid_shift_standard_schedule', JSON.stringify(standardSchedule));
+    saveData();
+    alert('Jadwal saat ini berhasil disimpan sebagai Standar Mingguan!');
+  }
+});
+};
+
+document.getElementById('btnLoadStandard').onclick = () => {
+checkAuthBeforeAction(() => {
+  const savedStd = localStorage.getItem('grid_shift_standard_schedule') || (standardSchedule ? JSON.stringify(standardSchedule) : null);
+  if (!savedStd) {
+  alert('Belum ada jadwal standar yang tersimpan. Silakan klik "Simpan Standar" terlebih dahulu.');
+  return;
+  }
+  if (confirm('Muat jadwal standar mingguan? Jadwal saat ini akan ditimpa.')) {
+  standardSchedule = JSON.parse(savedStd);
+  schedule = JSON.parse(JSON.stringify(standardSchedule));
+  saveData();
+  renderOutletsGrid();
+  renderSidebar();
+  alert('Jadwal standar berhasil dimuat!');
+  }
+});
+};
+
+document.getElementById('btnCopyCell').onclick = () => {
+if (!currentEditingContext) return;
+const { branchId, shiftType, dayName } = currentEditingContext;
+const currentList = schedule[branchId]?.[shiftType]?.[dayName] || [];
+cellClipboard = JSON.parse(JSON.stringify(currentList));
+document.getElementById('clipboardStatusInfo').textContent = `Disalin (${cellClipboard.length} pegawai)`;
+};
+
+document.getElementById('btnPasteCell').onclick = () => {
+if (!currentEditingContext) return;
+if (!cellClipboard) {
+alert('Belum ada data shift yang disalin!');
+return;
+}
+const { branchId, shiftType, dayName } = currentEditingContext;
+if (!schedule[branchId]) schedule[branchId] = { pagi: {}, sore: {} };
+if (!schedule[branchId][shiftType]) schedule[branchId][shiftType] = {};
+schedule[branchId][shiftType][dayName] = cellClipboard.filter(item => {
+const name = typeof item === 'string' ? item : item.n;
+const empObj = employees.find(e => e.name.toUpperCase() === name.toUpperCase());
+const isOff = empObj && empObj.offDay === dayName;
+const isLeave = isEmployeeOnLeave(name, dayName);
+return !(isOff || isLeave);
+});
+saveData();
+renderModalContent();
+renderOutletsGrid();
+renderSidebar();
+document.getElementById('clipboardStatusInfo').textContent = 'Berhasil ditempel!';
+};
+
+document.getElementById('btnSetStartDate').onclick = () => {
+checkAuthBeforeAction(() => {
+  const inputDate = prompt('Masukkan Tanggal Awal Hari Senin (misal: 12, 19, 26):', startMondayDate);
+  if (inputDate !== null && inputDate.trim() !== '') {
+  startMondayDate = inputDate.trim();
+  cleanupViolations();
+  saveData();
+  renderOutletsGrid();
+  }
+});
+};
+
+document.getElementById('btnScreenshot').onclick = function() {
+const captureElement = document.getElementById('captureArea');
+const originalScrollY = window.scrollY;
+window.scrollTo(0, 0);
+showSsToast();
+
+const tempStyle = document.createElement('style');
+tempStyle.id = 'ss-temp-fix-style';
+tempStyle.innerHTML = `
+#captureArea {
+  width: 1650px !important;
+  max-width: none !important;
+  background-color: #f8fafc !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+#captureArea * {
+  box-sizing: border-box !important;
+}
+.sheet-table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+  table-layout: fixed !important;
+}
+.sheet-table th, .sheet-table td {
+  border: 1px solid #94a3b8 !important;
+  vertical-align: top !important;
+  text-align: center !important;
+  padding: 4px 2px !important;
+}
+.sheet-table th {
+  padding: 8px 4px !important;
+  font-size: 8px !important;
+  vertical-align: middle !important;
+}
+.sheet-table td > div {
+  min-height: 48px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 3px !important;
+  padding: 2px 0 !important;
+}
+.name-badge {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  width: 94% !important;
+  height: 22px !important;
+  margin: 1px auto !important;
+  padding: 0 4px !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  border-radius: 4px !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important; 
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+.name-badge.hidden-name span {
+  visibility: hidden !important;
+}
+`;
+document.head.appendChild(tempStyle);
+
+setTimeout(() => {
+html2canvas(captureElement, {
+  scale: 2,
+  useCORS: true,
+  logging: false,
+  backgroundColor: '#f8fafc',
+  windowWidth: 1700,
+  scrollY: -window.scrollY
+}).then(canvas => {
+  const link = document.createElement('a');
+  link.download = `Jadwal-Shift-${currentMonth}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+
+  const styleEl = document.getElementById('ss-temp-fix-style');
+  if (styleEl) document.head.removeChild(styleEl);
+  window.scrollTo(0, originalScrollY);
+  setTimeout(() => {
+    hideSsToast();
+  }, 2500);
+}).catch(err => {
+  console.error(err);
+  hideSsToast();
+  const styleEl = document.getElementById('ss-temp-fix-style');
+  if (styleEl) document.head.removeChild(styleEl);
+  window.scrollTo(0, originalScrollY);
+});
+}, 400);
+};
+
+document.getElementById('btnPrevMonth').onclick = () => {
+checkAuthBeforeAction(() => {
+  const months = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
+  let idx = months.indexOf(currentMonth);
+  idx = (idx - 1 + 12) % 12;
+  currentMonth = months[idx];
+  monthYearDisplay.textContent = currentMonth;
+  saveData();
+});
+};
+
+document.getElementById('btnNextMonth').onclick = () => {
+checkAuthBeforeAction(() => {
+  const months = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
+  let idx = months.indexOf(currentMonth);
+  idx = (idx + 1) % 12;
+  currentMonth = months[idx];
+  monthYearDisplay.textContent = currentMonth;
+  saveData();
+});
+};
+
+noteTextarea.addEventListener('change', () => checkAuthBeforeAction(saveData));
+jagaMalamTextarea.addEventListener('change', () => checkAuthBeforeAction(saveData));
+searchEmpInput.addEventListener('input', renderSidebar);
+document.getElementById('modalSearchEmp').addEventListener('input', renderModalContent);
+
+const cellModal = document.getElementById('cellModal');
+document.getElementById('btnCloseCellModal').onclick = () => cellModal.classList.add('hidden');
+document.getElementById('btnSaveCellModal').onclick = () => cellModal.classList.add('hidden');
+
+const empModal = document.getElementById('empModal');
+document.getElementById('btnManageEmp').onclick = () => {
+  checkAuthBeforeAction(() => { renderMasterEmpList(); empModal.classList.remove('hidden'); });
+};
+document.getElementById('btnCloseEmpModal').onclick = () => empModal.classList.add('hidden');
+
+const branchModal = document.getElementById('branchModal');
+document.getElementById('btnManageBranch').onclick = () => {
+  checkAuthBeforeAction(() => { renderMasterBranchList(); branchModal.classList.remove('hidden'); });
+};
+document.getElementById('btnCloseBranchModal').onclick = () => branchModal.classList.add('hidden');
+
+document.getElementById('addEmpForm').addEventListener('submit', (e) => {
+e.preventDefault();
+const nameInput = document.getElementById('newEmpName');
+const offDaySelect = document.getElementById('newEmpOffDay');
+const nameVal = nameInput.value.trim().toUpperCase();
+const offDayVal = offDaySelect.value;
+if (nameVal) {
+if (!employees.some(e => e.name.toUpperCase() === nameVal)) {
+employees.push({ name: nameVal, offDay: offDayVal });
+nameInput.value = '';
+offDaySelect.value = '';
+sortEmployeesAlphabetically();
+saveData();
+renderMasterEmpList();
+renderSidebar();
+renderOutletsGrid();
+} else {
+alert('Nama pegawai sudah ada!');
+}
+}
+});
+
+document.getElementById('addLeaveForm').addEventListener('submit', (e) => {
+e.preventDefault();
+const name = document.getElementById('leaveEmpName').value;
+const start = parseInt(document.getElementById('leaveStart').value);
+const end = parseInt(document.getElementById('leaveEnd').value);
+if (!name) {
+alert('Pilih nama pegawai yang cuti.');
+return;
+}
+if (start > end) {
+alert('Tanggal mulai cuti tidak boleh lebih besar dari tanggal selesai.');
+return;
+}
+employeeLeaves.push({ name, start, end });
+document.getElementById('leaveStart').value = '';
+document.getElementById('leaveEnd').value = '';
+cleanupViolations();
+saveData();
+renderActiveLeavesList();
+renderSidebar();
+renderOutletsGrid();
+});
+
+document.getElementById('addBranchForm').addEventListener('submit', (e) => {
+e.preventDefault();
+const nameInput = document.getElementById('newBranchName');
+const themeSelect = document.getElementById('newBranchTheme');
+const hoursInput = document.getElementById('newBranchHours');
+const valName = nameInput.value.trim().toUpperCase();
+const valTheme = themeSelect.value;
+const valHours = hoursInput.value.trim();
+if (valName) {
+const id = 'outlet_' + Date.now();
+const hoursArr = valHours ? [valHours] : ['MASUK JAM 09.00 - 17.00'];
+branches.push({ id, name: valName, theme: valTheme, hours: hoursArr });
+nameInput.value = '';
+hoursInput.value = '';
+saveData();
+renderMasterBranchList();
+renderOutletsGrid();
+}
+});
+
+document.getElementById('btnClearAll').onclick = () => {
+checkAuthBeforeAction(() => {
+  if (confirm('Apakah Anda ingin mereset jadwal?')) {
+  schedule = {};
+  saveData();
+  renderOutletsGrid();
+  renderSidebar();
+  alert('Seluruh jadwal shift berhasil direset!');
+  }
+});
+};
+}
+</script>
+</body>
+</html>
