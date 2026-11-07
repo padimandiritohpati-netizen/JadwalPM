@@ -12,13 +12,14 @@
 body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 /* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom) */
 /* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom di Desktop) */
+/* TAMPILAN DEFAULT (UNTUK KOMPUTER / LAYAR LEBAR: 3 Kolom) */
 #outletsContainer {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 16px !important;
 }
 
-/* RESPONSIF KHUSUS HP (Layar kecil < 768px menjadi 1 kolom & padding tabel disesuaikan) */
+/* TAMPILAN OTOMATIS UNTUK HP / LAYAR KECIL (< 768px): 1 Kolom ke bawah */
 @media (max-width: 768px) {
   #outletsContainer {
     grid-template-columns: 1fr !important;
@@ -28,7 +29,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   .sheet-table th {
     font-size: 8px !important;
     padding: 4px 1px !important;
-    white-space: normal !important; /* Membolehkan teks membungkus jika terlalu panjang */
+    white-space: normal !important;
     word-break: break-all;
   }
   
