@@ -9,9 +9,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
-/* Styling Kertas Orak-Orek Patokan Libur - Tanpa Scroll, Memanjang Otomatis */
+/* Styling Kertas Orak-Orek Patokan Libur */
 #scratchpadContainer {
-  background: #fefce8; 
+  background: #fefce8; /* Warna kertas kuning muda ala catatan */
   border: 2px dashed #ca8a04;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -42,26 +42,26 @@
 }
 .scratchpad-textarea {
   width: 100%;
-  min-height: 40px !important;
-  height: auto !important;
+  min-height: 140px;
   border: none;
   background: transparent;
-  resize: none !important; /* Mencegah manual resize/scroll */
+  resize: vertical;
   font-size: 10.5px;
   font-family: 'Inter', sans-serif;
   color: #1e293b;
   outline: none;
   line-height: 1.4;
   padding: 2px;
-  overflow: hidden; /* Menghilangkan scrollbar */
 }
 body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+/* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom di Desktop) */
 #outletsContainer {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 16px !important;
 }
 
+/* TAMPILAN OTOMATIS UNTUK HP / LAYAR KECIL (< 768px): 1 Kolom ke bawah */
 @media (max-width: 768px) {
   #outletsContainer {
     grid-template-columns: 1fr !important;
@@ -82,7 +82,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     padding: 0 2px !important;
   }
 }
-
+/* Definisi Warna Header Outlet */
 .header-bg-yellow { background-color: #facc15 !important; border-color: #eab308 !important; color: #0f172a !important; }
 .header-bg-cyan { background-color: #22d3ee !important; border-color: #06b6d4 !important; color: #0f172a !important; }
 .header-bg-pink { background-color: #f472b6 !important; border-color: #ec4899 !important; color: #0f172a !important; }
@@ -91,6 +91,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 .header-bg-orange { background-color: #fb923c !important; border-color: #f97316 !important; color: #0f172a !important; }
 .header-bg-blue { background-color: #60a5fa !important; border-color: #3b82f6 !important; color: #0f172a !important; }
 
+/* Definisi Warna Sub-Hari di bawah Header */
 .subday-bg-yellow { background-color: #fef08a !important; }
 .subday-bg-cyan { background-color: #a5f3fc !important; }
 .subday-bg-pink { background-color: #fbcfe8 !important; }
@@ -98,7 +99,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 .subday-bg-purple { background-color: #e9d5ff !important; }
 .subday-bg-orange { background-color: #ffedd5 !important; }
 .subday-bg-blue { background-color: #bfdbfe !important; }
-
 .sheet-table {
   border-collapse: collapse;
   width: 100%;
@@ -137,6 +137,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   min-height: 50px !important;
 }
 
+/* Badge nama pegawai */
 .name-badge {
   display: flex !important;
   align-items: center !important;
@@ -160,11 +161,27 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   visibility: hidden !important;
 }
 
-.badge-none { color: #1e293b; background-color: transparent; }
-.badge-pink { background-color: #fbcfe8; color: #831843; border: 1px solid #f472b6 !important; }
-.badge-blue { background-color: #bfdbfe; color: #1e3a8a; border: 1px solid #60a5fa !important; }
-.badge-yellow { background-color: #fef08a; color: #713f12; border: 1px solid #facc15 !important; }
+.badge-none {
+  color: #1e293b;
+  background-color: transparent;
+}
+.badge-pink {
+  background-color: #fbcfe8;
+  color: #831843;
+  border: 1px solid #f472b6 !important;
+}
+.badge-blue {
+  background-color: #bfdbfe;
+  color: #1e3a8a;
+  border: 1px solid #60a5fa !important;
+}
+.badge-yellow {
+  background-color: #fef08a;
+  color: #713f12;
+  border: 1px solid #facc15 !important;
+}
 
+/* KHUSUS ATURAN CETAK / PRINT PDF & SCREENSHOT */
 @media print {
   .no-print, header, aside, #syncStatusBadge, #allOkToast, #ssToast, button { 
     display: none !important; 
@@ -222,6 +239,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   }
 }
 
+/* Penanda tanggal merah / hari libur */
 .holiday-red {
   background-color: #fecaca !important;
   color: #991b1b !important;
@@ -278,7 +296,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   <div class="max-w-[1700px] mx-auto px-4 py-2.5 flex justify-between items-center gap-3">
     <div class="flex items-center space-x-3"></div>
     <div class="flex items-center gap-2 flex-wrap">
-      <!-- Tombol Note Diberi Kelas 'hidden' agar hanya muncul saat login -->
+      <!-- TOMBOL NOTE (DITAMBAHKAN CLASS 'hidden' SECARA DEFAULT) -->
       <button id="btnOpenNoteModal" class="px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5 hidden" title="Buka Catatan / Tabel Catatan Libur">
         <i class="fa-solid fa-note-sticky"></i> Note
       </button>
@@ -367,6 +385,7 @@ class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg te
 </div>
 </aside>
 <main id="captureArea" class="flex-1 flex flex-col gap-4 min-w-0 print-full-width bg-slate-50 p-3 rounded-xl">
+<!-- Container Logo & Judul Bulan -->
 <div class="flex flex-col items-center justify-center gap-2 mb-2">  
   <div class="w-full bg-amber-400 border-2 border-amber-500 text-slate-900 text-center py-2 px-4 rounded-xl shadow-sm font-black text-xl uppercase tracking-widest flex items-center justify-between">
     <span class="text-xs font-bold text-slate-700 hidden sm:inline-block">JADWAL PEGAWAI</span>
@@ -409,9 +428,9 @@ class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg te
 </main>
 </div>
 
-<!-- MODAL NOTE (Tanpa Scroll, Otomatis Memanjang) -->
+<!-- MODAL NOTE -->
 <div id="noteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 no-print hidden">
-  <div class="bg-[#fefce8] border-2 border-amber-500 rounded-2xl max-w-3xl w-full shadow-2xl overflow-hidden flex flex-col">
+  <div class="bg-[#fefce8] border-2 border-amber-500 rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col">
     <div class="px-5 py-3 bg-amber-400 text-slate-950 flex justify-between items-center border-b border-amber-500">
       <h3 class="font-black text-xs uppercase tracking-wider flex items-center gap-2">
         <i class="fa-solid fa-table text-amber-900"></i> Catatan Tabel Patokan Libur & Jadwal
@@ -772,6 +791,7 @@ let activeHolidayDay = null;
 let standardSchedule = JSON.parse(localStorage.getItem('grid_shift_standard_schedule')) || null;
 let noteContent = localStorage.getItem('grid_shift_note') || "* SETIAP SENIN ESTI MASUK JAM 08.00\nNOTE: * TUKERAN HARUS KONFIRMASI (IZIN) KE MANAJEMEN";
 
+// Variabel untuk data 7 hari di Note tabel
 let scratchNotes = JSON.parse(localStorage.getItem('grid_shift_scratch_notes')) || ["", "", "", "", "", "", ""];
 
 let jagaMalamContent = localStorage.getItem('grid_shift_jaga_malam') || "TOHPATI: FARIS & CALVIN\nBUYAN: AHMAD";
@@ -904,15 +924,15 @@ async function loadDataFromSheets() {
   }
 }
 
+/* PERBAIKAN: Menambahkan btnOpenNoteModal ke daftar tombol admin */
 function updateAuthUI() {
   const btnLoginTrigger = document.getElementById('btnLoginTrigger');
   const btnLogout = document.getElementById('btnLogout');
   const btnManageUsers = document.getElementById('btnManageUsers');
   const activeUserDisplay = document.getElementById('activeUserDisplay');
   
-  // Daftar tombol admin/edit termasuk tombol Note
   const adminButtons = [
-    document.getElementById('btnOpenNoteModal'),
+    document.getElementById('btnOpenNoteModal'), // <-- Menambahkan tombol note di sini
     document.getElementById('btnSetStartDate'),
     document.getElementById('btnSaveStandard'),
     document.getElementById('btnLoadStandard'),
@@ -1806,16 +1826,13 @@ btnToggleSidebar.setAttribute('aria-label', 'Minimize sidebar');
 }
 };
 
+// Event tombol Note Modal
 const noteModal = document.getElementById('noteModal');
 document.getElementById('btnOpenNoteModal').onclick = () => {
+  // Isi textarea di modal dengan data tersimpan
   for (let i = 1; i <= 7; i++) {
     const el = document.getElementById(`scratchNote${i}`);
-    if (el) {
-      el.value = scratchNotes[i-1] || "";
-      // Atur tinggi otomatis berdasarkan isi teks saat modal dibuka
-      el.style.height = 'auto';
-      el.style.height = (el.scrollHeight) + 'px';
-    }
+    if (el) el.value = scratchNotes[i-1] || "";
   }
   noteModal.classList.remove('hidden');
 };
@@ -1831,14 +1848,6 @@ document.getElementById('btnSaveScratchNotes').onclick = () => {
   noteModal.classList.add('hidden');
   alert('Catatan berhasil disimpan!');
 };
-
-// Auto-expand tinggi textarea secara otomatis saat mengetik
-document.querySelectorAll('.scratchpad-textarea').forEach(textarea => {
-  textarea.addEventListener('input', function() {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 'px';
-  });
-});
 
 document.getElementById('btnLoginTrigger').onclick = () => {
   document.getElementById('loginModal').classList.remove('hidden');
@@ -2168,7 +2177,7 @@ e.preventDefault();
 const nameInput = document.getElementById('newBranchName');
 const themeSelect = document.getElementById('newBranchTheme');
 const hoursInput = document.getElementById('newBranchHours');
-const valName = nameInput.value.trim().toUpperCase();
+const valName = nameInput.value.type.trim().toUpperCase();
 const valTheme = themeSelect.value;
 const valHours = hoursInput.value.trim();
 if (valName) {
