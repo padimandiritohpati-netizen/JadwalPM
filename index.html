@@ -11,7 +11,7 @@
 <style>
 /* Styling Kertas Orak-Orek Patokan Libur */
 #scratchpadContainer {
-  background: #fefce8; /* Warna kertas kuning muda ala catatan */
+  background: #fefce8;
   border: 2px dashed #ca8a04;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -54,27 +54,23 @@
   padding: 2px;
 }
 body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-/* TAMPILAN NORMAL DI LAYAR (Lega, nyaman dibaca, 3 kolom di Desktop) */
 #outletsContainer {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
   gap: 16px !important;
 }
 
-/* TAMPILAN OTOMATIS UNTUK HP / LAYAR KECIL (< 768px): 1 Kolom ke bawah */
 @media (max-width: 768px) {
   #outletsContainer {
     grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
-  
   .sheet-table th {
     font-size: 8px !important;
     padding: 4px 1px !important;
     white-space: normal !important;
     word-break: break-all;
   }
-  
   .name-badge {
     width: 98% !important;
     font-size: 9px !important;
@@ -82,7 +78,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     padding: 0 2px !important;
   }
 }
-/* Definisi Warna Header Outlet */
+
 .header-bg-yellow { background-color: #facc15 !important; border-color: #eab308 !important; color: #0f172a !important; }
 .header-bg-cyan { background-color: #22d3ee !important; border-color: #06b6d4 !important; color: #0f172a !important; }
 .header-bg-pink { background-color: #f472b6 !important; border-color: #ec4899 !important; color: #0f172a !important; }
@@ -91,7 +87,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 .header-bg-orange { background-color: #fb923c !important; border-color: #f97316 !important; color: #0f172a !important; }
 .header-bg-blue { background-color: #60a5fa !important; border-color: #3b82f6 !important; color: #0f172a !important; }
 
-/* Definisi Warna Sub-Hari di bawah Header */
 .subday-bg-yellow { background-color: #fef08a !important; }
 .subday-bg-cyan { background-color: #a5f3fc !important; }
 .subday-bg-pink { background-color: #fbcfe8 !important; }
@@ -99,6 +94,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 .subday-bg-purple { background-color: #e9d5ff !important; }
 .subday-bg-orange { background-color: #ffedd5 !important; }
 .subday-bg-blue { background-color: #bfdbfe !important; }
+
 .sheet-table {
   border-collapse: collapse;
   width: 100%;
@@ -106,7 +102,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   font-size: 11px;
   table-layout: fixed;
 }
-
 .sheet-table th {
   border: 1px solid #94a3b8 !important;
   border-right: 1px solid #94a3b8 !important;
@@ -117,16 +112,13 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   font-size: 9px;
   white-space: nowrap;
 }
-
 .sheet-table td {
   border-right: 1px solid #94a3b8 !important;
   border-bottom: 1px solid #cbd5e1 !important;
 }
-
 .sheet-table th:last-child, .sheet-table td:last-child {
   border-right: 1px solid #94a3b8 !important;
 }
-
 .sheet-table td > div {
   display: flex !important;
   flex-direction: column !important;
@@ -137,7 +129,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   min-height: 50px !important;
 }
 
-/* Badge nama pegawai */
 .name-badge {
   display: flex !important;
   align-items: center !important;
@@ -156,42 +147,22 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   overflow: hidden !important;
   text-overflow: ellipsis !important;
 }
-
 .name-badge.hidden-name span {
   visibility: hidden !important;
 }
+.badge-none { color: #1e293b; background-color: transparent; }
+.badge-pink { background-color: #fbcfe8; color: #831843; border: 1px solid #f472b6 !important; }
+.badge-blue { background-color: #bfdbfe; color: #1e3a8a; border: 1px solid #60a5fa !important; }
+.badge-yellow { background-color: #fef08a; color: #713f12; border: 1px solid #facc15 !important; }
 
-.badge-none {
-  color: #1e293b;
-  background-color: transparent;
-}
-.badge-pink {
-  background-color: #fbcfe8;
-  color: #831843;
-  border: 1px solid #f472b6 !important;
-}
-.badge-blue {
-  background-color: #bfdbfe;
-  color: #1e3a8a;
-  border: 1px solid #60a5fa !important;
-}
-.badge-yellow {
-  background-color: #fef08a;
-  color: #713f12;
-  border: 1px solid #facc15 !important;
-}
-
-/* KHUSUS ATURAN CETAK / PRINT PDF & SCREENSHOT */
 @media print {
   .no-print, header, aside, #syncStatusBadge, #allOkToast, #ssToast, button { 
     display: none !important; 
   }
-
   @page {
     size: A3 landscape;
     margin: 4mm;
   }
-
   html, body {
     width: 100% !important;
     height: 100% !important;
@@ -201,7 +172,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-
   #captureArea {
     width: 100% !important;
     max-width: none !important;
@@ -211,23 +181,19 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
     transform: scale(0.85) !important;
     transform-origin: top center !important;
   }
-
   #outletsContainer {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 8px !important;
   }
-
   .sheet-card { 
     page-break-inside: avoid !important; 
     border: 1px solid #cbd5e1 !important;
     box-shadow: none !important;
   }
-
   .sheet-table th, .sheet-table td {
     padding: 2px !important;
   }
-
   .name-badge {
     display: flex !important;
     align-items: center !important;
@@ -239,7 +205,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   }
 }
 
-/* Penanda tanggal merah / hari libur */
 .holiday-red {
   background-color: #fecaca !important;
   color: #991b1b !important;
@@ -262,7 +227,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col relative">
 
-<!-- Status Indicator Cloud Sync -->
 <div id="syncStatusBadge" class="fixed top-3 left-4 z-50 bg-slate-900/90 text-white text-[11px] px-3 py-1.5 rounded-full shadow-lg flex items-center gap-2 border border-slate-700 no-print">
   <span id="syncDot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
   <span id="syncText" class="font-semibold">Terhubung ke Google Sheets</span>
@@ -270,21 +234,17 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 
 <div id="allOkToast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-500 ease-in-out pointer-events-none">
   <div class="bg-emerald-600 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-emerald-400">
-    <div class="bg-white/20 p-2 rounded-xl text-lg">
-      <i class="fa-solid fa-circle-check"></i>
-    </div>
+    <div class="bg-white/20 p-2 rounded-xl text-lg"><i class="fa-solid fa-circle-check"></i></div>
     <div>
       <h4 class="font-extrabold text-xs uppercase tracking-wider">Jadwal Sempurna!</h4>
-      <p class="text-[11px] text-emerald-100">Semua pegawai sudah terjadwal penuh (Senin-Minggu) & tidak ada bentrok.</p>
+      <p class="text-[11px] text-emerald-100">Semua pegawai sudah terjadwal penuh & tidak ada bentrok.</p>
     </div>
   </div>
 </div>
 
 <div id="ssToast" class="fixed top-6 right-6 z-50 transform -translate-y-20 opacity-0 transition-all duration-300 ease-in-out pointer-events-none">
   <div class="bg-indigo-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 border border-indigo-400">
-    <div class="bg-white/20 p-2 rounded-xl text-lg animate-spin">
-      <i class="fa-solid fa-spinner"></i>
-    </div>
+    <div class="bg-white/20 p-2 rounded-xl text-lg animate-spin"><i class="fa-solid fa-spinner"></i></div>
     <div>
       <h4 class="font-extrabold text-xs uppercase tracking-wider">Merekam Gambaran Jadwal</h4>
       <p class="text-[11px] text-indigo-100">SS BERHASIL MOHON TUNGGU HASIL DOWNLOAD</p>
@@ -296,11 +256,9 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
   <div class="max-w-[1700px] mx-auto px-4 py-2.5 flex justify-between items-center gap-3">
     <div class="flex items-center space-x-3"></div>
     <div class="flex items-center gap-2 flex-wrap">
-      <!-- TOMBOL NOTE (DITAMBAHKAN CLASS 'hidden' SECARA DEFAULT) -->
       <button id="btnOpenNoteModal" class="px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-slate-950 font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5 hidden" title="Buka Catatan / Tabel Catatan Libur">
         <i class="fa-solid fa-note-sticky"></i> Note
       </button>
-
       <button id="btnSetStartDate" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded-lg text-xs shadow transition flex items-center gap-1.5 hidden">
         <i class="fa-solid fa-calendar-days"></i> Tgl 
       </button>
@@ -313,14 +271,12 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
       <button id="btnScreenshot" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow transition flex items-center gap-1.5 hidden">
         <i class="fa-solid fa-camera"></i> SS
       </button>
-
       <button id="btnManageEmp" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 rounded-lg text-xs font-medium transition flex items-center gap-1.5 hidden">
         <i class="fa-solid fa-users text-amber-400"></i> Pegawai & Cuti
       </button>
       <button id="btnManageBranch" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 rounded-lg text-xs font-medium transition flex items-center gap-1.5 hidden">
         <i class="fa-solid fa-store text-cyan-400"></i> Outlet & Header
       </button>
-
       <button id="btnManageUsers" class="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-semibold transition hidden flex items-center gap-1.5">
         <i class="fa-solid fa-user-gear"></i> Setting
       </button>
@@ -330,7 +286,6 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
       <button id="btnLogout" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold transition hidden flex items-center gap-1.5">
         <i class="fa-solid fa-right-from-bracket"></i> Logout (<span id="activeUserDisplay"></span>)
       </button>
-
       <button id="btnClearAll" class="px-3 py-1.5 bg-rose-700 hover:bg-rose-800 text-white rounded-lg text-xs font-semibold transition flex items-center gap-1 hidden">
         <i class="fa-solid fa-rotate-left"></i> Reset
       </button>
@@ -358,7 +313,7 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 </span>
 <span id="unassignedCount" class="text-xs font-black bg-blue-600 text-white px-2 py-0.5 rounded-full">0</span>
 </div>
-<p class="text-[10px] text-blue-700 leading-tight">Berstatus <strong>BELUM</strong> jika masih ada hari (Senin-Minggu) yang kosong di luar libur/cuti.</p>
+<p class="text-[10px] text-blue-700 leading-tight">Berstatus <strong>BELUM</strong> jika masih ada hari yang kosong.</p>
 </div>
 <div id="conflictAlertBox" class="p-2.5 bg-rose-50 border border-rose-300 rounded-lg hidden">
 <div class="flex items-center justify-between mb-1">
@@ -372,20 +327,18 @@ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
 <div class="space-y-1">
 <div class="relative">
 <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-xs text-slate-400"></i>
-<input type="text" id="searchEmpInput" placeholder="Cari nama pegawai..."
-class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+<input type="text" id="searchEmpInput" placeholder="Cari nama pegawai..." class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
 </div>
 </div>
 <div>
-<div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Daftar Pegawai (Klik nama untuk detail):</div>
-<div id="sidebarEmpList" class="space-y-1.5 max-h-[calc(100vh-320px)] overflow-y-auto custom-scrollbar pr-1">
-</div>
+<div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">Daftar Pegawai:</div>
+<div id="sidebarEmpList" class="space-y-1.5 max-h-[calc(100vh-320px)] overflow-y-auto custom-scrollbar pr-1"></div>
 </div>
 </div>
 </div>
 </aside>
+
 <main id="captureArea" class="flex-1 flex flex-col gap-4 min-w-0 print-full-width bg-slate-50 p-3 rounded-xl">
-<!-- Container Logo & Judul Bulan -->
 <div class="flex flex-col items-center justify-center gap-2 mb-2">  
   <div class="w-full bg-amber-400 border-2 border-amber-500 text-slate-900 text-center py-2 px-4 rounded-xl shadow-sm font-black text-xl uppercase tracking-widest flex items-center justify-between">
     <span class="text-xs font-bold text-slate-700 hidden sm:inline-block">JADWAL PEGAWAI</span>
@@ -398,36 +351,34 @@ class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg te
   </div>
 </div>
 
-<div id="outletsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 print-full-width">
-</div>
+<div id="outletsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 print-full-width"></div>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 print-full-width">
-<div class="bg-white border border-slate-400 rounded-xl p-3 shadow-xs font-mono text-[11px]">
-<div class="font-bold text-slate-800 border-b pb-1 mb-2 uppercase flex justify-between items-center">
-<span>Catatan Operasional / Note:</span>
-<i class="fa-solid fa-pen text-slate-400 text-xs no-print"></i>
-</div>
-<textarea id="noteTextarea" disabled class="w-full h-24 p-1.5 border border-slate-200 rounded text-xs focus:ring-1 focus:ring-slate-400 outline-none resize-none bg-slate-100 cursor-not-allowed" placeholder="Tambahkan catatan khusus..."></textarea>
-</div>
-<div class="bg-emerald-100 border border-emerald-400 rounded-xl p-3 shadow-xs text-[11px] flex flex-col">
-<div class="font-bold text-emerald-900 border-b border-emerald-300 pb-1 mb-2 uppercase flex justify-between items-center">
-<span>Penugasan Kasir / Khusus:</span>
-<span class="text-[9px] bg-emerald-200 px-1.5 py-0.5 rounded text-emerald-800 font-bold">Kasir Outlet</span>
-</div>
-<div id="kasirGridList" class="space-y-1.5 flex-1 overflow-y-auto max-h-24 custom-scrollbar">
-</div>
-</div>
-<div class="bg-blue-100 border border-blue-400 rounded-xl p-3 shadow-xs text-[11px] flex flex-col">
-<div class="font-bold text-blue-900 border-b border-blue-300 pb-1 mb-2 uppercase flex justify-between items-center">
-<span>Penjagaan Malam (Jaga Malam):</span>
-<i class="fa-solid fa-moon text-blue-600"></i>
-</div>
-<textarea id="jagaMalamTextarea" disabled class="w-full h-24 p-1.5 border border-blue-200 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none bg-blue-50/50 text-blue-950 font-semibold cursor-not-allowed" placeholder="TOHPATI: FARIS & CALVIN..."></textarea>
-</div>
+<!-- PERBAIKAN: Menambahkan class 'no-print' pada kotak bawah agar tidak ikut tercetak -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 print-full-width no-print">
+  <div class="bg-white border border-slate-400 rounded-xl p-3 shadow-xs font-mono text-[11px]">
+    <div class="font-bold text-slate-800 border-b pb-1 mb-2 uppercase flex justify-between items-center">
+      <span>Catatan Operasional / Note:</span>
+      <i class="fa-solid fa-pen text-slate-400 text-xs"></i>
+    </div>
+    <textarea id="noteTextarea" disabled class="w-full h-24 p-1.5 border border-slate-200 rounded text-xs focus:ring-1 focus:ring-slate-400 outline-none resize-none bg-slate-100 cursor-not-allowed" placeholder="Tambahkan catatan khusus..."></textarea>
+  </div>
+  <div class="bg-emerald-100 border border-emerald-400 rounded-xl p-3 shadow-xs text-[11px] flex flex-col">
+    <div class="font-bold text-emerald-900 border-b border-emerald-300 pb-1 mb-2 uppercase flex justify-between items-center">
+      <span>Penugasan Kasir / Khusus:</span>
+      <span class="text-[9px] bg-emerald-200 px-1.5 py-0.5 rounded text-emerald-800 font-bold">Kasir Outlet</span>
+    </div>
+    <div id="kasirGridList" class="space-y-1.5 flex-1 overflow-y-auto max-h-24 custom-scrollbar"></div>
+  </div>
+  <div class="bg-blue-100 border border-blue-400 rounded-xl p-3 shadow-xs text-[11px] flex flex-col">
+    <div class="font-bold text-blue-900 border-b border-blue-300 pb-1 mb-2 uppercase flex justify-between items-center">
+      <span>Penjagaan Malam (Jaga Malam):</span>
+      <i class="fa-solid fa-moon text-blue-600"></i>
+    </div>
+    <textarea id="jagaMalamTextarea" disabled class="w-full h-24 p-1.5 border border-blue-200 rounded text-xs focus:ring-1 focus:ring-blue-400 outline-none resize-none bg-blue-50/50 text-blue-950 font-semibold cursor-not-allowed" placeholder="TOHPATI: FARIS & CALVIN..."></textarea>
+  </div>
 </div>
 </main>
 </div>
-
 <!-- MODAL NOTE -->
 <div id="noteModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 no-print hidden">
   <div class="bg-[#fefce8] border-2 border-amber-500 rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden flex flex-col">
@@ -618,6 +569,7 @@ Selesai & Simpan
   <button type="button" onclick="window.toggleHideNamesForDay(true)" class="text-amber-800"><i class="fa-solid fa-eye-slash mr-1.5"></i>Tutup Nama (Efek Kosong)</button>
   <button type="button" onclick="window.toggleHideNamesForDay(false)" class="text-emerald-800"><i class="fa-solid fa-eye mr-1.5"></i>Tampilkan Nama Kembali</button>
 </div>
+
 <div id="empModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center z-50 p-4 no-print">
 <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
 <div class="px-4 py-3 bg-slate-900 text-white flex justify-between items-center">
@@ -660,16 +612,14 @@ Simpan Cuti
 </button>
 </form>
 <p class="text-[10px] text-amber-800 italic">💡 Tips: Masukkan tanggal cuti dipisah koma jika lompat-lompat (contoh: <code>10, 11, 13</code>) atau satu angka saja untuk 1 hari (contoh: <code>10</code>).</p>
-<div id="activeLeaveListContainer" class="space-y-1 pt-1">
-</div>
+<div id="activeLeaveListContainer" class="space-y-1 pt-1"></div>
 </div>
 <div class="border border-slate-200 rounded-xl overflow-hidden">
 <div class="bg-slate-100 px-3 py-1.5 border-b font-bold text-xs text-slate-600 flex justify-between">
 <span>Daftar Pegawai (Terurut Sesuai Abjad)</span>
 <span id="masterEmpCountBadge" class="text-indigo-600 font-extrabold">0</span>
 </div>
-<ul id="masterEmpList" class="divide-y divide-slate-100 max-h-52 overflow-y-auto custom-scrollbar">
-</ul>
+<ul id="masterEmpList" class="divide-y divide-slate-100 max-h-52 overflow-y-auto custom-scrollbar"></ul>
 </div>
 </div>
 </div>
@@ -711,8 +661,7 @@ class="w-full px-3 py-1.5 text-xs border border-slate-200 rounded-lg text-slate-
 <div class="bg-slate-100 px-3 py-1.5 border-b font-bold text-xs text-slate-600">
 Daftar Outlet Aktif
 </div>
-<ul id="masterBranchList" class="divide-y divide-slate-100 max-h-60 overflow-y-auto custom-scrollbar">
-</ul>
+<ul id="masterBranchList" class="divide-y divide-slate-100 max-h-60 overflow-y-auto custom-scrollbar"></ul>
 </div>
 </div>
 </div>
@@ -791,12 +740,11 @@ let activeHolidayDay = null;
 let standardSchedule = JSON.parse(localStorage.getItem('grid_shift_standard_schedule')) || null;
 let noteContent = localStorage.getItem('grid_shift_note') || "* SETIAP SENIN ESTI MASUK JAM 08.00\nNOTE: * TUKERAN HARUS KONFIRMASI (IZIN) KE MANAJEMEN";
 
-// Variabel untuk data 7 hari di Note tabel
 let scratchNotes = JSON.parse(localStorage.getItem('grid_shift_scratch_notes')) || ["", "", "", "", "", "", ""];
-
 let jagaMalamContent = localStorage.getItem('grid_shift_jaga_malam') || "TOHPATI: FARIS & CALVIN\nBUYAN: AHMAD";
 let currentEditingContext = null;
 let activeRightClickedIdx = null;
+
 const outletsContainer = document.getElementById('outletsContainer');
 const sidebarEmpList = document.getElementById('sidebarEmpList');
 const searchEmpInput = document.getElementById('searchEmpInput');
@@ -876,13 +824,10 @@ async function loadDataFromSheets() {
     setSyncStatus('error', 'Belum setting Web App URL');
     return;
   }
-
   setSyncStatus('saving', 'Memuat data dari Google Sheets...');
-
   try {
     const response = await fetch(SCRIPT_URL);
     const data = await response.json();
-
     if (data && Object.keys(data).length > 0) {
       if (data.month) currentMonth = data.month;
       if (data.startDate) startMondayDate = data.startDate;
@@ -892,9 +837,7 @@ async function loadDataFromSheets() {
       if (data.schedule) schedule = data.schedule;
       if (data.holidayColors) holidayColors = data.holidayColors;
       if (data.hiddenNamesState) hiddenNamesState = data.hiddenNamesState;
-      if (data.scratchNotes) {
-        scratchNotes = data.scratchNotes;
-      }
+      if (data.scratchNotes) scratchNotes = data.scratchNotes;
       if (data.note !== undefined) {
         noteContent = data.note;
         noteTextarea.value = noteContent;
@@ -908,12 +851,10 @@ async function loadDataFromSheets() {
         users = data.users;
         localStorage.setItem('grid_shift_users', JSON.stringify(users));
       }
-
       monthYearDisplay.textContent = currentMonth;
       renderOutletsGrid();
       renderSidebar();
       renderKasirPanel();
-
       setSyncStatus('success', 'Data terbaru dimuat');
     } else {
       setSyncStatus('success', 'Sheets kosong (Menggunakan data lokal)');
@@ -924,7 +865,6 @@ async function loadDataFromSheets() {
   }
 }
 
-/* PERBAIKAN: Menambahkan btnOpenNoteModal ke daftar tombol admin */
 function updateAuthUI() {
   const btnLoginTrigger = document.getElementById('btnLoginTrigger');
   const btnLogout = document.getElementById('btnLogout');
@@ -932,7 +872,7 @@ function updateAuthUI() {
   const activeUserDisplay = document.getElementById('activeUserDisplay');
   
   const adminButtons = [
-    document.getElementById('btnOpenNoteModal'), // <-- Menambahkan tombol note di sini
+    document.getElementById('btnOpenNoteModal'),
     document.getElementById('btnSetStartDate'),
     document.getElementById('btnSaveStandard'),
     document.getElementById('btnLoadStandard'),
@@ -947,20 +887,15 @@ function updateAuthUI() {
     btnLogout.classList.remove('hidden');
     btnManageUsers.classList.remove('hidden');
     activeUserDisplay.textContent = currentUser;
-    
-    adminButtons.forEach(btn => {
-      if (btn) btn.classList.remove('hidden');
-    });
+    adminButtons.forEach(btn => { if (btn) btn.classList.remove('hidden'); });
   } else {
     btnLoginTrigger.classList.remove('hidden');
     btnLogout.classList.add('hidden');
     btnManageUsers.classList.add('hidden');
-    
-    adminButtons.forEach(btn => {
-      if (btn) btn.classList.add('hidden');
-    });
+    adminButtons.forEach(btn => { if (btn) btn.classList.add('hidden'); });
   }
 }
+
 function checkAuthBeforeAction(callback) {
   if (currentUser) {
     callback();
@@ -970,22 +905,21 @@ function checkAuthBeforeAction(callback) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-monthYearDisplay.textContent = currentMonth;
-noteTextarea.value = noteContent;
-jagaMalamTextarea.value = jagaMalamContent;
-renderOutletsGrid();
-renderSidebar();
-renderKasirPanel();
-setupEventListeners();
-updateAuthUI();
-
-loadDataFromSheets();
+  monthYearDisplay.textContent = currentMonth;
+  noteTextarea.value = noteContent;
+  jagaMalamTextarea.value = jagaMalamContent;
+  renderOutletsGrid();
+  renderSidebar();
+  renderKasirPanel();
+  setupEventListeners();
+  updateAuthUI();
+  loadDataFromSheets();
 });
 
 window.addEventListener('click', (event) => {
-colorContextMenu.classList.add('hidden');
-const holidayMenu = document.getElementById('holidayColorMenu');
-if (holidayMenu && !holidayMenu.contains(event.target)) holidayMenu.classList.add('hidden');
+  colorContextMenu.classList.add('hidden');
+  const holidayMenu = document.getElementById('holidayColorMenu');
+  if (holidayMenu && !holidayMenu.contains(event.target)) holidayMenu.classList.add('hidden');
 });
 
 function isEmployeeOnLeave(empName, dayName) {
@@ -993,16 +927,13 @@ function isEmployeeOnLeave(empName, dayName) {
   const foundDay = days.find(d => d.name === dayName);
   if (!foundDay) return false;
   const dateNum = parseInt(foundDay.date);
-  
   const leaves = employeeLeaves.filter(l => l.name.toUpperCase() === empName.toUpperCase());
   if (!leaves || leaves.length === 0) return false;
-
   for (const leave of leaves) {
     if (leave.dates) {
       const allowedDates = leave.dates.map(d => parseInt(d));
       if (allowedDates.includes(dateNum)) return true;
-    }
-    else if (leave.start !== undefined && leave.end !== undefined) {
+    } else if (leave.start !== undefined && leave.end !== undefined) {
       if (dateNum >= parseInt(leave.start) && dateNum <= parseInt(leave.end)) return true;
     }
   }
@@ -1010,91 +941,91 @@ function isEmployeeOnLeave(empName, dayName) {
 }
 
 function cleanupViolations() {
-let changed = false;
-const DAYS = getCalculatedDays();
-Object.keys(schedule).forEach(bId => {
-const branchObj = schedule[bId] || {};
-Object.keys(branchObj).forEach(shiftKey => {
-const shiftObj = branchObj[shiftKey] || {};
-DAYS.forEach(d => {
-if (shiftObj[d.name]) {
-const originalLen = shiftObj[d.name].length;
-shiftObj[d.name] = shiftObj[d.name].filter(item => {
-const name = typeof item === 'string' ? item : item.n;
-const empObj = employees.find(e => e.name.toUpperCase() === name.toUpperCase());
-const isOff = empObj && empObj.offDay === d.name;
-const isLeave = isEmployeeOnLeave(name, d.name);
-return !(isOff || isLeave);
-});
-if (shiftObj[d.name].length !== originalLen) changed = true;
-}
-});
-});
-});
-if (changed) saveData();
+  let changed = false;
+  const DAYS = getCalculatedDays();
+  Object.keys(schedule).forEach(bId => {
+    const branchObj = schedule[bId] || {};
+    Object.keys(branchObj).forEach(shiftKey => {
+      const shiftObj = branchObj[shiftKey] || {};
+      DAYS.forEach(d => {
+        if (shiftObj[d.name]) {
+          const originalLen = shiftObj[d.name].length;
+          shiftObj[d.name] = shiftObj[d.name].filter(item => {
+            const name = typeof item === 'string' ? item : item.n;
+            const empObj = employees.find(e => e.name.toUpperCase() === name.toUpperCase());
+            const isOff = empObj && empObj.offDay === d.name;
+            const isLeave = isEmployeeOnLeave(name, d.name);
+            return !(isOff || isLeave);
+          });
+          if (shiftObj[d.name].length !== originalLen) changed = true;
+        }
+      });
+    });
+  });
+  if (changed) saveData();
 }
 
 function getDailyAssignmentsMap() {
-const map = {};
-const DAYS = getCalculatedDays();
-Object.keys(schedule).forEach(branchId => {
-const branchObj = schedule[branchId] || {};
-Object.keys(branchObj).forEach(shiftKey => {
-const shiftObj = branchObj[shiftKey] || {};
-DAYS.forEach(d => {
-const empList = shiftObj[d.name] || [];
-empList.forEach(item => {
-const name = typeof item === 'string' ? item : item.n;
-if (!name) return;
-const key = `${d.name}_${name.toUpperCase().trim()}`;
-map[key] = (map[key] || 0) + 1;
-});
-});
-});
-});
-return map;
+  const map = {};
+  const DAYS = getCalculatedDays();
+  Object.keys(schedule).forEach(branchId => {
+    const branchObj = schedule[branchId] || {};
+    Object.keys(branchObj).forEach(shiftKey => {
+      const shiftObj = branchObj[shiftKey] || {};
+      DAYS.forEach(d => {
+        const empList = shiftObj[d.name] || [];
+        empList.forEach(item => {
+          const name = typeof item === 'string' ? item : item.n;
+          if (!name) return;
+          const key = `${d.name}_${name.toUpperCase().trim()}`;
+          map[key] = (map[key] || 0) + 1;
+        });
+      });
+    });
+  });
+  return map;
 }
 
 function getEmployeeWeeklyScheduleStatus(empObj) {
-const empName = empObj.name;
-const DAYS = getCalculatedDays();
-const dailyDetails = [];
-let unassignedDaysCount = 0;
-DAYS.forEach(d => {
-let info = "";
-let isOccupied = false;
-if (empObj.offDay === d.name) {
-info = "LIBUR";
-isOccupied = true;
-} else if (isEmployeeOnLeave(empName, d.name)) {
-info = "CUTI";
-isOccupied = true;
-} else {
-let assigned = [];
-Object.keys(schedule).forEach(bId => {
-const branchObj = schedule[bId] || {};
-const branchMeta = branches.find(b => b.id === bId);
-const bName = branchMeta ? branchMeta.name : bId;
-['pagi', 'sore'].forEach(shiftKey => {
-const list = branchObj[shiftKey]?.[d.name] || [];
-if (list.some(it => (typeof it === 'string' ? it : it.n).toUpperCase().trim() === empName.toUpperCase())) {
-assigned.push(`${bName} (${shiftKey.toUpperCase()})`);
-}
-});
-});
-if (assigned.length > 0) {
-info = assigned.join(', ');
-isOccupied = true;
-} else {
-info = "KOSONG / BELUM TERJADWAL";
-isOccupied = false;
-unassignedDaysCount++;
-}
-}
-dailyDetails.push({ day: d.name, date: d.date, info, isOccupied });
-});
-const isFullyOK = (unassignedDaysCount === 0);
-return { isFullyOK, unassignedDaysCount, dailyDetails };
+  const empName = empObj.name;
+  const DAYS = getCalculatedDays();
+  const dailyDetails = [];
+  let unassignedDaysCount = 0;
+  DAYS.forEach(d => {
+    let info = "";
+    let isOccupied = false;
+    if (empObj.offDay === d.name) {
+      info = "LIBUR";
+      isOccupied = true;
+    } else if (isEmployeeOnLeave(empName, d.name)) {
+      info = "CUTI";
+      isOccupied = true;
+    } else {
+      let assigned = [];
+      Object.keys(schedule).forEach(bId => {
+        const branchObj = schedule[bId] || {};
+        const branchMeta = branches.find(b => b.id === bId);
+        const bName = branchMeta ? branchMeta.name : bId;
+        ['pagi', 'sore'].forEach(shiftKey => {
+          const list = branchObj[shiftKey]?.[d.name] || [];
+          if (list.some(it => (typeof it === 'string' ? it : it.n).toUpperCase().trim() === empName.toUpperCase())) {
+            assigned.push(`${bName} (${shiftKey.toUpperCase()})`);
+          }
+        });
+      });
+      if (assigned.length > 0) {
+        info = assigned.join(', ');
+        isOccupied = true;
+      } else {
+        info = "KOSONG / BELUM TERJADWAL";
+        isOccupied = false;
+        unassignedDaysCount++;
+      }
+    }
+    dailyDetails.push({ day: d.name, date: d.date, info, isOccupied });
+  });
+  const isFullyOK = (unassignedDaysCount === 0);
+  return { isFullyOK, unassignedDaysCount, dailyDetails };
 }
 
 function getHolidayKey(day) {
@@ -1126,17 +1057,14 @@ function applyHolidayColor(color) {
   }
   const day = getCalculatedDays().find(d => d.name === activeHolidayDay);
   if (!day) return;
-
   const key = getHolidayKey(day);
   if (color === 'red') {
     holidayColors[key] = 'red';
   } else {
     delete holidayColors[key];
   }
-
   const menu = document.getElementById('holidayColorMenu');
   if (menu) menu.classList.add('hidden');
-
   renderOutletsGrid();
   saveData();
   activeHolidayDay = null;
@@ -1149,17 +1077,14 @@ function toggleHideNamesForDay(isHidden) {
   }
   const day = getCalculatedDays().find(d => d.name === activeHolidayDay);
   if (!day) return;
-
   const key = getHolidayKey(day);
   if (isHidden) {
     hiddenNamesState[key] = true;
   } else {
     delete hiddenNamesState[key];
   }
-
   const menu = document.getElementById('holidayColorMenu');
   if (menu) menu.classList.add('hidden');
-
   renderOutletsGrid();
   saveData();
   activeHolidayDay = null;
@@ -1176,78 +1101,79 @@ function getHolidayCellStyle(day) {
 }
 
 function renderOutletsGrid() {
-outletsContainer.innerHTML = '';
-const dailyAssignments = getDailyAssignmentsMap();
-const DAYS = getCalculatedDays();
-branches.forEach((branch) => {
-const bId = branch.id;
-if (!schedule[bId]) schedule[bId] = { pagi: {}, sore: {} };
-const card = document.createElement('div');
-card.className = "bg-white border border-slate-300 rounded-xl shadow-xs overflow-hidden sheet-card flex flex-col justify-between";
-const themeColor = branch.theme || 'yellow';
-const headerBgClass = `header-bg-${themeColor}`;
-const dayBgClass = `subday-bg-${themeColor}`;
-const hoursLegendHTML = (branch.hours || []).map(hStr => {
-let text = hStr.replace(/^['"\s]+|['"\s]+$/g, '');
-let colorClass = "";
-if (text.includes('|pink')) {
-text = text.replace('|pink', '').replace(/^['"\s]+|['"\s]+$/g, '');
-colorClass = "bg-pink-200 text-pink-900 border border-pink-300 px-1.5 py-0.5 rounded font-bold inline-block";
-} else if (text.includes('|blue')) {
-text = text.replace('|blue', '').replace(/^['"\s]+|['"\s]+$/g, '');
-colorClass = "bg-blue-200 text-blue-900 border border-blue-300 px-1.5 py-0.5 rounded font-bold inline-block";
-} else if (text.includes('|yellow')) {
-text = text.replace('|yellow', '').replace(/^['"\s]+|['"\s]+$/g, '');
-colorClass = "bg-yellow-200 text-yellow-900 border border-yellow-300 px-1.5 py-0.5 rounded font-bold inline-block";
-} else {
-colorClass = "text-slate-700 font-bold inline-block";
-}
-return `<div class="leading-relaxed flex items-center gap-1.5">• <span class="${colorClass}">${text}</span></div>`;
-}).join('');
-let tableHTML = `
-<div>
-<div class="${headerBgClass} font-black text-center py-1 text-xs border-b uppercase tracking-wider flex justify-between items-center px-2">
-<span class="w-4"></span>
-<span>${branch.name}</span>
-<button onclick="checkAuthBeforeAction(() => editBranchHours('${bId}'))" title="Edit Jam Masuk & Warna Header" class="text-slate-800 hover:text-black no-print text-[10px]">
-<i class="fa-solid fa-gear"></i>
-</button>
-</div>
-<table class="sheet-table">
-<thead>
-<tr class="${dayBgClass} font-bold text-[10px]">
-${DAYS.map(d => `<th onclick="window.showHolidayColorMenu('${d.name}', event)" oncontextmenu="window.showHolidayColorMenu('${d.name}', event)" title="Klik untuk menu libur & tutup nama" style="${getHolidayCellStyle(d)}" class="w-[14.28%] text-center align-middle cursor-pointer">${d.name}</th>`).join('')}
-</tr>
-<tr class="bg-amber-100/60 font-semibold text-[9px] text-slate-700">
-${DAYS.map(d => `<th onclick="window.showHolidayColorMenu('${d.name}', event)" oncontextmenu="window.showHolidayColorMenu('${d.name}', event)" title="Klik untuk menu libur & tutup nama" style="${getHolidayCellStyle(d)}" class="text-center align-middle cursor-pointer">${d.date}</th>`).join('')}
-</tr>
-</thead>
-<tbody>
-<tr>
-${DAYS.map(d => {
-const items = schedule[bId]?.pagi?.[d.name] || [];
-return renderCellSlotHTML(bId, 'pagi', d.name, items, dailyAssignments);
-}).join('')}
-</tr>
-<tr class="bg-slate-200 h-1">
-<td colspan="7" class="p-0 border-y border-slate-300"></td>
-</tr>
-<tr class="bg-yellow-200/90">
-${DAYS.map(d => {
-const items = schedule[bId]?.sore?.[d.name] || [];
-return renderCellSlotHTML(bId, 'sore', d.name, items, dailyAssignments, 'bg-yellow-200/90');
-}).join('')}
-</tr>
-</tbody>
-</table>
-</div>
-<div class="p-2 bg-slate-50 border-t border-slate-200 text-[9.5px] font-medium text-slate-600 space-y-1">
-${hoursLegendHTML}
-</div>
-`;
-card.innerHTML = tableHTML;
-outletsContainer.appendChild(card);
-});
+  outletsContainer.innerHTML = '';
+  const dailyAssignments = getDailyAssignmentsMap();
+  const DAYS = getCalculatedDays();
+  branches.forEach((branch) => {
+    const bId = branch.id;
+    if (!schedule[bId]) schedule[bId] = { pagi: {}, sore: {} };
+    const card = document.createElement('div');
+    card.className = "bg-white border border-slate-300 rounded-xl shadow-xs overflow-hidden sheet-card flex flex-col justify-between";
+    const themeColor = branch.theme || 'yellow';
+    const headerBgClass = `header-bg-${themeColor}`;
+    const dayBgClass = `subday-bg-${themeColor}`;
+    const hoursLegendHTML = (branch.hours || []).map(hStr => {
+      let text = hStr.replace(/^['"\s]+|['"\s]+$/g, '');
+      let colorClass = "";
+      if (text.includes('|pink')) {
+        text = text.replace('|pink', '').replace(/^['"\s]+|['"\s]+$/g, '');
+        colorClass = "bg-pink-200 text-pink-900 border border-pink-300 px-1.5 py-0.5 rounded font-bold inline-block";
+      } else if (text.includes('|blue')) {
+        text = text.replace('|blue', '').replace(/^['"\s]+|['"\s]+$/g, '');
+        colorClass = "bg-blue-200 text-blue-900 border border-blue-300 px-1.5 py-0.5 rounded font-bold inline-block";
+      } else if (text.includes('|yellow')) {
+        text = text.replace('|yellow', '').replace(/^['"\s]+|['"\s]+$/g, '');
+        colorClass = "bg-yellow-200 text-yellow-900 border border-yellow-300 px-1.5 py-0.5 rounded font-bold inline-block";
+      } else {
+        colorClass = "text-slate-700 font-bold inline-block";
+      }
+      return `<div class="leading-relaxed flex items-center gap-1.5">• <span class="${colorClass}">${text}</span></div>`;
+    }).join('');
+
+    let tableHTML = `
+    <div>
+    <div class="${headerBgClass} font-black text-center py-1 text-xs border-b uppercase tracking-wider flex justify-between items-center px-2">
+    <span class="w-4"></span>
+    <span>${branch.name}</span>
+    <button onclick="checkAuthBeforeAction(() => editBranchHours('${bId}'))" title="Edit Jam Masuk & Warna Header" class="text-slate-800 hover:text-black no-print text-[10px]">
+    <i class="fa-solid fa-gear"></i>
+    </button>
+    </div>
+    <table class="sheet-table">
+    <thead>
+    <tr class="${dayBgClass} font-bold text-[10px]">
+    ${DAYS.map(d => `<th onclick="window.showHolidayColorMenu('${d.name}', event)" oncontextmenu="window.showHolidayColorMenu('${d.name}', event)" title="Klik untuk menu libur & tutup nama" style="${getHolidayCellStyle(d)}" class="w-[14.28%] text-center align-middle cursor-pointer">${d.name}</th>`).join('')}
+    </tr>
+    <tr class="bg-amber-100/60 font-semibold text-[9px] text-slate-700">
+    ${DAYS.map(d => `<th onclick="window.showHolidayColorMenu('${d.name}', event)" oncontextmenu="window.showHolidayColorMenu('${d.name}', event)" title="Klik untuk menu libur & tutup nama" style="${getHolidayCellStyle(d)}" class="text-center align-middle cursor-pointer">${d.date}</th>`).join('')}
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    ${DAYS.map(d => {
+      const items = schedule[bId]?.pagi?.[d.name] || [];
+      return renderCellSlotHTML(bId, 'pagi', d.name, items, dailyAssignments);
+    }).join('')}
+    </tr>
+    <tr class="bg-slate-200 h-1">
+    <td colspan="7" class="p-0 border-y border-slate-300"></td>
+    </tr>
+    <tr class="bg-yellow-200/90">
+    ${DAYS.map(d => {
+      const items = schedule[bId]?.sore?.[d.name] || [];
+      return renderCellSlotHTML(bId, 'sore', d.name, items, dailyAssignments, 'bg-yellow-200/90');
+    }).join('')}
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="p-2 bg-slate-50 border-t border-slate-200 text-[9.5px] font-medium text-slate-600 space-y-1">
+    ${hoursLegendHTML}
+    </div>
+    `;
+    card.innerHTML = tableHTML;
+    outletsContainer.appendChild(card);
+  });
 }
 
 function renderCellSlotHTML(branchId, shiftType, dayName, items, dailyAssignments, extraBg = '') {
@@ -1270,7 +1196,6 @@ function renderCellSlotHTML(branchId, shiftType, dayName, items, dailyAssignment
     if (isHiddenName) {
       badgeClass += ' hidden-name';
     }
-    
     return `<div class="name-badge ${badgeClass}" title="${name}"><span>${name}</span></div>`;
   }).join('');
   
@@ -1285,362 +1210,324 @@ function renderCellSlotHTML(branchId, shiftType, dayName, items, dailyAssignment
 }
 
 function renderSidebar() {
-sidebarEmpList.innerHTML = '';
-sortEmployeesAlphabetically();
-const dailyAssignments = getDailyAssignmentsMap();
-const keyword = searchEmpInput.value.toLowerCase().trim();
-let unassignedCountNum = 0;
-let conflictCountNum = 0;
-Object.values(dailyAssignments).forEach(cnt => {
-if (cnt > 1) conflictCountNum++;
-});
-if (conflictCountNum > 0) {
-conflictAlertBox.classList.remove('hidden');
-conflictCount.textContent = conflictCountNum;
-} else {
-conflictAlertBox.classList.add('hidden');
-}
-employees.forEach(empObj => {
-const empName = empObj.name;
-const nameUpper = empName.toUpperCase().trim();
-if (keyword && !empName.toLowerCase().includes(keyword)) return;
-const { isFullyOK, unassignedDaysCount, dailyDetails } = getEmployeeWeeklyScheduleStatus(empObj);
-if (!isFullyOK) unassignedCountNum++;
-let hasConflict = false;
-const DAYS = getCalculatedDays();
-DAYS.forEach(d => {
-if (dailyAssignments[`${d.name}_${nameUpper}`] > 1) hasConflict = true;
-});
-const isExpanded = (activeExpandedEmpName === empName);
-const item = document.createElement('div');
-item.className = `rounded-lg border text-xs overflow-hidden transition ${
-hasConflict
-? 'bg-rose-50 border-rose-300 text-rose-900'
-: !isFullyOK
-? 'bg-blue-50/70 border-blue-200 text-blue-900'
-: 'bg-white border-slate-200 text-slate-700'
-}`;
-let empCardHTML = `
-<div onclick="toggleExpandEmp('${empName}')" class="p-2 flex items-center justify-between cursor-pointer select-none hover:bg-slate-100/60 transition">
-<div class="flex items-center gap-2 overflow-hidden">
-<span class="w-2.5 h-2.5 rounded-full flex-shrink-0 ${hasConflict ? 'bg-rose-600 animate-ping' : !isFullyOK ? 'bg-blue-600' : 'bg-emerald-500'}"></span>
-<div class="truncate">
-<div class="text-[11px] leading-tight font-extrabold flex items-center gap-1">
-<span>${empName}</span>
-<i class="fa-solid ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[9px] text-slate-400"></i>
-</div>
-<div class="text-[9px] text-slate-400 font-medium">Libur: ${empObj.offDay || 'Tidak ada'}</div>
-</div>
-</div>
-<span class="text-[9px] px-1.5 py-0.5 rounded font-black ${
-hasConflict ? 'bg-rose-600 text-white' : !isFullyOK ? 'bg-blue-600 text-white' : 'bg-emerald-100 text-emerald-800'
-}">
-${hasConflict ? 'BENTROK' : !isFullyOK ? 'BELUM' : 'OK'}
-</span>
-</div>
-`;
-if (isExpanded) {
-empCardHTML += `
-<div class="px-2.5 pb-2 pt-1 bg-white border-t border-slate-200 text-[10px] space-y-1">
-<div class="font-bold text-slate-500 uppercase border-b pb-0.5 text-[9px]">Detail Jadwal Senin - Minggu:</div>
-`;
-dailyDetails.forEach(d => {
-let badgeBg = "bg-emerald-50 text-emerald-800 font-bold border border-emerald-200";
-if (d.info === "LIBUR") badgeBg = "bg-amber-100 text-amber-900 font-bold border border-amber-300";
-else if (d.info === "CUTI") badgeBg = "bg-rose-100 text-rose-900 font-bold border border-rose-300";
-else if (!d.isOccupied) badgeBg = "bg-slate-100 text-slate-400 font-normal italic";
-empCardHTML += `
-<div class="flex justify-between items-center text-[9.5px]">
-<span class="font-semibold text-slate-600">${d.day} (${d.date}):</span>
-<span class="px-1.5 py-0.5 rounded ${badgeBg} truncate max-w-[170px] text-right" title="${d.info}">${d.info}</span>
-</div>
-`;
-});
-empCardHTML += `</div>`;
-}
-item.innerHTML = empCardHTML;
-sidebarEmpList.appendChild(item);
-});
-totalEmpBadge.textContent = employees.length;
-unassignedCount.textContent = unassignedCountNum;
-if (employees.length > 0 && unassignedCountNum === 0 && conflictCountNum === 0) {
-showAllOkToast();
-} else {
-hideAllOkToast();
-}
+  sidebarEmpList.innerHTML = '';
+  sortEmployeesAlphabetically();
+  const dailyAssignments = getDailyAssignmentsMap();
+  const keyword = searchEmpInput.value.toLowerCase().trim();
+  let unassignedCountNum = 0;
+  let conflictCountNum = 0;
+  Object.values(dailyAssignments).forEach(cnt => {
+    if (cnt > 1) conflictCountNum++;
+  });
+  if (conflictCountNum > 0) {
+    conflictAlertBox.classList.remove('hidden');
+    conflictCount.textContent = conflictCountNum;
+  } else {
+    conflictAlertBox.classList.add('hidden');
+  }
+  employees.forEach(empObj => {
+    const empName = empObj.name;
+    const nameUpper = empName.toUpperCase().trim();
+    if (keyword && !empName.toLowerCase().includes(keyword)) return;
+    const { isFullyOK, unassignedDaysCount, dailyDetails } = getEmployeeWeeklyScheduleStatus(empObj);
+    if (!isFullyOK) unassignedCountNum++;
+    let hasConflict = false;
+    const DAYS = getCalculatedDays();
+    DAYS.forEach(d => {
+      if (dailyAssignments[`${d.name}_${nameUpper}`] > 1) hasConflict = true;
+    });
+    const isExpanded = (activeExpandedEmpName === empName);
+    const item = document.createElement('div');
+    item.className = `rounded-lg border text-xs overflow-hidden transition ${
+      hasConflict
+      ? 'bg-rose-50 border-rose-300 text-rose-900'
+      : !isFullyOK
+      ? 'bg-blue-50/70 border-blue-200 text-blue-900'
+      : 'bg-white border-slate-200 text-slate-700'
+    }`;
+    let empCardHTML = `
+    <div onclick="toggleExpandEmp('${empName}')" class="p-2 flex items-center justify-between cursor-pointer select-none hover:bg-slate-100/60 transition">
+    <div class="flex items-center gap-2 overflow-hidden">
+    <span class="w-2.5 h-2.5 rounded-full flex-shrink-0 ${hasConflict ? 'bg-rose-600 animate-ping' : !isFullyOK ? 'bg-blue-600' : 'bg-emerald-500'}"></span>
+    <div class="truncate">
+    <div class="text-[11px] leading-tight font-extrabold flex items-center gap-1">
+    <span>${empName}</span>
+    <i class="fa-solid ${isExpanded ? 'fa-chevron-up' : 'fa-chevron-down'} text-[9px] text-slate-400"></i>
+    </div>
+    <div class="text-[9px] text-slate-400 font-medium">Libur: ${empObj.offDay || 'Tidak ada'}</div>
+    </div>
+    </div>
+    <span class="text-[9px] px-1.5 py-0.5 rounded font-black ${
+      hasConflict ? 'bg-rose-600 text-white' : !isFullyOK ? 'bg-blue-600 text-white' : 'bg-emerald-100 text-emerald-800'
+    }">
+    ${hasConflict ? 'BENTROK' : !isFullyOK ? 'BELUM' : 'OK'}
+    </span>
+    </div>
+    `;
+    if (isExpanded) {
+      empCardHTML += `
+      <div class="px-2.5 pb-2 pt-1 bg-white border-t border-slate-200 text-[10px] space-y-1">
+      <div class="font-bold text-slate-500 uppercase border-b pb-0.5 text-[9px]">Detail Jadwal Senin - Minggu:</div>
+      `;
+      dailyDetails.forEach(d => {
+        let badgeBg = "bg-emerald-50 text-emerald-800 font-bold border border-emerald-200";
+        if (d.info === "LIBUR") badgeBg = "bg-amber-100 text-amber-900 font-bold border border-amber-300";
+        else if (d.info === "CUTI") badgeBg = "bg-rose-100 text-rose-900 font-bold border border-rose-300";
+        else if (!d.isOccupied) badgeBg = "bg-slate-100 text-slate-400 font-normal italic";
+        empCardHTML += `
+        <div class="flex justify-between items-center text-[9.5px]">
+        <span class="font-semibold text-slate-600">${d.day} (${d.date}):</span>
+        <span class="px-1.5 py-0.5 rounded ${badgeBg} truncate max-w-[170px] text-right" title="${d.info}">${d.info}</span>
+        </div>
+        `;
+      });
+      empCardHTML += `</div>`;
+    }
+    item.innerHTML = empCardHTML;
+    sidebarEmpList.appendChild(item);
+  });
+  totalEmpBadge.textContent = employees.length;
+  unassignedCount.textContent = unassignedCountNum;
+  if (employees.length > 0 && unassignedCountNum === 0 && conflictCountNum === 0) {
+    showAllOkToast();
+  } else {
+    hideAllOkToast();
+  }
 }
 
 function toggleExpandEmp(empName) {
-if (activeExpandedEmpName === empName) {
-activeExpandedEmpName = null;
-} else {
-activeExpandedEmpName = empName;
-}
-renderSidebar();
+  if (activeExpandedEmpName === empName) {
+    activeExpandedEmpName = null;
+  } else {
+    activeExpandedEmpName = empName;
+  }
+  renderSidebar();
 }
 
 let allOkToastTimeout = null;
-
 function showAllOkToast() {
   const allOkToast = document.getElementById('allOkToast');
   if (!allOkToast) return;
-
   allOkToast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
   allOkToast.classList.add('translate-y-0', 'opacity-100');
-
-  if (allOkToastTimeout) {
-    clearTimeout(allOkToastTimeout);
-  }
-
-  allOkToastTimeout = setTimeout(() => {
-    hideAllOkToast();
-  }, 3000);
+  if (allOkToastTimeout) clearTimeout(allOkToastTimeout);
+  allOkToastTimeout = setTimeout(() => { hideAllOkToast(); }, 3000);
 }
 
 function hideAllOkToast() {
   const allOkToast = document.getElementById('allOkToast');
   if (!allOkToast) return;
-
   allOkToast.classList.remove('translate-y-0', 'opacity-100');
   allOkToast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
 }
 
 function renderKasirPanel() {
-const container = document.getElementById('kasirGridList');
-container.innerHTML = `
-<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR TOHPATI</span><span class="font-bold">QODRI / ALDI</span></div>
-<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MCD</span><span class="font-bold">SISTA / YAYEH</span></div>
-<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR NUSA</span><span class="font-bold">DIKA / MADE</span></div>
-<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR BAGUS</span><span class="font-bold">SOFYAN</span></div>
-<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MADU</span><span class="font-bold">KOMANG</span></div>
-<div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MAS</span><span class="font-bold">B JERO</span></div>
-`;
+  const container = document.getElementById('kasirGridList');
+  container.innerHTML = `
+  <div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR TOHPATI</span><span class="font-bold">QODRI / ALDI</span></div>
+  <div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MCD</span><span class="font-bold">SISTA / YAYEH</span></div>
+  <div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR NUSA</span><span class="font-bold">DIKA / MADE</span></div>
+  <div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR BAGUS</span><span class="font-bold">SOFYAN</span></div>
+  <div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MADU</span><span class="font-bold">KOMANG</span></div>
+  <div class="flex justify-between border-b border-emerald-200 pb-1"><span>KASIR MAS</span><span class="font-bold">B JERO</span></div>
+  `;
 }
 
 function openCellEditor(branchId, shiftType, dayName) {
-currentEditingContext = { branchId, shiftType, dayName };
-const branch = branches.find(b => b.id === branchId);
-document.getElementById('modalTargetTitle').textContent = `Shift ${shiftType.toUpperCase()} - ${branch?.name || ''}`;
-document.getElementById('modalTargetSubtitle').textContent = `Hari ${dayName} • Drag chip untuk ubah posisi. Klik Kanan untuk Ubah Warna.`;
-renderModalContent();
-document.getElementById('cellModal').classList.remove('hidden');
+  currentEditingContext = { branchId, shiftType, dayName };
+  const branch = branches.find(b => b.id === branchId);
+  document.getElementById('modalTargetTitle').textContent = `Shift ${shiftType.toUpperCase()} - ${branch?.name || ''}`;
+  document.getElementById('modalTargetSubtitle').textContent = `Hari ${dayName} • Drag chip untuk ubah posisi. Klik Kanan untuk Ubah Warna.`;
+  renderModalContent();
+  document.getElementById('cellModal').classList.remove('hidden');
 }
 
 function renderModalContent() {
-if (!currentEditingContext) return;
-const { branchId, shiftType, dayName } = currentEditingContext;
-if (!schedule[branchId]) schedule[branchId] = { pagi: {}, sore: {} };
-if (!schedule[branchId][shiftType]) schedule[branchId][shiftType] = {};
-if (!schedule[branchId][shiftType][dayName]) schedule[branchId][shiftType][dayName] = [];
-const currentList = schedule[branchId][shiftType][dayName];
-const chipsContainer = document.getElementById('modalActiveChips');
-const gridContainer = document.getElementById('modalEmpPickGrid');
-const searchVal = document.getElementById('modalSearchEmp').value.toLowerCase().trim();
-chipsContainer.innerHTML = '';
-if (currentList.length === 0) {
-chipsContainer.innerHTML = '<span class="text-xs text-slate-400 italic">Belum ada pegawai ditugaskan</span>';
-} else {
-currentList.forEach((item, idx) => {
-const name = typeof item === 'string' ? item : item.n;
-const color = typeof item === 'string' ? 'none' : (item.c || 'none');
-let bgBadge = 'bg-white text-slate-800 border-slate-300';
-if (color === 'pink') bgBadge = 'bg-pink-300 text-pink-950 border-pink-400 font-bold';
-if (color === 'blue') bgBadge = 'bg-blue-300 text-blue-950 border-blue-400 font-bold';
-if (color === 'yellow') bgBadge = 'bg-yellow-300 text-yellow-950 border-yellow-400 font-bold';
-const chip = document.createElement('div');
-chip.className = `inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-xl shadow-2xs border select-none cursor-grab active:cursor-grabbing ${bgBadge}`;
-chip.draggable = true;
-chip.dataset.index = idx;
-chip.title = "Drag ke kiri/kanan untuk atur posisi. Klik kanan untuk warna.";
-chip.innerHTML = `
-<i class="fa-solid fa-grip-vertical text-slate-400 text-[10px]"></i>
-<span>${name}</span>
-<button type="button" onclick="removeNameFromCell(${idx})" class="hover:text-rose-600 ml-1 text-xs"><i class="fa-solid fa-xmark"></i></button>
-`;
-chip.addEventListener('dragstart', (e) => {
-e.dataTransfer.setData('text/plain', idx);
-});
-chip.addEventListener('dragover', (e) => {
-e.preventDefault();
-});
-chip.addEventListener('drop', (e) => {
-e.preventDefault();
-const fromIdx = parseInt(e.dataTransfer.getData('text/plain'));
-const toIdx = idx;
-if (!isNaN(fromIdx) && fromIdx !== toIdx) {
-const movedItem = currentList.splice(fromIdx, 1)[0];
-currentList.splice(toIdx, 0, movedItem);
-saveData();
-renderModalContent();
-renderOutletsGrid();
-}
-});
-chip.oncontextmenu = (e) => {
-e.preventDefault();
-e.stopPropagation();
-activeRightClickedIdx = idx;
-colorContextMenu.style.left = `${e.clientX}px`;
-colorContextMenu.style.top = `${e.clientY}px`;
-colorContextMenu.classList.remove('hidden');
-};
-chipsContainer.appendChild(chip);
-});
-}
-gridContainer.innerHTML = '';
-sortEmployeesAlphabetically();
-const dailyAssignments = getDailyAssignmentsMap();
-employees.forEach(empObj => {
-const empName = empObj.name;
-if (searchVal && !empName.toLowerCase().includes(searchVal)) return;
-const isSelected = currentList.some(it => (typeof it === 'string' ? it : it.n) === empName);
-const isOffDay = empObj.offDay === dayName;
-const isLeave = isEmployeeOnLeave(empName, dayName);
-const isRestricted = isOffDay || isLeave;
-const isDouble = !isSelected && !isRestricted && (dailyAssignments[`${dayName}_${empName.toUpperCase()}`] > 0);
-const card = document.createElement('button');
-card.type = 'button';
-if (isRestricted) {
-card.disabled = true;
-const badgeText = isLeave ? 'CUTI' : 'LIBUR';
-card.className = `p-2 rounded-lg border text-left text-xs font-semibold flex items-center justify-between transition bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed opacity-75`;
-card.innerHTML = `
-<div class="truncate">
-<span class="block truncate font-bold">${empName}</span>
-<span class="text-[9px] text-rose-500 font-bold">${badgeText}: Hari ini</span>
-</div>
-<span class="text-[9px] bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-bold">${badgeText}</span>
-`;
-} else {
-card.className = `p-2 rounded-lg border text-left text-xs font-semibold flex items-center justify-between transition ${
-isSelected
-? 'bg-indigo-50 border-indigo-500 text-indigo-900 ring-1 ring-indigo-500'
-: isDouble
-? 'bg-rose-50 border-rose-300 text-rose-800'
-: 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
-}`;
-card.innerHTML = `
-<div class="truncate">
-<span class="block truncate font-bold">${empName}</span>
-${empObj.offDay ? `<span class="text-[9px] text-slate-400">Libur: ${empObj.offDay}</span>` : ''}
-</div>
-${isSelected
-? '<i class="fa-solid fa-check text-indigo-600"></i>'
-: isDouble
-? '<span class="text-[9px] bg-rose-200 text-rose-800 px-1 rounded font-bold">Ada Shift</span>'
-: '<i class="fa-solid fa-plus text-slate-300"></i>'}
-`;
-card.onclick = () => {
-const existingIdx = currentList.findIndex(it => (typeof it === 'string' ? it : it.n) === empName);
-if (existingIdx > -1) {
-currentList.splice(existingIdx, 1);
-} else {
-currentList.push({ n: empName, c: 'none' });
-}
-saveData();
-renderModalContent();
-renderOutletsGrid();
-renderSidebar();
-};
-}
-gridContainer.appendChild(card);
-});
+  if (!currentEditingContext) return;
+  const { branchId, shiftType, dayName } = currentEditingContext;
+  if (!schedule[branchId]) schedule[branchId] = { pagi: {}, sore: {} };
+  if (!schedule[branchId][shiftType]) schedule[branchId][shiftType] = {};
+  if (!schedule[branchId][shiftType][dayName]) schedule[branchId][shiftType][dayName] = [];
+  const currentList = schedule[branchId][shiftType][dayName];
+  const chipsContainer = document.getElementById('modalActiveChips');
+  const gridContainer = document.getElementById('modalEmpPickGrid');
+  const searchVal = document.getElementById('modalSearchEmp').value.toLowerCase().trim();
+  chipsContainer.innerHTML = '';
+  if (currentList.length === 0) {
+    chipsContainer.innerHTML = '<span class="text-xs text-slate-400 italic">Belum ada pegawai ditugaskan</span>';
+  } else {
+    currentList.forEach((item, idx) => {
+      const name = typeof item === 'string' ? item : item.n;
+      const color = typeof item === 'string' ? 'none' : (item.c || 'none');
+      let bgBadge = 'bg-white text-slate-800 border-slate-300';
+      if (color === 'pink') bgBadge = 'bg-pink-300 text-pink-950 border-pink-400 font-bold';
+      if (color === 'blue') bgBadge = 'bg-blue-300 text-blue-950 border-blue-400 font-bold';
+      if (color === 'yellow') bgBadge = 'bg-yellow-300 text-yellow-950 border-yellow-400 font-bold';
+      const chip = document.createElement('div');
+      chip.className = `inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-xl shadow-2xs border select-none cursor-grab active:cursor-grabbing ${bgBadge}`;
+      chip.draggable = true;
+      chip.dataset.index = idx;
+      chip.innerHTML = `
+      <i class="fa-solid fa-grip-vertical text-slate-400 text-[10px]"></i>
+      <span>${name}</span>
+      <button type="button" onclick="removeNameFromCell(${idx})" class="hover:text-rose-600 ml-1 text-xs"><i class="fa-solid fa-xmark"></i></button>
+      `;
+      chip.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/plain', idx); });
+      chip.addEventListener('dragover', (e) => { e.preventDefault(); });
+      chip.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const fromIdx = parseInt(e.dataTransfer.getData('text/plain'));
+        const toIdx = idx;
+        if (!isNaN(fromIdx) && fromIdx !== toIdx) {
+          const movedItem = currentList.splice(fromIdx, 1)[0];
+          currentList.splice(toIdx, 0, movedItem);
+          saveData();
+          renderModalContent();
+          renderOutletsGrid();
+        }
+      });
+      chip.oncontextmenu = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        activeRightClickedIdx = idx;
+        colorContextMenu.style.left = `${e.clientX}px`;
+        colorContextMenu.style.top = `${e.clientY}px`;
+        colorContextMenu.classList.remove('hidden');
+      };
+      chipsContainer.appendChild(chip);
+    });
+  }
+  gridContainer.innerHTML = '';
+  sortEmployeesAlphabetically();
+  const dailyAssignments = getDailyAssignmentsMap();
+  employees.forEach(empObj => {
+    const empName = empObj.name;
+    if (searchVal && !empName.toLowerCase().includes(searchVal)) return;
+    const isSelected = currentList.some(it => (typeof it === 'string' ? it : it.n) === empName);
+    const isOffDay = empObj.offDay === dayName;
+    const isLeave = isEmployeeOnLeave(empName, dayName);
+    const isRestricted = isOffDay || isLeave;
+    const isDouble = !isSelected && !isRestricted && (dailyAssignments[`${dayName}_${empName.toUpperCase()}`] > 0);
+    const card = document.createElement('button');
+    card.type = 'button';
+    if (isRestricted) {
+      card.disabled = true;
+      const badgeText = isLeave ? 'CUTI' : 'LIBUR';
+      card.className = `p-2 rounded-lg border text-left text-xs font-semibold flex items-center justify-between transition bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed opacity-75`;
+      card.innerHTML = `
+      <div class="truncate"><span class="block truncate font-bold">${empName}</span><span class="text-[9px] text-rose-500 font-bold">${badgeText}: Hari ini</span></div>
+      <span class="text-[9px] bg-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-bold">${badgeText}</span>
+      `;
+    } else {
+      card.className = `p-2 rounded-lg border text-left text-xs font-semibold flex items-center justify-between transition ${
+        isSelected ? 'bg-indigo-50 border-indigo-500 text-indigo-900 ring-1 ring-indigo-500' : isDouble ? 'bg-rose-50 border-rose-300 text-rose-800' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'
+      }`;
+      card.innerHTML = `
+      <div class="truncate"><span class="block truncate font-bold">${empName}</span>${empObj.offDay ? `<span class="text-[9px] text-slate-400">Libur: ${empObj.offDay}</span>` : ''}</div>
+      ${isSelected ? '<i class="fa-solid fa-check text-indigo-600"></i>' : isDouble ? '<span class="text-[9px] bg-rose-200 text-rose-800 px-1 rounded font-bold">Ada Shift</span>' : '<i class="fa-solid fa-plus text-slate-300"></i>'}
+      `;
+      card.onclick = () => {
+        const existingIdx = currentList.findIndex(it => (typeof it === 'string' ? it : it.n) === empName);
+        if (existingIdx > -1) {
+          currentList.splice(existingIdx, 1);
+        } else {
+          currentList.push({ n: empName, c: 'none' });
+        }
+        saveData();
+        renderModalContent();
+        renderOutletsGrid();
+        renderSidebar();
+      };
+    }
+    gridContainer.appendChild(card);
+  });
 }
 
 function applyContextMenuColor(chosenColor) {
-if (!currentEditingContext || activeRightClickedIdx === null) return;
-const { branchId, shiftType, dayName } = currentEditingContext;
-const list = schedule[branchId][shiftType][dayName];
-if (list[activeRightClickedIdx]) {
-const name = typeof list[activeRightClickedIdx] === 'string' ? list[activeRightClickedIdx] : list[activeRightClickedIdx].n;
-list[activeRightClickedIdx] = { n: name, c: chosenColor };
-saveData();
-renderModalContent();
-renderOutletsGrid();
-}
-colorContextMenu.classList.add('hidden');
+  if (!currentEditingContext || activeRightClickedIdx === null) return;
+  const { branchId, shiftType, dayName } = currentEditingContext;
+  const list = schedule[branchId][shiftType][dayName];
+  if (list[activeRightClickedIdx]) {
+    const name = typeof list[activeRightClickedIdx] === 'string' ? list[activeRightClickedIdx] : list[activeRightClickedIdx].n;
+    list[activeRightClickedIdx] = { n: name, c: chosenColor };
+    saveData();
+    renderModalContent();
+    renderOutletsGrid();
+  }
+  colorContextMenu.classList.add('hidden');
 }
 
 function removeNameFromCell(idx) {
-if (!currentEditingContext) return;
-const { branchId, shiftType, dayName } = currentEditingContext;
-schedule[branchId][shiftType][dayName].splice(idx, 1);
-saveData();
-renderModalContent();
-renderOutletsGrid();
-renderSidebar();
+  if (!currentEditingContext) return;
+  const { branchId, shiftType, dayName } = currentEditingContext;
+  schedule[branchId][shiftType][dayName].splice(idx, 1);
+  saveData();
+  renderModalContent();
+  renderOutletsGrid();
+  renderSidebar();
 }
 
 function renderMasterEmpList() {
-sortEmployeesAlphabetically();
-const list = document.getElementById('masterEmpList');
-document.getElementById('masterEmpCountBadge').textContent = employees.length;
-list.innerHTML = '';
-const DAYS = getCalculatedDays();
-employees.forEach((empObj, idx) => {
-const li = document.createElement('li');
-li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50 gap-2';
-li.innerHTML = `
-<div class="flex items-center gap-1.5 w-1/3 truncate">
-<span class="font-bold text-slate-800 truncate">${empObj.name}</span>
-<button onclick="editMasterEmpName(${idx})" title="Edit Nama Pegawai" class="text-slate-400 hover:text-indigo-600 transition px-1">
-<i class="fa-solid fa-pen-to-square"></i>
-</button>
-</div>
-<div class="flex items-center gap-1.5 flex-1 justify-end">
-<select onchange="updateEmpOffDay(${idx}, this.value)" class="text-[11px] px-2 py-1 border border-slate-300 rounded-lg bg-white focus:ring-1 focus:ring-indigo-500">
-<option value="" ${!empObj.offDay ? 'selected' : ''}>Tanpa Libur</option>
-${DAYS.map(d => `<option value="${d.name}" ${empObj.offDay === d.name ? 'selected' : ''}>Libur Hari ${d.name}</option>`).join('')}
-</select>
-<button onclick="deleteMasterEmp(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1">
-<i class="fa-solid fa-trash-can"></i>
-</button>
-</div>
-`;
-list.appendChild(li);
-});
-const leaveSelect = document.getElementById('leaveEmpName');
-leaveSelect.innerHTML = '<option value="">- Pilih Pegawai -</option>';
-employees.forEach(e => {
-leaveSelect.innerHTML += `<option value="${e.name}">${e.name}</option>`;
-});
-renderActiveLeavesList();
+  sortEmployeesAlphabetically();
+  const list = document.getElementById('masterEmpList');
+  document.getElementById('masterEmpCountBadge').textContent = employees.length;
+  list.innerHTML = '';
+  const DAYS = getCalculatedDays();
+  employees.forEach((empObj, idx) => {
+    const li = document.createElement('li');
+    li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50 gap-2';
+    li.innerHTML = `
+    <div class="flex items-center gap-1.5 w-1/3 truncate">
+    <span class="font-bold text-slate-800 truncate">${empObj.name}</span>
+    <button onclick="editMasterEmpName(${idx})" title="Edit Nama Pegawai" class="text-slate-400 hover:text-indigo-600 transition px-1"><i class="fa-solid fa-pen-to-square"></i></button>
+    </div>
+    <div class="flex items-center gap-1.5 flex-1 justify-end">
+    <select onchange="updateEmpOffDay(${idx}, this.value)" class="text-[11px] px-2 py-1 border border-slate-300 rounded-lg bg-white focus:ring-1 focus:ring-indigo-500">
+    <option value="" ${!empObj.offDay ? 'selected' : ''}>Tanpa Libur</option>
+    ${DAYS.map(d => `<option value="${d.name}" ${empObj.offDay === d.name ? 'selected' : ''}>Libur Hari ${d.name}</option>`).join('')}
+    </select>
+    <button onclick="deleteMasterEmp(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1"><i class="fa-solid fa-trash-can"></i></button>
+    </div>
+    `;
+    list.appendChild(li);
+  });
+  const leaveSelect = document.getElementById('leaveEmpName');
+  leaveSelect.innerHTML = '<option value="">- Pilih Pegawai -</option>';
+  employees.forEach(e => { leaveSelect.innerHTML += `<option value="${e.name}">${e.name}</option>`; });
+  renderActiveLeavesList();
 }
 
 function editMasterEmpName(index) {
-const oldName = employees[index].name;
-const newNameInput = prompt(`Ubah nama pegawai "${oldName}":`, oldName);
-if (newNameInput !== null && newNameInput.trim() !== '') {
-const newName = newNameInput.trim().toUpperCase();
-if (newName === oldName) return;
-if (employees.some((e, i) => i !== index && e.name.toUpperCase() === newName)) {
-alert('Nama pegawai tersebut sudah ada di sistem!');
-return;
-}
-employees[index].name = newName;
-employeeLeaves.forEach(l => {
-if (l.name.toUpperCase() === oldName.toUpperCase()) l.name = newName;
-});
-Object.keys(schedule).forEach(bId => {
-Object.keys(schedule[bId] || {}).forEach(shiftKey => {
-Object.keys(schedule[bId][shiftKey] || {}).forEach(dName => {
-schedule[bId][shiftKey][dName] = schedule[bId][shiftKey][dName].map(item => {
-if (typeof item === 'string') {
-return item.toUpperCase() === oldName.toUpperCase() ? newName : item;
-} else if (item && item.n) {
-if (item.n.toUpperCase() === oldName.toUpperCase()) {
-return { ...item, n: newName };
-}
-}
-return item;
-});
-});
-});
-});
-saveData();
-renderMasterEmpList();
-renderSidebar();
-renderOutletsGrid();
-}
+  const oldName = employees[index].name;
+  const newNameInput = prompt(`Ubah nama pegawai "${oldName}":`, oldName);
+  if (newNameInput !== null && newNameInput.trim() !== '') {
+    const newName = newNameInput.trim().toUpperCase();
+    if (newName === oldName) return;
+    if (employees.some((e, i) => i !== index && e.name.toUpperCase() === newName)) {
+      alert('Nama pegawai tersebut sudah ada di sistem!');
+      return;
+    }
+    employees[index].name = newName;
+    employeeLeaves.forEach(l => { if (l.name.toUpperCase() === oldName.toUpperCase()) l.name = newName; });
+    Object.keys(schedule).forEach(bId => {
+      Object.keys(schedule[bId] || {}).forEach(shiftKey => {
+        Object.keys(schedule[bId][shiftKey] || {}).forEach(dName => {
+          schedule[bId][shiftKey][dName] = schedule[bId][shiftKey][dName].map(item => {
+            if (typeof item === 'string') {
+              return item.toUpperCase() === oldName.toUpperCase() ? newName : item;
+            } else if (item && item.n) {
+              if (item.n.toUpperCase() === oldName.toUpperCase()) return { ...item, n: newName };
+            }
+            return item;
+          });
+        });
+      });
+    });
+    saveData();
+    renderMasterEmpList();
+    renderSidebar();
+    renderOutletsGrid();
+  }
 }
 
 function renderActiveLeavesList() {
@@ -1651,105 +1538,89 @@ function renderActiveLeavesList() {
     return;
   }
   employeeLeaves.forEach((leave, idx) => {
-    let dateStr = "";
-    if (leave.dates) {
-      dateStr = leave.dates.join(', ');
-    } else {
-      dateStr = `${leave.start} s/d ${leave.end}`;
-    }
-
+    let dateStr = leave.dates ? leave.dates.join(', ') : `${leave.start} s/d ${leave.end}`;
     const div = document.createElement('div');
     div.className = "flex items-center justify-between text-[11px] bg-white border border-amber-200 px-2 py-1 rounded-lg";
-    div.innerHTML = `
-      <span><strong class="text-amber-900">${leave.name}</strong> Cuti Tgl: ${dateStr}</span>
-      <button onclick="removeLeave(${idx})" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>
-    `;
+    div.innerHTML = `<span><strong class="text-amber-900">${leave.name}</strong> Cuti Tgl: ${dateStr}</span><button onclick="removeLeave(${idx})" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-xmark"></i></button>`;
     container.appendChild(div);
   });
 }
 
 function removeLeave(idx) {
-employeeLeaves.splice(idx, 1);
-saveData();
-renderActiveLeavesList();
-renderSidebar();
-renderOutletsGrid();
+  employeeLeaves.splice(idx, 1);
+  saveData();
+  renderActiveLeavesList();
+  renderSidebar();
+  renderOutletsGrid();
 }
 
 function updateEmpOffDay(index, newOffDay) {
-employees[index].offDay = newOffDay;
-cleanupViolations();
-saveData();
-renderSidebar();
-renderOutletsGrid();
+  employees[index].offDay = newOffDay;
+  cleanupViolations();
+  saveData();
+  renderSidebar();
+  renderOutletsGrid();
 }
 
 function deleteMasterEmp(index) {
-employees.splice(index, 1);
-saveData();
-renderMasterEmpList();
-renderSidebar();
-renderOutletsGrid();
+  employees.splice(index, 1);
+  saveData();
+  renderMasterEmpList();
+  renderSidebar();
+  renderOutletsGrid();
 }
 
 function renderMasterBranchList() {
-const list = document.getElementById('masterBranchList');
-list.innerHTML = '';
-branches.forEach((b, idx) => {
-const li = document.createElement('li');
-li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50 gap-2';
-li.innerHTML = `
-<div class="flex-1">
-<div class="font-bold text-slate-800">${b.name}</div>
-<div class="text-[10px] text-slate-400">${(b.hours || []).join(' | ')}</div>
-</div>
-<div class="flex items-center gap-2">
-<select onchange="updateBranchTheme(${idx}, this.value)" class="text-[11px] px-2 py-1 border border-slate-300 rounded-lg bg-white focus:ring-1 focus:ring-cyan-500 font-bold">
-<option value="yellow" ${b.theme === 'yellow' ? 'selected' : ''}>Kuning</option>
-<option value="pink" ${b.theme === 'pink' ? 'selected' : ''}>Pink</option>
-<option value="cyan" ${b.theme === 'cyan' ? 'selected' : ''}>Cyan</option>
-<option value="emerald" ${b.theme === 'emerald' ? 'selected' : ''}>Hijau</option>
-<option value="purple" ${b.theme === 'purple' ? 'selected' : ''}>Ungu</option>
-<option value="orange" ${b.theme === 'orange' ? 'selected' : ''}>Oranye</option>
-<option value="blue" ${b.theme === 'blue' ? 'selected' : ''}>Biru</option>
-</select>
-${branches.length > 1 ? `
-<button onclick="deleteMasterBranch(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1">
-<i class="fa-solid fa-trash-can"></i>
-</button>
-` : ''}
-</div>
-`;
-list.appendChild(li);
-});
+  const list = document.getElementById('masterBranchList');
+  list.innerHTML = '';
+  branches.forEach((b, idx) => {
+    const li = document.createElement('li');
+    li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50 gap-2';
+    li.innerHTML = `
+    <div class="flex-1"><div class="font-bold text-slate-800">${b.name}</div><div class="text-[10px] text-slate-400">${(b.hours || []).join(' | ')}</div></div>
+    <div class="flex items-center gap-2">
+    <select onchange="updateBranchTheme(${idx}, this.value)" class="text-[11px] px-2 py-1 border border-slate-300 rounded-lg bg-white font-bold">
+    <option value="yellow" ${b.theme === 'yellow' ? 'selected' : ''}>Kuning</option>
+    <option value="pink" ${b.theme === 'pink' ? 'selected' : ''}>Pink</option>
+    <option value="cyan" ${b.theme === 'cyan' ? 'selected' : ''}>Cyan</option>
+    <option value="emerald" ${b.theme === 'emerald' ? 'selected' : ''}>Hijau</option>
+    <option value="purple" ${b.theme === 'purple' ? 'selected' : ''}>Ungu</option>
+    <option value="orange" ${b.theme === 'orange' ? 'selected' : ''}>Oranye</option>
+    <option value="blue" ${b.theme === 'blue' ? 'selected' : ''}>Biru</option>
+    </select>
+    ${branches.length > 1 ? `<button onclick="deleteMasterBranch(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+    </div>
+    `;
+    list.appendChild(li);
+  });
 }
 
 function updateBranchTheme(index, newTheme) {
-branches[index].theme = newTheme;
-saveData();
-renderOutletsGrid();
+  branches[index].theme = newTheme;
+  saveData();
+  renderOutletsGrid();
 }
 
 function deleteMasterBranch(index) {
-const b = branches[index];
-delete schedule[b.id];
-branches.splice(index, 1);
-saveData();
-renderMasterBranchList();
-renderOutletsGrid();
-renderSidebar();
+  const b = branches[index];
+  delete schedule[b.id];
+  branches.splice(index, 1);
+  saveData();
+  renderMasterBranchList();
+  renderOutletsGrid();
+  renderSidebar();
 }
 
 function editBranchHours(bId) {
-const b = branches.find(item => item.id === bId);
-if (!b) return;
-const currentStr = (b.hours || []).join('; ');
-const newHours = prompt(`Edit Jam Operasional untuk ${b.name} (Gunakan '|pink', '|blue', atau '|yellow' untuk indikator warna, pisahkan dengan ';'):`, currentStr);
-if (newHours !== null) {
-b.hours = newHours.split(';').map(s => s.trim()).filter(Boolean);
-saveData();
-renderOutletsGrid();
-}
+  const b = branches.find(item => item.id === bId);
+  if (!b) return;
+  const currentStr = (b.hours || []).join('; ');
+  const newHours = prompt(`Edit Jam Operasional untuk ${b.name}:`, currentStr);
+  if (newHours !== null) {
+    b.hours = newHours.split(';').map(s => s.trim()).filter(Boolean);
+    saveData();
+    renderOutletsGrid();
+  }
 }
 
 function renderUserList() {
@@ -1759,15 +1630,8 @@ function renderUserList() {
     const li = document.createElement('li');
     li.className = 'px-3 py-2 flex items-center justify-between text-xs hover:bg-slate-50';
     li.innerHTML = `
-      <div class="flex items-center gap-2">
-        <i class="fa-solid fa-user-shield text-slate-400"></i>
-        <span class="font-bold text-slate-800 uppercase">${u.username}</span>
-      </div>
-      ${users.length > 1 ? `
-        <button onclick="deleteUser(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1">
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      ` : '<span class="text-[9px] text-slate-400 italic">Utama</span>'}
+      <div class="flex items-center gap-2"><i class="fa-solid fa-user-shield text-slate-400"></i><span class="font-bold text-slate-800 uppercase">${u.username}</span></div>
+      ${users.length > 1 ? `<button onclick="deleteUser(${idx})" class="text-slate-400 hover:text-rose-600 transition px-1"><i class="fa-solid fa-trash-can"></i></button>` : '<span class="text-[9px] text-slate-400 italic">Utama</span>'}
     `;
     userList.appendChild(li);
   });
@@ -1782,427 +1646,336 @@ function deleteUser(idx) {
 }
 
 function showSsToast() {
-const ssToast = document.getElementById('ssToast');
-ssToast.classList.remove('-translate-y-20', 'opacity-0', 'pointer-events-none');
-ssToast.classList.add('translate-y-0', 'opacity-100');
+  const ssToast = document.getElementById('ssToast');
+  ssToast.classList.remove('-translate-y-20', 'opacity-0', 'pointer-events-none');
+  ssToast.classList.add('translate-y-0', 'opacity-100');
 }
 
 function hideSsToast() {
-const ssToast = document.getElementById('ssToast');
-ssToast.classList.remove('translate-y-0', 'opacity-100');
-ssToast.classList.add('-translate-y-20', 'opacity-0', 'pointer-events-none');
+  const ssToast = document.getElementById('ssToast');
+  ssToast.classList.remove('translate-y-0', 'opacity-100');
+  ssToast.classList.add('-translate-y-20', 'opacity-0', 'pointer-events-none');
 }
 
 function setupEventListeners() {
-const mainSidebar = document.getElementById('mainSidebar');
-const sidebarCard = document.getElementById('sidebarCard');
-const btnToggleSidebar = document.getElementById('btnToggleSidebarMinimize');
-const sidebarBodyContent = document.getElementById('sidebarBodyContent');
-const sidebarToggleIcon = document.getElementById('sidebarToggleIcon');
-const sidebarTitleText = document.getElementById('sidebarTitleText');
-const totalEmpBadge = document.getElementById('totalEmpBadge');
-let isSidebarMinimized = false;
+  const mainSidebar = document.getElementById('mainSidebar');
+  const sidebarCard = document.getElementById('sidebarCard');
+  const btnToggleSidebar = document.getElementById('btnToggleSidebarMinimize');
+  const sidebarBodyContent = document.getElementById('sidebarBodyContent');
+  const sidebarToggleIcon = document.getElementById('sidebarToggleIcon');
+  const sidebarTitleText = document.getElementById('sidebarTitleText');
+  let isSidebarMinimized = false;
 
-btnToggleSidebar.onclick = () => {
-isSidebarMinimized = !isSidebarMinimized;
-if (isSidebarMinimized) {
-mainSidebar.className = "w-14 flex-shrink-0 transition-all duration-300 no-print";
-sidebarCard.classList.add('sidebar-minimized-card');
-sidebarBodyContent.classList.add('hidden');
-sidebarTitleText.classList.add('hidden');
-totalEmpBadge.classList.add('hidden');
-sidebarToggleIcon.className = "fa-solid fa-chevron-right";
-btnToggleSidebar.title = "Tampilkan / Maximize Sidebar";
-btnToggleSidebar.setAttribute('aria-label', 'Tampilkan sidebar');
-} else {
-mainSidebar.className = "w-full lg:w-80 flex-shrink-0 transition-all duration-300 no-print";
-sidebarCard.classList.remove('sidebar-minimized-card');
-sidebarBodyContent.classList.remove('hidden');
-sidebarTitleText.classList.remove('hidden');
-totalEmpBadge.classList.remove('hidden');
-sidebarToggleIcon.className = "fa-solid fa-chevron-left";
-btnToggleSidebar.title = "Minimize Sidebar";
-btnToggleSidebar.setAttribute('aria-label', 'Minimize sidebar');
-}
-};
+  btnToggleSidebar.onclick = () => {
+    isSidebarMinimized = !isSidebarMinimized;
+    if (isSidebarMinimized) {
+      mainSidebar.className = "w-14 flex-shrink-0 transition-all duration-300 no-print";
+      sidebarCard.classList.add('sidebar-minimized-card');
+      sidebarBodyContent.classList.add('hidden');
+      sidebarTitleText.classList.add('hidden');
+      totalEmpBadge.classList.add('hidden');
+      sidebarToggleIcon.className = "fa-solid fa-chevron-right";
+    } else {
+      mainSidebar.className = "w-full lg:w-80 flex-shrink-0 transition-all duration-300 no-print";
+      sidebarCard.classList.remove('sidebar-minimized-card');
+      sidebarBodyContent.classList.remove('hidden');
+      sidebarTitleText.classList.remove('hidden');
+      totalEmpBadge.classList.remove('hidden');
+      sidebarToggleIcon.className = "fa-solid fa-chevron-left";
+    }
+  };
 
-// Event tombol Note Modal
-const noteModal = document.getElementById('noteModal');
-document.getElementById('btnOpenNoteModal').onclick = () => {
-  // Isi textarea di modal dengan data tersimpan
-  for (let i = 1; i <= 7; i++) {
-    const el = document.getElementById(`scratchNote${i}`);
-    if (el) el.value = scratchNotes[i-1] || "";
-  }
-  noteModal.classList.remove('hidden');
-};
-document.getElementById('btnCloseNoteModal').onclick = () => {
-  noteModal.classList.add('hidden');
-};
-document.getElementById('btnSaveScratchNotes').onclick = () => {
-  for (let i = 1; i <= 7; i++) {
-    const el = document.getElementById(`scratchNote${i}`);
-    if (el) scratchNotes[i-1] = el.value;
-  }
-  saveData();
-  noteModal.classList.add('hidden');
-  alert('Catatan berhasil disimpan!');
-};
+  const noteModal = document.getElementById('noteModal');
+  document.getElementById('btnOpenNoteModal').onclick = () => {
+    for (let i = 1; i <= 7; i++) {
+      const el = document.getElementById(`scratchNote${i}`);
+      if (el) el.value = scratchNotes[i-1] || "";
+    }
+    noteModal.classList.remove('hidden');
+  };
+  document.getElementById('btnCloseNoteModal').onclick = () => { noteModal.classList.add('hidden'); };
+  document.getElementById('btnSaveScratchNotes').onclick = () => {
+    for (let i = 1; i <= 7; i++) {
+      const el = document.getElementById(`scratchNote${i}`);
+      if (el) scratchNotes[i-1] = el.value;
+    }
+    saveData();
+    noteModal.classList.add('hidden');
+    alert('Catatan berhasil disimpan!');
+  };
 
-document.getElementById('btnLoginTrigger').onclick = () => {
-  document.getElementById('loginModal').classList.remove('hidden');
-};
-document.getElementById('btnCloseLoginModal').onclick = () => {
-  document.getElementById('loginModal').classList.add('hidden');
-  document.getElementById('loginError').classList.add('hidden');
-};
-
-document.getElementById('loginForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const uVal = document.getElementById('loginUsername').value.trim().toUpperCase();
-  const pVal = document.getElementById('loginPassword').value.trim();
-  const foundUser = users.find(u => u.username.toUpperCase() === uVal && u.password === pVal);
-  
-  if (foundUser) {
-    currentUser = foundUser.username;
-    sessionStorage.setItem('grid_shift_current_user', currentUser);
-    updateAuthUI();
+  document.getElementById('btnLoginTrigger').onclick = () => { document.getElementById('loginModal').classList.remove('hidden'); };
+  document.getElementById('btnCloseLoginModal').onclick = () => {
     document.getElementById('loginModal').classList.add('hidden');
     document.getElementById('loginError').classList.add('hidden');
-    document.getElementById('loginUsername').value = '';
-    document.getElementById('loginPassword').value = '';
-  } else {
-    document.getElementById('loginError').classList.remove('hidden');
-  }
-});
+  };
 
-document.getElementById('btnLogout').onclick = () => {
-  if (confirm('Apakah Anda yakin ingin Logout?')) {
-    currentUser = null;
-    sessionStorage.removeItem('grid_shift_current_user');
-    updateAuthUI();
-  }
-};
-
-const userModal = document.getElementById('userModal');
-document.getElementById('btnManageUsers').onclick = () => {
-  renderUserList();
-  userModal.classList.remove('hidden');
-};
-document.getElementById('btnCloseUserModal').onclick = () => userModal.classList.add('hidden');
-
-document.getElementById('addUserForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const uName = document.getElementById('newUsername').value.trim().toUpperCase();
-  const uPass = document.getElementById('newPassword').value.trim();
-  if (uName && uPass) {
-    if (users.some(u => u.username.toUpperCase() === uName)) {
-      alert('Username tersebut sudah digunakan!');
-      return;
+  document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const uVal = document.getElementById('loginUsername').value.trim().toUpperCase();
+    const pVal = document.getElementById('loginPassword').value.trim();
+    const foundUser = users.find(u => u.username.toUpperCase() === uVal && u.password === pVal);
+    if (foundUser) {
+      currentUser = foundUser.username;
+      sessionStorage.setItem('grid_shift_current_user', currentUser);
+      updateAuthUI();
+      document.getElementById('loginModal').classList.add('hidden');
+      document.getElementById('loginError').classList.add('hidden');
+      document.getElementById('loginUsername').value = '';
+      document.getElementById('loginPassword').value = '';
+    } else {
+      document.getElementById('loginError').classList.remove('hidden');
     }
-    users.push({ username: uName, password: uPass });
+  });
+
+  document.getElementById('btnLogout').onclick = () => {
+    if (confirm('Apakah Anda yakin ingin Logout?')) {
+      currentUser = null;
+      sessionStorage.removeItem('grid_shift_current_user');
+      updateAuthUI();
+    }
+  };
+
+  const userModal = document.getElementById('userModal');
+  document.getElementById('btnManageUsers').onclick = () => { renderUserList(); userModal.classList.remove('hidden'); };
+  document.getElementById('btnCloseUserModal').onclick = () => userModal.classList.add('hidden');
+
+  document.getElementById('addUserForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const uName = document.getElementById('newUsername').value.trim().toUpperCase();
+    const uPass = document.getElementById('newPassword').value.trim();
+    if (uName && uPass) {
+      if (users.some(u => u.username.toUpperCase() === uName)) {
+        alert('Username tersebut sudah digunakan!');
+        return;
+      }
+      users.push({ username: uName, password: uPass });
+      saveData();
+      renderUserList();
+      document.getElementById('newUsername').value = '';
+      document.getElementById('newPassword').value = '';
+    }
+  });
+
+  document.getElementById('btnSaveStandard').onclick = () => {
+    checkAuthBeforeAction(() => {
+      if (confirm('Simpan data sebagai master jadwal?')) {
+        standardSchedule = JSON.parse(JSON.stringify(schedule));
+        localStorage.setItem('grid_shift_standard_schedule', JSON.stringify(standardSchedule));
+        saveData();
+        alert('Jadwal saat ini berhasil disimpan sebagai Standar Mingguan!');
+      }
+    });
+  };
+
+  document.getElementById('btnLoadStandard').onclick = () => {
+    checkAuthBeforeAction(() => {
+      const savedStd = localStorage.getItem('grid_shift_standard_schedule') || (standardSchedule ? JSON.stringify(standardSchedule) : null);
+      if (!savedStd) {
+        alert('Belum ada jadwal standar yang tersimpan.');
+        return;
+      }
+      if (confirm('Muat jadwal standar mingguan?')) {
+        standardSchedule = JSON.parse(savedStd);
+        schedule = JSON.parse(JSON.stringify(standardSchedule));
+        saveData();
+        renderOutletsGrid();
+        renderSidebar();
+        alert('Jadwal standar berhasil dimuat!');
+      }
+    });
+  };
+
+  document.getElementById('btnCopyCell').onclick = () => {
+    if (!currentEditingContext) return;
+    const { branchId, shiftType, dayName } = currentEditingContext;
+    const currentList = schedule[branchId]?.[shiftType]?.[dayName] || [];
+    cellClipboard = JSON.parse(JSON.stringify(currentList));
+    document.getElementById('clipboardStatusInfo').textContent = `Disalin (${cellClipboard.length} pegawai)`;
+  };
+
+  document.getElementById('btnPasteCell').onclick = () => {
+    if (!currentEditingContext) return;
+    if (!cellClipboard) { alert('Belum ada data shift yang disalin!'); return; }
+    const { branchId, shiftType, dayName } = currentEditingContext;
+    if (!schedule[branchId]) schedule[branchId] = { pagi: {}, sore: {} };
+    if (!schedule[branchId][shiftType]) schedule[branchId][shiftType] = {};
+    schedule[branchId][shiftType][dayName] = cellClipboard.filter(item => {
+      const name = typeof item === 'string' ? item : item.n;
+      const empObj = employees.find(e => e.name.toUpperCase() === name.toUpperCase());
+      const isOff = empObj && empObj.offDay === dayName;
+      const isLeave = isEmployeeOnLeave(name, dayName);
+      return !(isOff || isLeave);
+    });
     saveData();
-    renderUserList();
-    document.getElementById('newUsername').value = '';
-    document.getElementById('newPassword').value = '';
-  }
-});
+    renderModalContent();
+    renderOutletsGrid();
+    renderSidebar();
+    document.getElementById('clipboardStatusInfo').textContent = 'Berhasil ditempel!';
+  };
 
-document.getElementById('btnSaveStandard').onclick = () => {
-checkAuthBeforeAction(() => {
-  if (confirm('Apakah Anda yakin ingin menyimpan data sebagai master jadwal?')) {
-    standardSchedule = JSON.parse(JSON.stringify(schedule));
-    localStorage.setItem('grid_shift_standard_schedule', JSON.stringify(standardSchedule));
+  document.getElementById('btnSetStartDate').onclick = () => {
+    checkAuthBeforeAction(() => {
+      const inputDate = prompt('Masukkan Tanggal Awal Hari Senin:', startMondayDate);
+      if (inputDate !== null && inputDate.trim() !== '') {
+        startMondayDate = inputDate.trim();
+        cleanupViolations();
+        saveData();
+        renderOutletsGrid();
+      }
+    });
+  };
+
+  document.getElementById('btnScreenshot').onclick = function() {
+    const captureElement = document.getElementById('captureArea');
+    const originalScrollY = window.scrollY;
+    window.scrollTo(0, 0);
+    showSsToast();
+
+    const tempStyle = document.createElement('style');
+    tempStyle.id = 'ss-temp-fix-style';
+    tempStyle.innerHTML = `
+      #captureArea { width: 1650px !important; max-width: none !important; background-color: #f8fafc !important; padding: 20px !important; box-sizing: border-box !important; }
+      #captureArea * { box-sizing: border-box !important; }
+      .sheet-table { border-collapse: collapse !important; width: 100% !important; table-layout: fixed !important; }
+      .sheet-table th, .sheet-table td { border: 1px solid #94a3b8 !important; vertical-align: top !important; text-align: center !important; padding: 4px 2px !important; }
+      .sheet-table th { padding: 8px 4px !important; font-size: 8px !important; vertical-align: middle !important; }
+      .sheet-table td > div { min-height: 48px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; align-items: center !important; gap: 3px !important; padding: 2px 0 !important; }
+      .name-badge { display: flex !important; align-items: center !important; justify-content: center !important; text-align: center !important; width: 94% !important; height: 22px !important; margin: 1px auto !important; padding: 0 4px !important; font-size: 10px !important; font-weight: 700 !important; border-radius: 4px !important; box-sizing: border-box !important; border: 1px solid rgba(0, 0, 0, 0.15) !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+      .name-badge.hidden-name span { visibility: hidden !important; }
+    `;
+    document.head.appendChild(tempStyle);
+
+    setTimeout(() => {
+      html2canvas(captureElement, {
+        scale: 2, useCORS: true, logging: false, backgroundColor: '#f8fafc', windowWidth: 1700, scrollY: -window.scrollY
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `Jadwal-Shift-${currentMonth}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        const styleEl = document.getElementById('ss-temp-fix-style');
+        if (styleEl) document.head.removeChild(styleEl);
+        window.scrollTo(0, originalScrollY);
+        setTimeout(() => { hideSsToast(); }, 2500);
+      }).catch(err => {
+        console.error(err);
+        hideSsToast();
+        const styleEl = document.getElementById('ss-temp-fix-style');
+        if (styleEl) document.head.removeChild(styleEl);
+        window.scrollTo(0, originalScrollY);
+      });
+    }, 400);
+  };
+
+  document.getElementById('btnPrevMonth').onclick = () => {
+    checkAuthBeforeAction(() => {
+      const months = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
+      let idx = months.indexOf(currentMonth);
+      idx = (idx - 1 + 12) % 12;
+      currentMonth = months[idx];
+      monthYearDisplay.textContent = currentMonth;
+      saveData();
+    });
+  };
+
+  document.getElementById('btnNextMonth').onclick = () => {
+    checkAuthBeforeAction(() => {
+      const months = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
+      let idx = months.indexOf(currentMonth);
+      idx = (idx + 1) % 12;
+      currentMonth = months[idx];
+      monthYearDisplay.textContent = currentMonth;
+      saveData();
+    });
+  };
+
+  noteTextarea.addEventListener('change', () => checkAuthBeforeAction(saveData));
+  jagaMalamTextarea.addEventListener('change', () => checkAuthBeforeAction(saveData));
+  searchEmpInput.addEventListener('input', renderSidebar);
+  document.getElementById('modalSearchEmp').addEventListener('input', renderModalContent);
+
+  const cellModal = document.getElementById('cellModal');
+  document.getElementById('btnCloseCellModal').onclick = () => cellModal.classList.add('hidden');
+  document.getElementById('btnSaveCellModal').onclick = () => cellModal.classList.add('hidden');
+
+  const empModal = document.getElementById('empModal');
+  document.getElementById('btnManageEmp').onclick = () => { checkAuthBeforeAction(() => { renderMasterEmpList(); empModal.classList.remove('hidden'); }); };
+  document.getElementById('btnCloseEmpModal').onclick = () => empModal.classList.add('hidden');
+
+  const branchModal = document.getElementById('branchModal');
+  document.getElementById('btnManageBranch').onclick = () => { checkAuthBeforeAction(() => { renderMasterBranchList(); branchModal.classList.remove('hidden'); }); };
+  document.getElementById('btnCloseBranchModal').onclick = () => branchModal.classList.add('hidden');
+
+  document.getElementById('addEmpForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameInput = document.getElementById('newEmpName');
+    const offDaySelect = document.getElementById('newEmpOffDay');
+    const nameVal = nameInput.value.trim().toUpperCase();
+    const offDayVal = offDaySelect.value;
+    if (nameVal) {
+      if (!employees.some(e => e.name.toUpperCase() === nameVal)) {
+        employees.push({ name: nameVal, offDay: offDayVal });
+        nameInput.value = '';
+        offDaySelect.value = '';
+        sortEmployeesAlphabetically();
+        saveData();
+        renderMasterEmpList();
+        renderSidebar();
+        renderOutletsGrid();
+      } else {
+        alert('Nama pegawai sudah ada!');
+      }
+    }
+  });
+
+  document.getElementById('addLeaveForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('leaveEmpName').value;
+    const rawDatesStr = document.getElementById('leaveDatesInput').value;
+    if (!name) { alert('Pilih nama pegawai yang cuti.'); return; }
+    const datesArray = rawDatesStr.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+    if (datesArray.length === 0) { alert('Format tanggal cuti tidak valid.'); return; }
+    employeeLeaves.push({ name, dates: datesArray });
+    document.getElementById('leaveDatesInput').value = '';
+    cleanupViolations();
     saveData();
-    alert('Jadwal saat ini berhasil disimpan sebagai Standar Mingguan!');
-  }
-});
-};
+    renderActiveLeavesList();
+    renderSidebar();
+    renderOutletsGrid();
+  });
 
-document.getElementById('btnLoadStandard').onclick = () => {
-checkAuthBeforeAction(() => {
-  const savedStd = localStorage.getItem('grid_shift_standard_schedule') || (standardSchedule ? JSON.stringify(standardSchedule) : null);
-  if (!savedStd) {
-  alert('Belum ada jadwal standar yang tersimpan. Silakan klik "Simpan Standar" terlebih dahulu.');
-  return;
-  }
-  if (confirm('Muat jadwal standar mingguan? Jadwal saat ini akan ditimpa.')) {
-  standardSchedule = JSON.parse(savedStd);
-  schedule = JSON.parse(JSON.stringify(standardSchedule));
-  saveData();
-  renderOutletsGrid();
-  renderSidebar();
-  alert('Jadwal standar berhasil dimuat!');
-  }
-});
-};
+  document.getElementById('addBranchForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameInput = document.getElementById('newBranchName');
+    const themeSelect = document.getElementById('newBranchTheme');
+    const hoursInput = document.getElementById('newBranchHours');
+    const valName = nameInput.value.trim().toUpperCase();
+    const valTheme = themeSelect.value;
+    const valHours = hoursInput.value.trim();
+    if (valName) {
+      const id = 'outlet_' + Date.now();
+      const hoursArr = valHours ? [valHours] : ['MASUK JAM 09.00 - 17.00'];
+      branches.push({ id, name: valName, theme: valTheme, hours: hoursArr });
+      nameInput.value = '';
+      hoursInput.value = '';
+      saveData();
+      renderMasterBranchList();
+      renderOutletsGrid();
+    }
+  });
 
-document.getElementById('btnCopyCell').onclick = () => {
-if (!currentEditingContext) return;
-const { branchId, shiftType, dayName } = currentEditingContext;
-const currentList = schedule[branchId]?.[shiftType]?.[dayName] || [];
-cellClipboard = JSON.parse(JSON.stringify(currentList));
-document.getElementById('clipboardStatusInfo').textContent = `Disalin (${cellClipboard.length} pegawai)`;
-};
-
-document.getElementById('btnPasteCell').onclick = () => {
-if (!currentEditingContext) return;
-if (!cellClipboard) {
-alert('Belum ada data shift yang disalin!');
-return;
-}
-const { branchId, shiftType, dayName } = currentEditingContext;
-if (!schedule[branchId]) schedule[branchId] = { pagi: {}, sore: {} };
-if (!schedule[branchId][shiftType]) schedule[branchId][shiftType] = {};
-schedule[branchId][shiftType][dayName] = cellClipboard.filter(item => {
-const name = typeof item === 'string' ? item : item.n;
-const empObj = employees.find(e => e.name.toUpperCase() === name.toUpperCase());
-const isOff = empObj && empObj.offDay === dayName;
-const isLeave = isEmployeeOnLeave(name, dayName);
-return !(isOff || isLeave);
-});
-saveData();
-renderModalContent();
-renderOutletsGrid();
-renderSidebar();
-document.getElementById('clipboardStatusInfo').textContent = 'Berhasil ditempel!';
-};
-
-document.getElementById('btnSetStartDate').onclick = () => {
-checkAuthBeforeAction(() => {
-  const inputDate = prompt('Masukkan Tanggal Awal Hari Senin (misal: 12, 19, 26):', startMondayDate);
-  if (inputDate !== null && inputDate.trim() !== '') {
-  startMondayDate = inputDate.trim();
-  cleanupViolations();
-  saveData();
-  renderOutletsGrid();
-  }
-});
-};
-
-document.getElementById('btnScreenshot').onclick = function() {
-const captureElement = document.getElementById('captureArea');
-const originalScrollY = window.scrollY;
-window.scrollTo(0, 0);
-showSsToast();
-
-const tempStyle = document.createElement('style');
-tempStyle.id = 'ss-temp-fix-style';
-tempStyle.innerHTML = `
-#captureArea {
-  width: 1650px !important;
-  max-width: none !important;
-  background-color: #f8fafc !important;
-  padding: 20px !important;
-  box-sizing: border-box !important;
-}
-#captureArea * {
-  box-sizing: border-box !important;
-}
-.sheet-table {
-  border-collapse: collapse !important;
-  width: 100% !important;
-  table-layout: fixed !important;
-}
-.sheet-table th, .sheet-table td {
-  border: 1px solid #94a3b8 !important;
-  vertical-align: top !important;
-  text-align: center !important;
-  padding: 4px 2px !important;
-}
-.sheet-table th {
-  padding: 8px 4px !important;
-  font-size: 8px !important;
-  vertical-align: middle !important;
-}
-.sheet-table td > div {
-  min-height: 48px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  align-items: center !important;
-  gap: 3px !important;
-  padding: 2px 0 !important;
-}
-.name-badge {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  width: 94% !important;
-  height: 22px !important;
-  margin: 1px auto !important;
-  padding: 0 4px !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  border-radius: 4px !important;
-  box-sizing: border-box !important;
-  border: 1px solid rgba(0, 0, 0, 0.15) !important; 
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-.name-badge.hidden-name span {
-  visibility: hidden !important;
-}
-`;
-document.head.appendChild(tempStyle);
-
-setTimeout(() => {
-html2canvas(captureElement, {
-  scale: 2,
-  useCORS: true,
-  logging: false,
-  backgroundColor: '#f8fafc',
-  windowWidth: 1700,
-  scrollY: -window.scrollY
-}).then(canvas => {
-  const link = document.createElement('a');
-  link.download = `Jadwal-Shift-${currentMonth}.png`;
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-
-  const styleEl = document.getElementById('ss-temp-fix-style');
-  if (styleEl) document.head.removeChild(styleEl);
-  window.scrollTo(0, originalScrollY);
-  setTimeout(() => {
-    hideSsToast();
-  }, 2500);
-}).catch(err => {
-  console.error(err);
-  hideSsToast();
-  const styleEl = document.getElementById('ss-temp-fix-style');
-  if (styleEl) document.head.removeChild(styleEl);
-  window.scrollTo(0, originalScrollY);
-});
-}, 400);
-};
-
-document.getElementById('btnPrevMonth').onclick = () => {
-checkAuthBeforeAction(() => {
-  const months = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
-  let idx = months.indexOf(currentMonth);
-  idx = (idx - 1 + 12) % 12;
-  currentMonth = months[idx];
-  monthYearDisplay.textContent = currentMonth;
-  saveData();
-});
-};
-
-document.getElementById('btnNextMonth').onclick = () => {
-checkAuthBeforeAction(() => {
-  const months = ["JANUARI","FEBRUARI","MARET","APRIL","MEI","JUNI","JULI","AGUSTUS","SEPTEMBER","OKTOBER","NOVEMBER","DESEMBER"];
-  let idx = months.indexOf(currentMonth);
-  idx = (idx + 1) % 12;
-  currentMonth = months[idx];
-  monthYearDisplay.textContent = currentMonth;
-  saveData();
-});
-};
-
-noteTextarea.addEventListener('change', () => checkAuthBeforeAction(saveData));
-jagaMalamTextarea.addEventListener('change', () => checkAuthBeforeAction(saveData));
-searchEmpInput.addEventListener('input', renderSidebar);
-document.getElementById('modalSearchEmp').addEventListener('input', renderModalContent);
-
-const cellModal = document.getElementById('cellModal');
-document.getElementById('btnCloseCellModal').onclick = () => cellModal.classList.add('hidden');
-document.getElementById('btnSaveCellModal').onclick = () => cellModal.classList.add('hidden');
-
-const empModal = document.getElementById('empModal');
-document.getElementById('btnManageEmp').onclick = () => {
-  checkAuthBeforeAction(() => { renderMasterEmpList(); empModal.classList.remove('hidden'); });
-};
-document.getElementById('btnCloseEmpModal').onclick = () => empModal.classList.add('hidden');
-
-const branchModal = document.getElementById('branchModal');
-document.getElementById('btnManageBranch').onclick = () => {
-  checkAuthBeforeAction(() => { renderMasterBranchList(); branchModal.classList.remove('hidden'); });
-};
-document.getElementById('btnCloseBranchModal').onclick = () => branchModal.classList.add('hidden');
-
-document.getElementById('addEmpForm').addEventListener('submit', (e) => {
-e.preventDefault();
-const nameInput = document.getElementById('newEmpName');
-const offDaySelect = document.getElementById('newEmpOffDay');
-const nameVal = nameInput.value.trim().toUpperCase();
-const offDayVal = offDaySelect.value;
-if (nameVal) {
-if (!employees.some(e => e.name.toUpperCase() === nameVal)) {
-employees.push({ name: nameVal, offDay: offDayVal });
-nameInput.value = '';
-offDaySelect.value = '';
-sortEmployeesAlphabetically();
-saveData();
-renderMasterEmpList();
-renderSidebar();
-renderOutletsGrid();
-} else {
-alert('Nama pegawai sudah ada!');
-}
-}
-});
-
-document.getElementById('addLeaveForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('leaveEmpName').value;
-  const rawDatesStr = document.getElementById('leaveDatesInput').value;
-  
-  if (!name) {
-    alert('Pilih nama pegawai yang cuti.');
-    return;
-  }
-
-  const datesArray = rawDatesStr
-    .split(',')
-    .map(s => parseInt(s.trim()))
-    .filter(n => !isNaN(n));
-
-  if (datesArray.length === 0) {
-    alert('Format tanggal cuti tidak valid. Gunakan angka dipisah koma (contoh: 10, 11, 13 atau 10).');
-    return;
-  }
-
-  employeeLeaves.push({ name, dates: datesArray });
-  document.getElementById('leaveDatesInput').value = '';
-  cleanupViolations();
-  saveData();
-  renderActiveLeavesList();
-  renderSidebar();
-  renderOutletsGrid();
-});
-
-document.getElementById('addBranchForm').addEventListener('submit', (e) => {
-e.preventDefault();
-const nameInput = document.getElementById('newBranchName');
-const themeSelect = document.getElementById('newBranchTheme');
-const hoursInput = document.getElementById('newBranchHours');
-const valName = nameInput.value.type.trim().toUpperCase();
-const valTheme = themeSelect.value;
-const valHours = hoursInput.value.trim();
-if (valName) {
-const id = 'outlet_' + Date.now();
-const hoursArr = valHours ? [valHours] : ['MASUK JAM 09.00 - 17.00'];
-branches.push({ id, name: valName, theme: valTheme, hours: hoursArr });
-nameInput.value = '';
-hoursInput.value = '';
-saveData();
-renderMasterBranchList();
-renderOutletsGrid();
-}
-});
-
-document.getElementById('btnClearAll').onclick = () => {
-checkAuthBeforeAction(() => {
-  if (confirm('Apakah Anda ingin mereset jadwal?')) {
-  schedule = {};
-  saveData();
-  renderOutletsGrid();
-  renderSidebar();
-  alert('Seluruh jadwal shift berhasil direset!');
-  }
-});
-};
+  document.getElementById('btnClearAll').onclick = () => {
+    checkAuthBeforeAction(() => {
+      if (confirm('Apakah Anda ingin mereset jadwal?')) {
+        schedule = {};
+        saveData();
+        renderOutletsGrid();
+        renderSidebar();
+        alert('Seluruh jadwal shift berhasil direset!');
+      }
+    });
+  };
 }
 </script>
 </body>
